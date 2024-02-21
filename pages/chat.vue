@@ -2,7 +2,8 @@
     <div>
         <!-- Navigation Bar -->
         <div class="navbar">
-            <div class="logo">ChatBot</div> <!-- Assuming you have a logo, adjust accordingly -->
+            <div class="logo">ChatBot</div>
+            <!-- Assuming you have a logo, adjust accordingly -->
             <div class="menu-items">
                 <div class="nav-item home" @click="goToHome">Home</div>
                 <div class="nav-item" @click="signIn">Sign In</div>
@@ -19,7 +20,7 @@
 
             <!-- Circular Rectangle Box at the bottom -->
             <div class="message-box">
-                <textarea placeholder="Message the ChatBot..." style="color: rgb(6, 5, 5);"></textarea>
+                <textarea placeholder="Message the ChatBot..." style="color: rgb(6, 5, 5)"></textarea>
             </div>
         </div>
     </div>
@@ -129,6 +130,5 @@ export default {
 
 .message-box textarea::placeholder {
     color: black;
-
 }
 </style>
