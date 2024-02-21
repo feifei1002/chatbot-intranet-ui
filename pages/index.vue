@@ -1,4 +1,10 @@
-<template>
-    <h1 v-t="'titles.home'" />
-    <p>Hello world! Here you can find info about the chatbot.</p>
+<template class="h-screen w-screen">
+    <div class=" flex">
+        <div class=" flex justify-center items-center h-screen w-1/2 bg-chatbot-blue">
+            <p class=" font-mono font-bold text-chatbot-pink pt-6">
+                Short Description
+            </p>
+        </div>
+        <div class=" flex h-screen w-1/2 bg-chatbot-pink"></div>
+    </div>
 </template>
