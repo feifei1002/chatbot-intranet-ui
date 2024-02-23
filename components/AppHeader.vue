@@ -1,27 +1,28 @@
 <script setup>
 import { useRouter } from 'vue-router'
 const router = useRouter()
-let currentPathObject = router.currentRoute.value; 
+let currentPathObject = router.currentRoute.value;
 console.log(currentPathObject.fullPath);
 </script>
 
 <template class="">
     <nav class=" bg-navbar-blue p-6">
-        <div class="container flex">
-            <div>
-                <a href="#" class="text-xl font-bold text-white">Chatbot</a>
-            </div>
-            <div>
+        <div class="container flex items-center">
+            <img src="/img/logo.png" width="60em" />
+            <a href="#" class="w-3/4 text-xl font-bold text-white pl-4">Chatbot</a>
+            <div class="flex justify-between right-0 w-1/4 absolute pr-6">
                 <a href="/" class="text-xl font-semibold"
                     :class="{ 'text-chatbot-pink': currentPathObject.fullPath == '/', 'text-white': currentPathObject.fullPath != '/' }">Home</a>
-            </div>
-            <div>
                 <a href="signin" class="text-xl font-semibold"
-                    :class="{ 'text-chatbot-pink': currentPathObject.fullPath == '/signin', 'text-white': currentPathObject.fullPath != '/signin' }">Sign In</a>
-            </div>
-            <div>
+                    :class="{ 'text-chatbot-pink': currentPathObject.fullPath == '/signin', 'text-white': currentPathObject.fullPath != '/signin' }">Sign
+                    In</a>
                 <a href="chat" class="text-xl font-semibold"
-                    :class="{ 'text-chatbot-pink': currentPathObject.fullPath == '/chat', 'text-white': currentPathObject.fullPath != '/chat' }">Try Chatbot {{ aaaaa }}</a>
+                    :class="{ 'text-chatbot-pink': currentPathObject.fullPath == '/chat', 'text-white': currentPathObject.fullPath != '/chat' }">Try
+                    Chatbot
+                    <Icon name="material-symbols:arrow-outward" />
+                </a>
+
+            </div>
         </div>
-    </div>
-</nav></template>
+    </nav>
+</template>
