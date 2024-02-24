@@ -1,27 +1,44 @@
 <script setup>
-import { useRouter } from 'vue-router'
-const router = useRouter()
-let currentPathObject = router.currentRoute.value;
+import { useRouter } from "vue-router";
+const router = useRouter();
+const currentPathObject = router.currentRoute.value;
 console.log(currentPathObject.fullPath);
 </script>
 
 <template class="">
-    <nav class=" bg-navbar-blue p-6">
+    <nav class="bg-navbar-blue p-6">
         <div class="container flex items-center">
             <img src="/img/logo.png" width="60em" />
-            <a href="#" class="w-3/4 text-xl font-bold text-white pl-4">Chatbot</a>
-            <div class="flex justify-between right-0 w-1/4 absolute pr-6">
-                <a href="/" class="text-xl font-semibold"
-                    :class="{ 'text-chatbot-pink': currentPathObject.fullPath == '/', 'text-white': currentPathObject.fullPath != '/' }">Home</a>
-                <a href="signin" class="text-xl font-semibold"
-                    :class="{ 'text-chatbot-pink': currentPathObject.fullPath == '/signin', 'text-white': currentPathObject.fullPath != '/signin' }">Sign
-                    In</a>
-                <a href="chat" class="text-xl font-semibold"
-                    :class="{ 'text-chatbot-pink': currentPathObject.fullPath == '/chat', 'text-white': currentPathObject.fullPath != '/chat' }">Try
-                    Chatbot
+            <a href="#" class="w-3/4 pl-4 text-xl font-bold text-white">Chatbot</a>
+            <div class="absolute right-0 flex w-1/4 justify-between pr-6">
+                <a
+                    href="/"
+                    class="text-xl font-semibold"
+                    :class="{
+                        'text-chatbot-pink': currentPathObject.fullPath == '/',
+                        'text-white': currentPathObject.fullPath != '/',
+                    }"
+                    >Home</a
+                >
+                <a
+                    href="signin"
+                    class="text-xl font-semibold"
+                    :class="{
+                        'text-chatbot-pink': currentPathObject.fullPath == '/signin',
+                        'text-white': currentPathObject.fullPath != '/signin',
+                    }"
+                    >Sign In</a
+                >
+                <a
+                    href="chat"
+                    class="text-xl font-semibold"
+                    :class="{
+                        'text-chatbot-pink': currentPathObject.fullPath == '/chat',
+                        'text-white': currentPathObject.fullPath != '/chat',
+                    }"
+                    >Try Chatbot
                     <Icon name="material-symbols:arrow-outward" />
                 </a>
-
             </div>
         </div>
     </nav>
