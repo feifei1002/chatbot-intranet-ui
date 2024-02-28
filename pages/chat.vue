@@ -20,9 +20,12 @@ const json = questions.value;
 const obj = JSON.parse(json);
 
 // defines each question to a separate variable
-const questionOne = obj.question1;
-const questionTwo = obj.question2;
-const questionThree = obj.question3;
+const questionArray = obj.questions;
+
+// split into three qs
+// const questionOne = obj.questions;
+// const questionTwo = obj.question2;
+// const questionThree = obj.question3;
 </script>
 
 <style></style>
