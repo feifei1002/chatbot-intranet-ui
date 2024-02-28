@@ -1,16 +1,5 @@
 <template>
     <div>
-        <!-- Navigation Bar -->
-        <div class="navbar">
-            <div class="logo">ChatBot</div>
-            <!-- Assuming you have a logo, adjust accordingly -->
-            <div class="menu-items">
-                <div class="nav-item home" @click="goToHome">Home</div>
-                <div class="nav-item" @click="signIn">Sign In</div>
-                <div class="nav-item try-chatbot" @click="tryChatbot">Try Chatbot</div>
-            </div>
-        </div>
-
         <!-- Chat Container -->
         <div class="chat-container">
             <!-- Your chatbot content goes here -->

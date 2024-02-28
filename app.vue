@@ -1,6 +1,6 @@
 <template>
     <div>
-        <AppHeader class="absolute w-screen" />
+        <AppHeader class="sticky w-full" />
         <NuxtPage />
     </div>
 </template>
