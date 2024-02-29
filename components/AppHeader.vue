@@ -2,7 +2,7 @@
 import { useRouter } from "vue-router";
 const router = useRouter();
 const currentPathObject = router.currentRoute.value;
-console.log(currentPathObject.fullPath);
+console.log(currentPathObject.fullPath); 
 </script>
 
 <template class="">
