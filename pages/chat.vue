@@ -1,32 +1,48 @@
 <template>
-    <div>
-        <!-- Chat Container -->
-        <div class="chat-container">
-            <!-- Your chatbot content goes here -->
-            <div class="background-section dark-blue"></div>
-            <div class="background-section dark-pink"></div>
+    <div class="flex h-full">
+        <!-- Blue side with 1/3 of the page -->
+        <div class="flex w-1/5 flex-col bg-indigo-950 p-4">
+            <!-- New Chat Button -->
+            <button
+                class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
+                @click="newChat"
+            >
+                New Chat
+            </button>
+        </div>
+        <!-- Pink side with 3/4 of the page -->
+        <div class="flex w-4/5 flex-col bg-pink-500 p-1">
+            <!-- Add your chatbot content here -->
+            <div class="flex h-full flex-col overflow-y-scroll">
+                <div
+                    v-for="(message, index) in userMessages"
+                    :key="index"
+                    class="mb-2 max-w-96 text-wrap break-words rounded p-1"
+                    :class="{
+                        'mr-1 self-end bg-pink-600 text-right': message.sender === 'user',
+                        'self-start bg-indigo-900 text-left text-white': message.sender === 'bot',
+                    }"
+                >
+                    {{ message.text }}
+                </div>
+            </div>
 
-            <!-- Circular Rectangle Box at the bottom -->
-            <div class="message-box flex items-center">
+            <div class="flex justify-end">
+                <!-- Circular Rectangle Box at the bottom -->
                 <textarea
                     v-model="userMessage"
                     placeholder="Message the ChatBot..."
-                    class="mr-2 flex-1"
+                    class="box-border h-20 w-full resize-none rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
                     style="color: rgb(6, 5, 5)"
                 ></textarea>
-            </div>
-            <div class="send-button">
-                <button class="send-btn" @click="sendMessage">Send</button>
-            </div>
 
-            <!-- Display user messages on the right edge -->
-            <div v-if="userMessages.length" class="user-messages">
-                <div v-for="(message, index) in userMessages" :key="index" class="user-message right-edge">
-                    {{ message }}
-                </div>
+                <button
+                    class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
+                    @click="sendMessage"
+                >
+                    Send
+                </button>
             </div>
-            <!-- New Chat Button -->
-            <button class="new-chat-btn" @click="newChat">New Chat</button>
         </div>
     </div>
 </template>
@@ -40,21 +56,31 @@ export default {
         };
     },
     methods: {
-        goToHome() {
-            // Implement logic to navigate to the Home page
-        },
-        signIn() {
-            // Implement logic for signing in
-        },
-        tryChatbot() {
-            // Implement logic for trying the chatbot
-        },
         sendMessage() {
             if (this.userMessage.trim() !== "") {
-                this.userMessages.push(this.userMessage.trim());
+                const userMessage = this.userMessage.trim();
+
+                // Push the user's message first
+                this.userMessages.push({ text: userMessage, sender: "user" });
+
+                // Simulate a delayed response from the ChatBot
+                setTimeout(() => {
+                    const botReply = "Hello, I am the ChatBot. How can I assist you today?";
+
+                    // Push the bot's reply after the user's message
+                    this.userMessages.push({ text: botReply, sender: "bot" });
+
+                    // Scroll to the bottom after a delay (adjust the delay if needed)
+                    setTimeout(() => {
+                        const messageContainer = this.$refs.messageContainer;
+                        messageContainer.scrollTop = messageContainer.scrollHeight;
+                    }, 100);
+                }, 500);
+
                 this.userMessage = ""; // Clear the input after sending
             }
         },
+
         newChat() {
             // Clear user messages
             this.userMessages = [];
@@ -62,151 +88,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #353955;
-    height: 60px;
-    padding: 0 20px;
-}
-
-.logo {
-    color: white;
-    font-weight: bold;
-}
-
-.menu-items {
-    display: flex;
-}
-
-.nav-item {
-    cursor: pointer;
-    margin-left: 15px;
-    color: white;
-}
-
-.nav-item.home {
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.nav-item.try-chatbot {
-    color: #dc4e79;
-}
-
-.chat-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-}
-
-.background-section {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.dark-blue {
-    background-color: #211639;
-    left: 0;
-    width: 20%;
-}
-
-.dark-pink {
-    background-color: #dc4e79;
-    right: 0;
-    width: 80%;
-}
-
-.message-box {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    margin-left: 80px;
-    max-width: 850px;
-    background-color: transparent;
-    padding: 10px;
-    border-radius: 20px;
-    border: 2px solid black;
-}
-
-.message-box textarea {
-    width: 100%;
-    height: 40px;
-    box-sizing: border-box;
-    padding: 5px;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    color: black;
-    background-color: transparent;
-    resize: none;
-}
-
-.message-box textarea::placeholder {
-    color: black;
-}
-
-.send-button {
-    position: absolute;
-    bottom: 45px;
-    right: 20px; /* Adjust the right spacing as needed */
-}
-
-.send-btn {
-    background-color: transparent; /* Adjust the color as needed */
-    color: black;
-    padding: 10px;
-    border: 2px solid black; /* Add a small border around the button */
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.send-btn:hover {
-    background-color: white; /* Change to white on hover */
-    color: #353955;
-}
-
-.user-messages {
-    position: absolute;
-    top: 40px;
-    right: 20px;
-    max-width: 300px; /* Adjust the max-width as needed */
-}
-
-.user-message {
-    background-color: #353955;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-
-.right-edge {
-    align-self: flex-end;
-}
-
-.new-chat-btn {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    margin-left: 120px;
-    background-color: transparent;
-    color: white;
-    padding: 8px;
-    border: 2px solid white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.new-chat-btn:hover {
-    background-color: white; /* Change to white on hover */
-    color: #353955;
-}
-</style>
