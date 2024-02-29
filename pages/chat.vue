@@ -17,15 +17,16 @@ const { data: questions } = await useFetch(`${config.public.apiURL}/suggested`);
 // gets value as json
 const json = questions.value;
 // parses value as json
-const obj = JSON.parse(json);
+const obj = JSON.stringify(json);
+const jsonObj = JSON.parse(obj);
 
-// defines each question to a separate variable
-const questionArray = obj.questions;
+// gets array of questions, with key 'questions'
+const questionArray = jsonObj.questions;
 
-// split into three qs
-// const questionOne = obj.questions;
-// const questionTwo = obj.question2;
-// const questionThree = obj.question3;
+// split array into e questions
+const questionOne = questionArray[0];
+const questionTwo = questionArray[1];
+const questionThree = questionArray[2];
 </script>
 
 <style></style>
