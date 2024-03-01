@@ -1,10 +1,11 @@
 <template>
     <div>
         <h1>Three suggested questions:</h1>
+        <br />
         <!--   variables taken from backend request   -->
-        <p>{{ questionOne }}</p>
-        <p>{{ questionTwo }}</p>
-        <p>{{ questionThree }}</p>
+        <button type="submit" @click="handleSubmitOne">{{ questionOne }}</button><br /><br />
+        <button type="submit" @click="handleSubmitTwo">{{ questionTwo }}</button><br /><br />
+        <button type="submit" @click="handleSubmitThree">{{ questionThree }}</button>
     </div>
 </template>
 <script setup>
@@ -27,6 +28,39 @@ const questionArray = jsonObj.questions;
 const questionOne = questionArray[0];
 const questionTwo = questionArray[1];
 const questionThree = questionArray[2];
+
+const handleSubmitOne = async () => {
+    // const { data: responseData } = await $fetch("/submit", {
+    //     method: "post",
+    //     body: {
+    //         question: questionOne,
+    //     },
+    // });
+
+    console.log(questionOne);
+};
+
+const handleSubmitTwo = async () => {
+    // const { data: responseData } = await $fetch("/submit", {
+    //     method: "post",
+    //     body: {
+    //         question: questionTwo,
+    //     },
+    // });
+
+    console.log(questionTwo);
+};
+
+const handleSubmitThree = async () => {
+    // const { data: responseData } = await $fetch("/submit", {
+    //     method: "post",
+    //     body: {
+    //         question: questionThree,
+    //     },
+    // });
+
+    console.log(questionThree);
+};
 </script>
 
 <style></style>
