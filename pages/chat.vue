@@ -30,12 +30,12 @@ const questionTwo = questionArray[1];
 const questionThree = questionArray[2];
 
 const handleSubmitOne = async () => {
-    // const { data: responseData } = await $fetch("/submit", {
-    //     method: "post",
-    //     body: {
-    //         question: questionOne,
-    //     },
-    // });
+    await $fetch(`${config.public.apiURL}/clicked`, {
+        method: "post",
+        body: {
+            question: questionOne,
+        },
+    });
 
     console.log(questionOne);
 };
