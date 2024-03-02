@@ -29,6 +29,8 @@ const questionOne = questionArray[0];
 const questionTwo = questionArray[1];
 const questionThree = questionArray[2];
 
+// functions to submit post request of a question from a button
+// can probably make this one function but add validation for which question
 const handleSubmitOne = async () => {
     await $fetch(`${config.public.apiURL}/clicked`, {
         method: "post",
@@ -37,29 +39,29 @@ const handleSubmitOne = async () => {
         },
     });
 
-    console.log(questionOne);
+    console.log("clicked: " + questionOne);
 };
 
 const handleSubmitTwo = async () => {
-    // const { data: responseData } = await $fetch("/submit", {
-    //     method: "post",
-    //     body: {
-    //         question: questionTwo,
-    //     },
-    // });
+    await $fetch(`${config.public.apiURL}/clicked`, {
+        method: "post",
+        body: {
+            question: questionTwo,
+        },
+    });
 
-    console.log(questionTwo);
+    console.log("clicked: " + questionTwo);
 };
 
 const handleSubmitThree = async () => {
-    // const { data: responseData } = await $fetch("/submit", {
-    //     method: "post",
-    //     body: {
-    //         question: questionThree,
-    //     },
-    // });
+    await $fetch(`${config.public.apiURL}/clicked`, {
+        method: "post",
+        body: {
+            question: questionThree,
+        },
+    });
 
-    console.log(questionThree);
+    console.log("clicked: " + questionThree);
 };
 </script>
 
