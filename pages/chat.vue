@@ -1,6 +1,7 @@
 <template>
     <!-- suggested questions go here -->
-    <div>
+    <!-- if fetch succeeds and array of questions is fetched, outputs suggested qs -->
+    <div v-if="questionArr">
         <!-- class used for styling, using tailwind -->
         <!-- indigo used to match the UI of the chatbot's conversation -->
         <p class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white">
@@ -34,58 +35,83 @@
 // get variables from nuxt.config.ts
 const config = useRuntimeConfig();
 
-// add exception handling here to catch if fetch fails
-
 // fetches JSON array of 3 suggested questions
-const { data: questions } = await useFetch(`${config.public.apiURL}/suggested`);
+const { data: questions, error } = await useFetch(`${config.public.apiURL}/suggested`);
+const questionArr = separateQuestions(questions);
+let questionOne;
+let questionTwo;
+let questionThree;
 
-// gets value as json
-const json = questions.value;
-// parses value as json
-const obj = JSON.stringify(json);
-const jsonObj = JSON.parse(obj);
+function separateQuestions(questions) {
+    if (questions.value) {
+        // successful request
 
-// gets array of questions, with key 'questions'
-const questionArray = jsonObj.questions;
+        // parses value as json
+        const obj = JSON.stringify(questions.value);
+        const jsonObj = JSON.parse(obj);
 
-// split array into e questions
-const questionOne = questionArray[0];
-const questionTwo = questionArray[1];
-const questionThree = questionArray[2];
+        // gets array of questions, with key 'questions'
+        return jsonObj.questions;
+    } else {
+        // failed request
+
+        console.log("error: ", error.value.data.message);
+        return null;
+    }
+}
+
+// split array into 3 questions if array of questions is available
+if (questionArr) {
+    questionOne = questionArr[0];
+    questionTwo = questionArr[1];
+    questionThree = questionArr[2];
+}
 
 // functions to submit post request of a question from a button
 // can probably make this one function but add validation for which question
 const handleSubmitOne = async () => {
-    await $fetch(`${config.public.apiURL}/clicked`, {
-        method: "post",
-        body: {
-            question: questionOne,
-        },
-    });
+    if (questionArr) {
+        await $fetch(`${config.public.apiURL}/clicked`, {
+            method: "post",
+            body: {
+                question: questionOne,
+            },
+        });
 
-    console.log("clicked: " + questionOne);
+        console.log("clicked: " + questionOne);
+    } else {
+        console.log("failed to post question to backend");
+    }
 };
 
 const handleSubmitTwo = async () => {
-    await $fetch(`${config.public.apiURL}/clicked`, {
-        method: "post",
-        body: {
-            question: questionTwo,
-        },
-    });
+    if (questionArr) {
+        await $fetch(`${config.public.apiURL}/clicked`, {
+            method: "post",
+            body: {
+                question: questionTwo,
+            },
+        });
 
-    console.log("clicked: " + questionTwo);
+        console.log("clicked: " + questionTwo);
+    } else {
+        console.log("failed to post question to backend");
+    }
 };
 
 const handleSubmitThree = async () => {
-    await $fetch(`${config.public.apiURL}/clicked`, {
-        method: "post",
-        body: {
-            question: questionThree,
-        },
-    });
+    if (questionArr) {
+        await $fetch(`${config.public.apiURL}/clicked`, {
+            method: "post",
+            body: {
+                question: questionThree,
+            },
+        });
 
-    console.log("clicked: " + questionThree);
+        console.log("clicked: " + questionThree);
+    } else {
+        console.log("failed to post question to backend");
+    }
 };
 </script>
 
