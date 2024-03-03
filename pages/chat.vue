@@ -1,16 +1,40 @@
 <template>
+    <!-- suggested questions go here -->
     <div>
-        <h1>Three suggested questions:</h1>
-        <br />
-        <!--   variables taken from backend request   -->
-        <button type="submit" @click="handleSubmitOne">{{ questionOne }}</button><br /><br />
-        <button type="submit" @click="handleSubmitTwo">{{ questionTwo }}</button><br /><br />
-        <button type="submit" @click="handleSubmitThree">{{ questionThree }}</button>
+        <!-- class used for styling, using tailwind -->
+        <!-- indigo used to match the UI of the chatbot's conversation -->
+        <p class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white">
+            Suggested questions you could ask:
+        </p>
+        <!-- hovering the button makes the background colour lighter -->
+        <button
+            type="submit"
+            class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
+            @click="handleSubmitOne"
+        >
+            {{ questionOne }}</button
+        ><br />
+        <button
+            type="submit"
+            class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
+            @click="handleSubmitTwo"
+        >
+            {{ questionTwo }}</button
+        ><br />
+        <button
+            type="submit"
+            class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
+            @click="handleSubmitThree"
+        >
+            {{ questionThree }}
+        </button>
     </div>
 </template>
 <script setup>
 // get variables from nuxt.config.ts
 const config = useRuntimeConfig();
+
+// add exception handling here to catch if fetch fails
 
 // fetches JSON array of 3 suggested questions
 const { data: questions } = await useFetch(`${config.public.apiURL}/suggested`);
