@@ -15,15 +15,15 @@
             <!-- Add your chatbot content here -->
             <div class="flex h-full flex-col overflow-y-scroll">
                 <div
-                    v-for="(message, index) in userMessages"
+                    v-for="(message, index) in chatMessages"
                     :key="index"
                     class="mb-2 max-w-96 text-wrap break-words rounded p-1"
                     :class="{
-                        'mr-1 self-end bg-pink-600 text-right': message.sender === 'user',
-                        'self-start bg-indigo-900 text-left text-white': message.sender === 'bot',
+                        'mr-1 self-end bg-pink-600 text-right': message.role === 'user',
+                        'self-start bg-indigo-900 text-left text-white': message.role === 'assistant',
                     }"
                 >
-                    {{ message.text }}
+                    <MarkdownRenderer :content="message.content" />
                 </div>
             </div>
 
@@ -38,6 +38,7 @@
 
                 <button
                     class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
+                    :disabled="generating"
                     @click="sendMessage"
                 >
                     Send
@@ -47,44 +48,65 @@
     </div>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            userMessage: "",
-            userMessages: [],
-        };
-    },
-    methods: {
-        sendMessage() {
-            if (this.userMessage.trim() !== "") {
-                const userMessage = this.userMessage.trim();
+<script setup>
+import { fetchEventSource } from "@microsoft/fetch-event-source";
 
-                // Push the user's message first
-                this.userMessages.push({ text: userMessage, sender: "user" });
+const userMessage = ref("");
+const chatMessages = ref([]);
 
-                // Simulate a delayed response from the ChatBot
-                setTimeout(() => {
-                    const botReply = "Hello, I am the ChatBot. How can I assist you today?";
+const generating = ref(false);
 
-                    // Push the bot's reply after the user's message
-                    this.userMessages.push({ text: botReply, sender: "bot" });
+const newChat = () => {
+    chatMessages.value = [];
+};
 
-                    // Scroll to the bottom after a delay (adjust the delay if needed)
-                    setTimeout(() => {
-                        const messageContainer = this.$refs.messageContainer;
-                        messageContainer.scrollTop = messageContainer.scrollHeight;
-                    }, 100);
-                }, 500);
+const sendMessage = () => {
+    const message = userMessage.value.trim();
+    if (message !== "") {
+        generating.value = true;
 
-                this.userMessage = ""; // Clear the input after sending
-            }
-        },
+        // add user message
+        chatMessages.value.push({ content: message, role: "user" });
+        userMessage.value = "";
 
-        newChat() {
-            // Clear user messages
-            this.userMessages = [];
-        },
-    },
+        // add assistant message
+        const assistantMessage = ref("");
+        chatMessages.value.push({ content: assistantMessage, role: "assistant" });
+
+        const config = useRuntimeConfig();
+
+        fetchEventSource(`${config.public.apiURL}/chat`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // everything but last two messages, since they're the ones we're generating
+                previous_messages: chatMessages.value.slice(0, -2),
+                question: message,
+            }),
+            onclose: () => {
+                generating.value = false;
+            },
+            onmessage: event => {
+                console.log("Message:", event);
+                // we can get empty messages, so we need to check if there's data
+                if (event.data) {
+                    const data = JSON.parse(event.data);
+                    if (data.text) {
+                        // add the text to the assistant message
+                        assistantMessage.value += data.text;
+                    }
+                }
+            },
+            onerror: error => {
+                console.error("Error:", error);
+                alert("An error occurred while genering the response");
+                generating.value = false;
+                // throw the error, so that we don't retry the request
+                throw error;
+            },
+        });
+    }
 };
 </script>

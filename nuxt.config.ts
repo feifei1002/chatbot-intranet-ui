@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     modules: ["@nuxt/ui", "@nuxtjs/i18n", "@nuxtjs/eslint-module", "@nuxtjs/tailwindcss", "nuxt-icon"],
     runtimeConfig: {
         public: {
-            apiURL: "http://localhost:3000",
+            apiURL: "http://localhost:8000",
         },
     },
     i18n: {
