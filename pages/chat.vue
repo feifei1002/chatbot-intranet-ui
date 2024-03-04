@@ -52,11 +52,6 @@
 // get variables from nuxt.config.ts
 const config = useRuntimeConfig();
 
-// fetches a JSON array of 3 suggested questions
-const { data: questions } = await useFetch(`${config.public.apiURL}/suggested`);
-console.log("JSON array of suggested questions is:");
-console.log(questions);
-
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 const userMessage = ref("");
@@ -81,7 +76,7 @@ const sendMessage = () => {
         const assistantMessage = ref("");
         chatMessages.value.push({ content: assistantMessage, role: "assistant" });
 
-        const config = useRuntimeConfig();
+        // const config = useRuntimeConfig();
 
         fetchEventSource(`${config.public.apiURL}/chat`, {
             method: "POST",
@@ -109,12 +104,21 @@ const sendMessage = () => {
             },
             onerror: error => {
                 console.error("Error:", error);
-                alert("An error occurred while genering the response");
+                alert("An error occurred while generating the response");
                 generating.value = false;
                 // throw the error, so that we don't retry the request
                 throw error;
             },
         });
+        // generate 3 suggested questions
+        getSuggestions();
     }
+};
+
+const getSuggestions = () => {
+    // fetches a JSON array of 3 suggested questions
+    const { data: questions } = useFetch(`${config.public.apiURL}/suggested`);
+    console.log("JSON array of suggested questions is:");
+    console.log(questions);
 };
 </script>
