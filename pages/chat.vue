@@ -110,8 +110,22 @@ const sendMessage = () => {
                 throw error;
             },
         });
+
+        // sends chat history
+        $fetch(`${config.public.apiURL}/chat_history`, {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                chat_messages: chatMessages.value.slice(0, -2),
+                question: message,
+            }),
+        });
+
         // generate 3 suggested questions
-        getSuggestions();
+        console.log(chatMessages);
+        // getSuggestions();
     }
 };
 
