@@ -101,6 +101,9 @@ const sendMessage = () => {
                     }),
                 });
 
+                // generate 3 suggested questions
+                getSuggestions();
+
                 generating.value = false;
             },
             onmessage: event => {
@@ -122,15 +125,13 @@ const sendMessage = () => {
                 throw error;
             },
         });
-
-        // generate 3 suggested questions
-        getSuggestions();
     }
 };
 
 const getSuggestions = () => {
     // fetches a JSON array of 3 suggested questions
     const { data: questions } = useFetch(`${config.public.apiURL}/suggested`);
+    // printing to console for testing
     console.log("JSON array of suggested questions is:");
     console.log(questions);
 };
