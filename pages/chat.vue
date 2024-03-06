@@ -76,8 +76,6 @@ const sendMessage = () => {
         const assistantMessage = ref("");
         chatMessages.value.push({ content: assistantMessage, role: "assistant" });
 
-        // const config = useRuntimeConfig();
-
         fetchEventSource(`${config.public.apiURL}/chat`, {
             method: "POST",
             headers: {
@@ -89,9 +87,8 @@ const sendMessage = () => {
                 question: message,
             }),
             onclose: () => {
-                // adds assistant message
-                // sends chat history
-                $fetch(`${config.public.apiURL}/chat_history`, {
+                // sends chat history and returns suggested questions
+                $fetch(`${config.public.apiURL}/suggested`, {
                     method: "post",
                     headers: {
                         "Content-Type": "application/json",
@@ -100,9 +97,6 @@ const sendMessage = () => {
                         chat_messages: chatMessages.value,
                     }),
                 });
-
-                // generate 3 suggested questions
-                getSuggestions();
 
                 generating.value = false;
             },
@@ -126,13 +120,5 @@ const sendMessage = () => {
             },
         });
     }
-};
-
-const getSuggestions = () => {
-    // fetches a JSON array of 3 suggested questions
-    const { data: questions } = useFetch(`${config.public.apiURL}/suggested`);
-    // printing to console for testing
-    console.log("JSON array of suggested questions is:");
-    console.log(questions);
 };
 </script>
