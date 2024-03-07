@@ -27,10 +27,11 @@
 
                   <img
                       v-if="message.role === 'assistant' && message.content !== ''"
+                      alt="speaker icon"
                       src="/img/speaker-icon.png"
                       style="height: 16px; width: 16px; margin-bottom: 5px; margin-left: 355px;"
-                      @click="speakMessage(message.content)"
-                  />
+                      title="Click to hear response"
+                      @click="speakMessage(message.content)"/>
 
                 </div>
             </div>
@@ -109,7 +110,7 @@ const sendMessage = () => {
             },
             onerror: error => {
                 console.error("Error:", error);
-                alert("An error occurred while genering the response");
+                alert("An error occurred while generating the response");
                 generating.value = false;
                 // throw the error, so that we don't retry the request
                 throw error;
@@ -139,7 +140,6 @@ const speakMessage = async (content) => {
     const audioBuffer = await ttsResponse.arrayBuffer();
     const audioBlob = new Blob([audioBuffer], { type: 'audio/ogg' });
 
-    // Assuming you have an HTML5 audio element to play the speech
     const audio = new Audio();
     audio.src = URL.createObjectURL(audioBlob);
     await audio.play();
