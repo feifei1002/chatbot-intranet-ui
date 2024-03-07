@@ -24,6 +24,13 @@
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
+
+                  <img
+                      v-if="message.role === 'assistant' && message.content !== ''"
+                      src="/img/speaker-icon.png"
+                      style="height: 16px; width: 16px; margin-bottom: 5px; margin-left: 355px;"
+                  />
+
                 </div>
             </div>
 
