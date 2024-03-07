@@ -25,14 +25,14 @@
                 >
                     <MarkdownRenderer :content="message.content" />
 
-                  <img
-                      v-if="message.role === 'assistant' && message.content !== ''"
-                      alt="speaker icon"
-                      src="/img/speaker-icon.png"
-                      style="height: 16px; width: 16px; margin-bottom: 5px; margin-left: 355px;"
-                      title="Click to hear response"
-                      @click="speakMessage(message.content)"/>
-
+                    <img
+                        v-if="message.role === 'assistant' && message.content !== ''"
+                        alt="speaker icon"
+                        src="/img/speaker-icon.png"
+                        style="height: 16px; width: 16px; margin-bottom: 5px; margin-left: 355px"
+                        title="Click to hear response"
+                        @click="speakMessage(message.content)"
+                    />
                 </div>
             </div>
 
@@ -119,32 +119,32 @@ const sendMessage = () => {
     }
 };
 
-const speakMessage = async (content) => {
-  const config = useRuntimeConfig();
-  try {
-    const ttsResponse = await fetch(`${config.public.apiURL}/tts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        text: content,
-      }),
-    });
+const speakMessage = async content => {
+    const config = useRuntimeConfig();
+    try {
+        const ttsResponse = await fetch(`${config.public.apiURL}/tts`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                text: content,
+            }),
+        });
 
-    if (!ttsResponse.ok) {
-      console.error('Failed to fetch TTS response');
-      return;
+        if (!ttsResponse.ok) {
+            console.error("Failed to fetch TTS response");
+            return;
+        }
+
+        const audioBuffer = await ttsResponse.arrayBuffer();
+        const audioBlob = new Blob([audioBuffer], { type: "audio/ogg" });
+
+        const audio = new Audio();
+        audio.src = URL.createObjectURL(audioBlob);
+        await audio.play();
+    } catch (error) {
+        console.error("Error during TTS request:", error);
     }
-
-    const audioBuffer = await ttsResponse.arrayBuffer();
-    const audioBlob = new Blob([audioBuffer], { type: 'audio/ogg' });
-
-    const audio = new Audio();
-    audio.src = URL.createObjectURL(audioBlob);
-    await audio.play();
-  } catch (error) {
-    console.error('Error during TTS request:', error);
-  }
 };
 </script>
