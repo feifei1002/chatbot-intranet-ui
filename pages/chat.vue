@@ -36,31 +36,32 @@
                 </div>
             </div>
 
-            <div class="flex justify-end box-border h-20 w-full resize-none rounded-2xl border-2 border-black bg-transparent p-5 outline-none">
+            <div
+                class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
+            >
                 <!-- Circular Rectangle Box at the bottom -->
                 <textarea
                     v-model="userMessage"
                     placeholder="Message the ChatBot..."
                     class="h-20 w-full resize-none rounded-2xl border-black bg-transparent outline-none"
-                    style="color: rgb(6, 5, 5);"
-
+                    style="color: rgb(6, 5, 5)"
                 ></textarea>
 
-              <img
-                  alt="send icon"
-                  src="/assets/send-icon.png"
-                  style="height: 44px; width: 44px;"
-                  title="Click to send message"
-                  @click="sendMessage"
-              />
+                <img
+                    alt="send icon"
+                    src="/assets/send-icon.png"
+                    style="height: 44px; width: 44px"
+                    title="Click to send message"
+                    @click="sendMessage"
+                />
 
-<!--                <button-->
-<!--                    class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"-->
-<!--                    :disabled="generating"-->
-<!--                    @click="sendMessage"-->
-<!--                >-->
-<!--                    Send-->
-<!--                </button>-->
+                <!--                <button-->
+                <!--                    class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"-->
+                <!--                    :disabled="generating"-->
+                <!--                    @click="sendMessage"-->
+                <!--                >-->
+                <!--                    Send-->
+                <!--                </button>-->
             </div>
         </div>
     </div>
@@ -131,6 +132,7 @@ const sendMessage = () => {
 const speakMessage = async content => {
     const config = useRuntimeConfig();
     try {
+        // Make a POST request to the TTS endpoint
         const ttsResponse = await fetch(`${config.public.apiURL}/tts`, {
             method: "POST",
             headers: {
@@ -140,19 +142,22 @@ const speakMessage = async content => {
                 text: content,
             }),
         });
-
+        // Check if the TTS request was successful
         if (!ttsResponse.ok) {
             console.error("Failed to fetch TTS response");
             return;
         }
-
+        // Convert the TTS response to an audio blob
         const audioBuffer = await ttsResponse.arrayBuffer();
         const audioBlob = new Blob([audioBuffer], { type: "audio/ogg" });
-
+        // Create an Audio element and set its source
         const audio = new Audio();
         audio.src = URL.createObjectURL(audioBlob);
+
+        // Play the audio
         await audio.play();
     } catch (error) {
+        // Handle any errors that occur during the TTS request or audio playback
         console.error("Error during TTS request:", error);
     }
 };

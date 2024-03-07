@@ -9,7 +9,7 @@ console.log(currentPathObject.fullPath);
     <nav class="bg-navbar-blue p-6">
         <div class="container flex items-center">
             <img src="/img/logo.png" width="60em" />
-            <a href="#" class="w-3/4 pl-4 text-xl font-bold text-white">Chatbot</a>
+            <a href="http://localhost:3000" class="w-3/4 pl-4 text-xl font-bold text-white">Chatbot</a>
             <div class="absolute right-0 flex w-1/4 justify-between pr-6">
                 <a
                     href="/"
