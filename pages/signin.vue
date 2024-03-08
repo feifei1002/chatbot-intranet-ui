@@ -9,14 +9,20 @@ const submitInput = async () => {
         username: username.value,
         password: password.value,
     };
-    try {
-        // This sends a POST request to the `auth.provider.endpoints.signIn` (/api/token) endpoint with `credentials` as the body
-        await signIn(credentials);
-        alert("Successfully logged in!");
-        await navigateTo("/");
-    } catch (error) {
-        console.error(error);
-    }
+
+    // This sends a POST request to the `auth.provider.endpoints.signIn` (/api/token) endpoint with `credentials` as the body
+    await signIn(credentials, {
+        redirect: false,
+    })
+        .catch(err => {
+            console.error(err);
+            // alert the message from the error
+            // if undefined, alert the error itself
+            alert(err?.data?.message ?? err);
+        })
+        .then(() => {
+            navigateTo("/");
+        });
 };
 </script>
 

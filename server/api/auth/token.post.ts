@@ -1,38 +1,38 @@
-import { URLSearchParams } from "url";
 import z from "zod";
 
-export default eventHandler(async (event) => {
-  const result = z.object({ username: z.string().min(1), password: z.string() }).safeParse(await readBody(event));
+export default defineEventHandler(async event => {
+    const result = z.object({ username: z.string().min(1), password: z.string() }).safeParse(await readBody(event));
 
-  if (!result.success) {
-    return createError({ statusCode: 403, statusMessage: 'Unauthorized, try again' })
-  }
+    if (!result.success) {
+        return createError({ status: 403, message: "Unauthorized, try again" });
+    }
 
-  const {username, password} = result.data;
+    const { username, password } = result.data;
 
-try{
-  const params = new URLSearchParams();
-  params.append("username", username);
-  params.append("password", password);
+    let response;
 
-  const config = useRuntimeConfig()
+    try {
+        const config = useRuntimeConfig();
 
-  const response = await fetch(`${config.public.apiURL}/token`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: params,
-  });
+        response = await fetch(`${config.public.apiURL}/token`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
+    } catch (error: any) {
+        throw createError({ message: error.message });
+    }
 
-  if (response.ok){
-    const {access_token} = await response.json();
-  return{
-    token: access_token,
-  }
-  } else {
-    throw new Error("Error while authenticating")
-  } } catch (error: any){
-    throw createError(error.message);
-  }
+    if (response.ok) {
+        return await response.json();
+    } else if (response.status === 401) {
+        throw createError({ status: 401, message: "Invalid credentials, try again" });
+    } else {
+        console.error("Server error while authenticating", response);
+        throw createError({
+            message: "Server error while authenticating",
+        });
+    }
 });
