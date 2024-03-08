@@ -49,6 +49,9 @@
 </template>
 
 <script setup>
+// get variables from nuxt.config.ts
+const config = useRuntimeConfig();
+
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 const userMessage = ref("");
@@ -73,8 +76,6 @@ const sendMessage = () => {
         const assistantMessage = ref("");
         chatMessages.value.push({ content: assistantMessage, role: "assistant" });
 
-        const config = useRuntimeConfig();
-
         fetchEventSource(`${config.public.apiURL}/chat`, {
             method: "POST",
             headers: {
@@ -86,6 +87,17 @@ const sendMessage = () => {
                 question: message,
             }),
             onclose: () => {
+                // sends chat history and returns suggested questions
+                $fetch(`${config.public.apiURL}/suggested`, {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        chat_messages: chatMessages.value,
+                    }),
+                });
+
                 generating.value = false;
             },
             onmessage: event => {
@@ -101,7 +113,7 @@ const sendMessage = () => {
             },
             onerror: error => {
                 console.error("Error:", error);
-                alert("An error occurred while genering the response");
+                alert("An error occurred while generating the response");
                 generating.value = false;
                 // throw the error, so that we don't retry the request
                 throw error;
