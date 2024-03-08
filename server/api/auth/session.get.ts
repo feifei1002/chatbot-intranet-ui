@@ -2,6 +2,7 @@ export default defineEventHandler(async event => {
     let response;
 
     const authHeaderValue = getRequestHeader(event, "authorization");
+    // throw error if no Authorization header is present
     if (typeof authHeaderValue === "undefined") {
         throw createError({
             statusCode: 403,
@@ -9,6 +10,7 @@ export default defineEventHandler(async event => {
         });
     }
 
+    // send request to the backend
     try {
         const config = useRuntimeConfig();
 
@@ -24,7 +26,8 @@ export default defineEventHandler(async event => {
     if (response.ok) {
         return await response.json();
     } else if (response.status === 401) {
-        throw createError({ status: 401, message: "Invalid credentials, try again" });
+        // throw error since user failed to authenticate
+        throw createError({ status: 401, message: "Invalid session, please login again" });
     } else {
         console.error("Server error while authenticating", response);
         throw createError({

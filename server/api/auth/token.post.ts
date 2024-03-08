@@ -3,6 +3,7 @@ import z from "zod";
 export default defineEventHandler(async event => {
     const result = z.object({ username: z.string().min(1), password: z.string() }).safeParse(await readBody(event));
 
+    // request failed zod schema validation
     if (!result.success) {
         return createError({ status: 403, message: "Unauthorized, try again" });
     }
@@ -11,6 +12,7 @@ export default defineEventHandler(async event => {
 
     let response;
 
+    // send request to the backend
     try {
         const config = useRuntimeConfig();
 
@@ -28,6 +30,7 @@ export default defineEventHandler(async event => {
     if (response.ok) {
         return await response.json();
     } else if (response.status === 401) {
+        // throw error since user failed to authenticate
         throw createError({ status: 401, message: "Invalid credentials, try again" });
     } else {
         console.error("Server error while authenticating", response);
