@@ -1,36 +1,37 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: { enabled: true },
-    modules: ["@nuxt/ui", "@nuxtjs/i18n", "@nuxtjs/eslint-module", "@nuxtjs/tailwindcss", "nuxt-icon", "@sidebase/nuxt-auth"],
-    typescript: {
-        tsConfig: {
-            "extends": "../../../tsconfig.base.json"
-        }
-    },
+    modules: [
+        "@nuxt/ui",
+        "@nuxtjs/i18n",
+        "@nuxtjs/eslint-module",
+        "@nuxtjs/tailwindcss",
+        "nuxt-icon",
+        "@sidebase/nuxt-auth",
+    ],
     auth: {
-        baseURL: '/api',
+        baseURL: "/api/auth",
         provider: {
-            type: 'local',
+            type: "local",
             endpoints: {
-                signIn: { path: '/auth/token', method: 'post' },
+                signIn: { path: "/token", method: "post" },
             },
-            token: { signInResponseTokenPointer: '/access_token' },
+            token: { signInResponseTokenPointer: "/access_token" },
         },
-        runtimeConfig: {
-            public: {
-                apiURL: "http://127.0.0.1:8000",
+    },
+    runtimeConfig: {
+        public: {
+            apiURL: "http://127.0.0.1:8000",
+        },
+    },
+    i18n: {
+        defaultLocale: "en",
+        langDir: "lang",
+        locales: [
+            {
+                code: "en",
+                file: "en-GB.json",
             },
-        },
-        i18n: {
-            defaultLocale: "en",
-            langDir: "lang",
-            locales: [
-                {
-                    code: "en",
-                    file: "en-GB.json",
-                },
-            ],
-        },
-    }
-}
-);
+        ],
+    },
+});
