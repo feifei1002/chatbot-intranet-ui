@@ -28,15 +28,6 @@
 
                 <!-- suggested qs output here -->
 
-                <!--                <div v-if="questionArr">-->
-                <!--                    <button-->
-                <!--                        class="mb-2 max-w-96 text-wrap break-words rounded p-1"-->
-                <!--                        :class="'self-start bg-indigo-900 text-left text-white'"-->
-                <!--                    >-->
-                <!--                        {{ questionOne }}-->
-                <!--                    </button>-->
-                <!--                </div>-->
-
                 <div v-if="questionArr">
                     <!-- class used for styling, using tailwind -->
                     <!-- indigo used to match the UI of the chatbot's conversation -->
@@ -66,6 +57,7 @@
                         {{ questionThree }}
                     </button>
                 </div>
+
                 <!-- end of suggestion qs -->
             </div>
 
@@ -97,16 +89,10 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 const userMessage = ref("");
 const chatMessages = ref([]);
 
-// let questions = ref("");
-// let error;
-
 let questionOne;
 let questionTwo;
 let questionThree;
-// let obj;
-// let jsonObj;
 let questionArr;
-// let jsonSent;
 
 const generating = ref(false);
 
@@ -118,6 +104,9 @@ const sendMessage = () => {
     const message = userMessage.value.trim();
     if (message !== "") {
         generating.value = true;
+
+        // empties suggested questions at the start of response generation
+        questionArr = "";
 
         // add user message
         chatMessages.value.push({ content: message, role: "user" });
@@ -146,6 +135,7 @@ const sendMessage = () => {
                 returnSeparateQuestions();
 
                 generating.value = false;
+                // returnSeparateQuestions();
             },
             onmessage: event => {
                 console.log("Message:", event);
@@ -166,7 +156,10 @@ const sendMessage = () => {
                 throw error;
             },
         });
+
+        // returnSeparateQuestions();
     }
+    // returnSeparateQuestions();
 };
 
 // below code is probably badly written, need to reformat
@@ -184,27 +177,15 @@ const returnSeparateQuestions = async () => {
 
     console.log(jsonSent);
 
-    questionArr = separateQuestions(jsonSent);
+    if (jsonSent.value) {
+        // successful request
 
-    function separateQuestions(jsonSent) {
-        if (jsonSent.value) {
-            // successful request
+        // parses value as json
+        const obj = JSON.stringify(jsonSent.value);
+        const jsonObj = JSON.parse(obj);
 
-            // parses value as json
-            const obj = JSON.stringify(jsonSent.value);
-            const jsonObj = JSON.parse(obj);
-
-            // gets array of questions, with key 'questions'
-            return jsonObj.questions;
-        } else {
-            // failed request
-
-            console.log("error: ", error.data.message);
-            // return null;
-        }
-    }
-
-    if (questionArr) {
+        // gets array of questions, with key 'questions'
+        questionArr = jsonObj.questions;
         questionOne = questionArr[0];
         questionTwo = questionArr[1];
         questionThree = questionArr[2];
@@ -212,6 +193,11 @@ const returnSeparateQuestions = async () => {
         console.log(questionOne);
         console.log(questionTwo);
         console.log(questionThree);
+    } else {
+        // failed request
+
+        console.log("error: ", error.data.message);
+        // return null;
     }
 };
 
