@@ -1,8 +1,12 @@
 <script setup>
-import { ref } from "vue";
+const { status, signIn } = useAuth();
+
+if (status.value === "authenticated") {
+    navigateTo("/");
+}
+
 const username = ref("");
 const password = ref("");
-const { signIn } = useAuth();
 
 const submitInput = async () => {
     const credentials = {
