@@ -15,6 +15,7 @@ export default defineNuxtConfig({
             type: "local",
             endpoints: {
                 signIn: { path: "/token", method: "post" },
+                getSession: { path: "/session", method: "get" },
             },
             token: { signInResponseTokenPointer: "/access_token" },
         },
