@@ -24,44 +24,32 @@
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
-
-                    <img
-                        v-if="message.role === 'assistant' && message.content !== ''"
-                        alt="speaker icon"
-                        src="/assets/speaker-icon.png"
-                        style="height: 16px; width: 16px; margin-bottom: 5px; margin-left: 355px"
-                        title="Click to hear response"
+                  <Icon name="heroicons:speaker-wave-16-solid"
+                  v-if="message.content !== ''"
+                  title="Click to hear response"
                         @click="speakMessage(message.content)"
-                    />
+                  />
                 </div>
             </div>
 
             <div
-                class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
+                class="flex justify-end"
             >
                 <!-- Circular Rectangle Box at the bottom -->
                 <textarea
                     v-model="userMessage"
                     placeholder="Message the ChatBot..."
-                    class="h-20 w-full resize-none rounded-2xl border-black bg-transparent outline-none"
+                    class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
                     style="color: rgb(6, 5, 5)"
                 ></textarea>
 
-                <img
-                    alt="send icon"
-                    src="/assets/send-icon.png"
-                    style="height: 44px; width: 44px"
-                    title="Click to send message"
-                    @click="sendMessage"
-                />
-
-                <!--                <button-->
-                <!--                    class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"-->
-                <!--                    :disabled="generating"-->
-                <!--                    @click="sendMessage"-->
-                <!--                >-->
-                <!--                    Send-->
-                <!--                </button>-->
+                                <button
+                                    class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
+                                    :disabled="generating"
+                                    @click="sendMessage"
+                                >
+                                    Send
+                                </button>
             </div>
         </div>
     </div>
