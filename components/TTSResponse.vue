@@ -15,10 +15,10 @@
 
 <script setup>
 const props = defineProps({
-  content: {
-    type: String,
-    default: "",
-  },
+    content: {
+        type: String,
+        default: "",
+    },
 });
 
 const speakMessage = async () => {
