@@ -24,12 +24,7 @@
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
-                    <UIcon
-                        v-if="message.content !== ''"
-                        name="i-heroicons-speaker-wave-16-solid"
-                        title="Click to hear response"
-                        @click="speakMessage(message.content)"
-                    />
+                    <TTSResponse :content="message.content" />
                 </div>
             </div>
 
@@ -125,39 +120,6 @@ const sendMessage = () => {
                 throw error;
             },
         });
-    }
-};
-
-const speakMessage = async content => {
-    const config = useRuntimeConfig();
-    try {
-        // Make a POST request to the TTS endpoint
-        const ttsResponse = await fetch(`${config.public.apiURL}/tts`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                text: content,
-            }),
-        });
-        // Check if the TTS request was successful
-        if (!ttsResponse.ok) {
-            console.error("Failed to fetch TTS response");
-            return;
-        }
-        // Convert the TTS response to an audio blob
-        const audioBuffer = await ttsResponse.arrayBuffer();
-        const audioBlob = new Blob([audioBuffer], { type: "audio/ogg" });
-        // Create an Audio element and set its source
-        const audio = new Audio();
-        audio.src = URL.createObjectURL(audioBlob);
-
-        // Play the audio
-        await audio.play();
-    } catch (error) {
-        // Handle any errors that occur during the TTS request or audio playback
-        console.error("Error during TTS request:", error);
     }
 };
 </script>
