@@ -191,8 +191,10 @@ const handleSubmitQuestionClicked = questionClicked => {
         console.log("clicked: ", questionClicked);
 
         // now send questions to chatbot
+        userMessage.value = questionClicked;
+        sendMessage();
     } else {
-        console.log("Failed to click question");
+        console.log("Error when clicking a question");
     }
 };
 </script>
