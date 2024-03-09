@@ -6,17 +6,17 @@ console.log(currentPathObject.fullPath);
 </script>
 
 <template class="">
-    <nav class="bg-navbar-blue p-6">
+    <nav class="bg-chatbot-white p-6">
         <div class="container flex items-center">
             <img src="/img/logo.png" width="60em" />
-            <a href="#" class="w-3/4 pl-4 text-xl font-bold text-white">Chatbot</a>
+            <a href="#" class="w-3/4 pl-4 text-xl font-bold text-chatbot-font">Chatbot</a>
             <div class="absolute right-0 flex w-1/4 justify-between pr-6">
                 <a
                     href="/"
                     class="text-xl font-semibold"
                     :class="{
-                        'text-chatbot-pink': currentPathObject.fullPath == '/',
-                        'text-white': currentPathObject.fullPath != '/',
+                        'text-chatbot-red': currentPathObject.fullPath == '/',
+                        'text-chatbot-font': currentPathObject.fullPath != '/',
                     }"
                     >Home</a
                 >
@@ -24,8 +24,8 @@ console.log(currentPathObject.fullPath);
                     href="signin"
                     class="text-xl font-semibold"
                     :class="{
-                        'text-chatbot-pink': currentPathObject.fullPath == '/signin',
-                        'text-white': currentPathObject.fullPath != '/signin',
+                        'text-chatbot-red': currentPathObject.fullPath == '/signin',
+                        'text-chatbot-font': currentPathObject.fullPath != '/signin',
                     }"
                     >Sign In</a
                 >
@@ -33,8 +33,8 @@ console.log(currentPathObject.fullPath);
                     href="chat"
                     class="text-xl font-semibold"
                     :class="{
-                        'text-chatbot-pink': currentPathObject.fullPath == '/chat',
-                        'text-white': currentPathObject.fullPath != '/chat',
+                        'text-chatbot-red': currentPathObject.fullPath == '/chat',
+                        'text-chatbot-font': currentPathObject.fullPath != '/chat',
                     }"
                     >Try Chatbot
                     <Icon name="material-symbols:arrow-outward" />
