@@ -14,7 +14,12 @@
 </template>
 
 <script setup>
-const props = defineProps(["content"]);
+const props = defineProps({
+  content: {
+    type: String,
+    default: "",
+  },
+});
 
 const speakMessage = async () => {
     try {
