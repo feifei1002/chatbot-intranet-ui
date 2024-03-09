@@ -19,14 +19,13 @@ const props = defineProps({
 });
 
 const copyText = () => {
-    const textarea = document.createElement("textarea");
-    textarea.value = props.content;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-
-    // Optionally, you can emit an event or perform any other action
-    console.log("Text copied:", props.content);
+    navigator.clipboard
+        .writeText(props.content)
+        .then(() => {
+            console.log("Text copied:", props.content);
+        })
+        .catch(err => {
+            console.error("Unable to copy text: ", err);
+        });
 };
 </script>
