@@ -28,9 +28,6 @@ dependencies:
     version: 4.2.5(vue@3.4.19)
 
 devDependencies:
-  '@iconify/vue':
-    specifier: ^4.1.1
-    version: 4.1.1(vue@3.4.19)
   '@nuxt/eslint-config':
     specifier: ^0.2.0
     version: 0.2.0(eslint@8.56.0)

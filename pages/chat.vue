@@ -24,9 +24,9 @@
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
-                    <Icon
+                    <UIcon
                         v-if="message.content !== ''"
-                        name="heroicons:speaker-wave-16-solid"
+                        name="i-heroicons-speaker-wave-16-solid"
                         title="Click to hear response"
                         @click="speakMessage(message.content)"
                     />
