@@ -24,17 +24,16 @@
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
-                  <Icon name="heroicons:speaker-wave-16-solid"
-                  v-if="message.content !== ''"
-                  title="Click to hear response"
+                    <Icon
+                        v-if="message.content !== ''"
+                        name="heroicons:speaker-wave-16-solid"
+                        title="Click to hear response"
                         @click="speakMessage(message.content)"
-                  />
+                    />
                 </div>
             </div>
 
-            <div
-                class="flex justify-end"
-            >
+            <div class="flex justify-end">
                 <!-- Circular Rectangle Box at the bottom -->
                 <textarea
                     v-model="userMessage"
@@ -43,13 +42,13 @@
                     style="color: rgb(6, 5, 5)"
                 ></textarea>
 
-                                <button
-                                    class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
-                                    :disabled="generating"
-                                    @click="sendMessage"
-                                >
-                                    Send
-                                </button>
+                <button
+                    class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
+                    :disabled="generating"
+                    @click="sendMessage"
+                >
+                    Send
+                </button>
             </div>
         </div>
     </div>
