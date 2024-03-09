@@ -38,21 +38,21 @@
                     <button
                         type="submit"
                         class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
-                        @click="handleSubmitOne"
+                        @click="handleSubmitQuestionClicked(questionOne)"
                     >
                         {{ questionOne }}</button
                     ><br />
                     <button
                         type="submit"
                         class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
-                        @click="handleSubmitTwo"
+                        @click="handleSubmitQuestionClicked(questionTwo)"
                     >
                         {{ questionTwo }}</button
                     ><br />
                     <button
                         type="submit"
                         class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
-                        @click="handleSubmitThree"
+                        @click="handleSubmitQuestionClicked(questionThree)"
                     >
                         {{ questionThree }}
                     </button>
@@ -89,10 +89,10 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 const userMessage = ref("");
 const chatMessages = ref([]);
 
-let questionOne;
-let questionTwo;
-let questionThree;
-let questionArr;
+const questionOne = ref("");
+const questionTwo = ref("");
+const questionThree = ref("");
+const questionArr = ref("");
 
 const generating = ref(false);
 
@@ -106,7 +106,7 @@ const sendMessage = () => {
         generating.value = true;
 
         // empties suggested questions at the start of response generation
-        questionArr = "";
+        questionArr.value = "";
 
         // add user message
         chatMessages.value.push({ content: message, role: "user" });
@@ -115,8 +115,6 @@ const sendMessage = () => {
         // add assistant message
         const assistantMessage = ref("");
         chatMessages.value.push({ content: assistantMessage, role: "assistant" });
-
-        // const config = useRuntimeConfig();
 
         fetchEventSource(`${config.public.apiURL}/chat`, {
             method: "POST",
@@ -129,13 +127,7 @@ const sendMessage = () => {
                 question: message,
             }),
             onclose: () => {
-                // sends chat history and returns suggested questions
-                // BUT CURRENTLY UPDATES SUGGESTED QS ON SCREEN WHEN THE USER STARTS TYPING NEW QUESTIONS
-                // PROBABLY HAVE TO MOVE PLACE OF THIS FUNCTION CALLED
-                returnSeparateQuestions();
-
                 generating.value = false;
-                // returnSeparateQuestions();
             },
             onmessage: event => {
                 console.log("Message:", event);
@@ -157,9 +149,9 @@ const sendMessage = () => {
             },
         });
 
-        // returnSeparateQuestions();
+        // after generating assistant message, generate related questions to ask
+        returnSeparateQuestions();
     }
-    // returnSeparateQuestions();
 };
 
 // below code is probably badly written, need to reformat
@@ -172,10 +164,7 @@ const returnSeparateQuestions = async () => {
         body: JSON.stringify({
             chat_messages: chatMessages.value,
         }),
-        // pick: ["questions"],
     });
-
-    console.log(jsonSent);
 
     if (jsonSent.value) {
         // successful request
@@ -185,66 +174,25 @@ const returnSeparateQuestions = async () => {
         const jsonObj = JSON.parse(obj);
 
         // gets array of questions, with key 'questions'
-        questionArr = jsonObj.questions;
-        questionOne = questionArr[0];
-        questionTwo = questionArr[1];
-        questionThree = questionArr[2];
-
-        console.log(questionOne);
-        console.log(questionTwo);
-        console.log(questionThree);
+        questionArr.value = jsonObj.questions;
+        questionOne.value = questionArr.value[0];
+        questionTwo.value = questionArr.value[1];
+        questionThree.value = questionArr.value[2];
     } else {
         // failed request
 
         console.log("error: ", error.data.message);
-        // return null;
     }
 };
 
-// functions to submit post request of a question from a button
-// can probably make this one function but add validation for which question
-const handleSubmitOne = async () => {
-    if (questionArr) {
-        await $fetch(`${config.public.apiURL}/clicked`, {
-            method: "post",
-            body: {
-                question: questionOne,
-            },
-        });
+// gets question clicked
+const handleSubmitQuestionClicked = questionClicked => {
+    if (questionArr.value) {
+        console.log("clicked: ", questionClicked);
 
-        console.log("clicked: " + questionOne);
+        // now send questions to chatbot
     } else {
-        console.log("failed to post question to backend");
-    }
-};
-
-const handleSubmitTwo = async () => {
-    if (questionArr) {
-        await $fetch(`${config.public.apiURL}/clicked`, {
-            method: "post",
-            body: {
-                question: questionTwo,
-            },
-        });
-
-        console.log("clicked: " + questionTwo);
-    } else {
-        console.log("failed to post question to backend");
-    }
-};
-
-const handleSubmitThree = async () => {
-    if (questionArr) {
-        await $fetch(`${config.public.apiURL}/clicked`, {
-            method: "post",
-            body: {
-                question: questionThree,
-            },
-        });
-
-        console.log("clicked: " + questionThree);
-    } else {
-        console.log("failed to post question to backend");
+        console.log("Failed to click question");
     }
 };
 </script>
