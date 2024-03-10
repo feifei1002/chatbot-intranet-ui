@@ -24,6 +24,7 @@
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
+                    <CopyButton :content="message.content" />
                     <TTSResponse :content="message.content" />
                 </div>
             </div>
