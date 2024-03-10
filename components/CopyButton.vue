@@ -21,11 +21,11 @@ const props = defineProps({
 const copyText = () => {
     navigator.clipboard
         .writeText(props.content)
-        .then(() => {
-            console.log("Text copied:", props.content);
-        })
         .catch(err => {
             console.error("Unable to copy text: ", err);
+        })
+        .then(() => {
+            console.log("Text copied:", props.content);
         });
 };
 </script>
