@@ -24,6 +24,7 @@
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
+                    <TTSResponse :content="message.content" />
                 </div>
             </div>
 
@@ -32,7 +33,7 @@
                 <textarea
                     v-model="userMessage"
                     placeholder="Message the ChatBot..."
-                    class="box-border h-20 w-full resize-none rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
+                    class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
                     style="color: rgb(6, 5, 5)"
                 ></textarea>
 
