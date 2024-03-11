@@ -19,8 +19,8 @@
                     :key="index"
                     class="mb-2 max-w-96 text-wrap break-words rounded p-1"
                     :class="{
-                        'mr-1 self-end bg-red-300 text-right': message.role === 'user',
-                        'self-start bg-pink-800 text-left': message.role === 'assistant',
+                        'mr-1 self-end bg-[#FAD2B7] text-right': message.role === 'user',
+                        'self-start bg-[#F2D5D6] text-left': message.role === 'assistant',
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
