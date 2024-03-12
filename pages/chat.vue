@@ -28,7 +28,10 @@
 
                 <!-- suggested qs output here -->
                 <div v-if="questionArray">
-                    <SuggestedQuestions :question-array="questionArray" @send="askClickedQuestionToChatBot" />
+                    <SuggestedQuestions
+                        :question-array="questionArray"
+                        @ask-to-chat-bot="askClickedQuestionToChatBot"
+                    />
                 </div>
                 <!-- end of suggestion qs -->
             </div>
@@ -156,9 +159,9 @@ const returnSuggestedQuestionsArray = async () => {
 };
 
 // sends question clicked to the chatBot
-function askClickedQuestionToChatBot(chosen) {
+const askClickedQuestionToChatBot = chosen => {
     // sets value of user message, so it gets submitted to chatBot
     userMessage.value = chosen;
     sendMessage();
-}
+};
 </script>
