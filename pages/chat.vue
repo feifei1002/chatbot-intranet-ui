@@ -57,8 +57,6 @@
     </div>
 </template>
 <script setup>
-import SuggestedQuestions from "~/components/SuggestedQuestions.vue";
-
 const config = useRuntimeConfig();
 
 import { fetchEventSource } from "@microsoft/fetch-event-source";
