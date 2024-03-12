@@ -1,61 +1,41 @@
 <template>
-    <!--        <div v-if="questionArr">-->
-    <!--            class used for styling, using tailwind indigo used to match the UI of the chatbot's conversation-->
+    <!-- class used for styling, using tailwind indigo used to match the UI of the chatbot's conversation-->
     <p class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white">
         Suggested questions you could ask:
     </p>
     <!-- hovering the button makes the background colour lighter -->
+    <!-- each button is each question of the array of 3 questions -->
     <button
         type="submit"
         class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
-        @click="$emit('send', questionOne)"
+        @click="$emit('askToChatBot', questionArray[0])"
     >
-        {{ questionOne }}</button
+        {{ questionArray[0] }}</button
     ><br />
-    <!--    <button-->
-    <!--        type="submit"-->
-    <!--        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"-->
-    <!--        @click="handleSubmitQuestionClicked(questionTwo)"-->
-    <!--    >-->
-    <!--        {{ questionTwo }}</button-->
-    <!--    ><br />-->
-    <!--    <button-->
-    <!--        type="submit"-->
-    <!--        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"-->
-    <!--        @click="handleSubmitQuestionClicked(questionThree)"-->
-    <!--    >-->
-    <!--        {{ questionThree }}-->
-    <!--    </button>-->
+    <button
+        type="submit"
+        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
+        @click="$emit('askToChatBot', questionArray[1])"
+    >
+        {{ questionArray[1] }}</button
+    ><br />
+    <button
+        type="submit"
+        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
+        @click="$emit('askToChatBot', questionArray[2])"
+    >
+        {{ questionArray[2] }}
+    </button>
 </template>
 <script setup>
+// props to take array of questions form parent chat.vue
 const props = defineProps({
-    questionOne: {
-        type: String,
-        default: "",
-    },
-    questionTwo: {
-        type: String,
-        default: "",
-    },
-    questionThree: {
-        type: String,
-        default: "",
+    questionArray: {
+        type: Array,
+        default: () => [],
     },
 });
 
-const emit = defineEmits(["send"]);
-
-// gets question clicked
-const handleSubmitQuestionClicked = questionClicked => {
-    try {
-        console.log("clicked: ", questionClicked);
-
-        // now send questions to chatbot
-
-        // cant do below line because in chat.vue
-        sendMessage();
-    } catch {
-        console.log("Error when clicking a question");
-    }
-};
+// emits to call function 'askClickedQuestionToChatBot' from parent chat.vue
+const emit = defineEmits(["askToChatBot"]);
 </script>

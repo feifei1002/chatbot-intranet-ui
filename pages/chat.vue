@@ -27,46 +27,9 @@
                 </div>
 
                 <!-- suggested qs output here -->
-
-                <!--                <div v-if="questionArr">-->
-                <!--                    &lt;!&ndash; class used for styling, using tailwind &ndash;&gt;-->
-                <!--                    &lt;!&ndash; indigo used to match the UI of the chatbot's conversation &ndash;&gt;-->
-                <!--                    <p class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white">-->
-                <!--                        Suggested questions you could ask:-->
-                <!--                    </p>-->
-                <!--                    &lt;!&ndash; hovering the button makes the background colour lighter &ndash;&gt;-->
-                <!--                    <button-->
-                <!--                        type="submit"-->
-                <!--                        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"-->
-                <!--                        @click="handleSubmitQuestionClicked(questionOne)"-->
-                <!--                    >-->
-                <!--                        {{ questionOne }}</button-->
-                <!--                    ><br />-->
-                <!--                    <button-->
-                <!--                        type="submit"-->
-                <!--                        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"-->
-                <!--                        @click="handleSubmitQuestionClicked(questionTwo)"-->
-                <!--                    >-->
-                <!--                        {{ questionTwo }}</button-->
-                <!--                    ><br />-->
-                <!--                    <button-->
-                <!--                        type="submit"-->
-                <!--                        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"-->
-                <!--                        @click="handleSubmitQuestionClicked(questionThree)"-->
-                <!--                    >-->
-                <!--                        {{ questionThree }}-->
-                <!--                    </button>-->
-                <!--                </div>-->
-
-                <div v-if="questionArr">
-                    <SuggestedQuestions
-                        :question-one="questionOne"
-                        :question-two="questionTwo"
-                        :question-three="questionThree"
-                        @send="callAgain"
-                    />
+                <div v-if="questionArray">
+                    <SuggestedQuestions :question-array="questionArray" @send="askClickedQuestionToChatBot" />
                 </div>
-
                 <!-- end of suggestion qs -->
             </div>
 
@@ -100,10 +63,8 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 const userMessage = ref("");
 const chatMessages = ref([]);
 
-const questionOne = ref("");
-const questionTwo = ref("");
-const questionThree = ref("");
-const questionArr = ref("");
+// suggested questions to ask
+const questionArray = ref("");
 
 const generating = ref(false);
 
@@ -117,7 +78,8 @@ const sendMessage = () => {
         generating.value = true;
 
         // empties suggested questions at the start of response generation
-        questionArr.value = "";
+        // so doesn't clutter screen when generating a response
+        questionArray.value = "";
 
         // add user message
         chatMessages.value.push({ content: message, role: "user" });
@@ -138,6 +100,8 @@ const sendMessage = () => {
                 question: message,
             }),
             onclose: () => {
+                // after assistant message is loaded ask for suggested questions
+                returnSuggestedQuestionsArray();
                 generating.value = false;
             },
             onmessage: event => {
@@ -159,14 +123,14 @@ const sendMessage = () => {
                 throw error;
             },
         });
-
-        // after generating assistant message, generate related questions to ask
-        returnSeparateQuestions();
     }
 };
 
 // gets questions from backend and set variables to them
-const returnSeparateQuestions = async () => {
+const returnSuggestedQuestionsArray = async () => {
+    // post request to /suggested
+    // sends chat messages in post request
+    // returns json array (jsonSent) of 3 questions in key 'questions'
     const { data: jsonSent, error } = await useFetch(`${config.public.apiURL}/suggested`, {
         method: "post",
         headers: {
@@ -177,41 +141,24 @@ const returnSeparateQuestions = async () => {
         }),
     });
 
+    // error handling for if valid response from post request
     if (jsonSent.value) {
-        // successful request
-
         // parses value as json
         const obj = JSON.stringify(jsonSent.value);
         const jsonObj = JSON.parse(obj);
 
-        // gets array of questions, with key 'questions'
-        questionArr.value = jsonObj.questions;
-        questionOne.value = questionArr.value[0];
-        questionTwo.value = questionArr.value[1];
-        questionThree.value = questionArr.value[2];
+        // gets array of questions from key 'questions'
+        questionArray.value = jsonObj.questions;
     } else {
         // failed request
-
         console.log("error: ", error.data.message);
     }
 };
 
-function callAgain(chosen) {
-    console.log("clicked: ", chosen);
+// sends question clicked to the chatBot
+function askClickedQuestionToChatBot(chosen) {
+    // sets value of user message, so it gets submitted to chatBot
     userMessage.value = chosen;
     sendMessage();
 }
-//
-// gets question clicked
-// const handleSubmitQuestionClicked = questionClicked => {
-//     if (questionArr.value) {
-//         console.log("clicked: ", questionClicked);
-//
-//         // now send questions to chatbot
-//         userMessage.value = questionClicked;
-//         sendMessage();
-//     } else {
-//         console.log("Error when clicking a question");
-//     }
-// };
 </script>
