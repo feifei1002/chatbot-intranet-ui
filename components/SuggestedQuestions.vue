@@ -8,24 +8,24 @@
     <button
         type="submit"
         class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
-        @click="handleSubmitQuestionClicked(questionOne)"
+        @click="$emit('send', questionOne)"
     >
         {{ questionOne }}</button
     ><br />
-    <button
-        type="submit"
-        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
-        @click="handleSubmitQuestionClicked(questionTwo)"
-    >
-        {{ questionTwo }}</button
-    ><br />
-    <button
-        type="submit"
-        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"
-        @click="handleSubmitQuestionClicked(questionThree)"
-    >
-        {{ questionThree }}
-    </button>
+    <!--    <button-->
+    <!--        type="submit"-->
+    <!--        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"-->
+    <!--        @click="handleSubmitQuestionClicked(questionTwo)"-->
+    <!--    >-->
+    <!--        {{ questionTwo }}</button-->
+    <!--    ><br />-->
+    <!--    <button-->
+    <!--        type="submit"-->
+    <!--        class="mb-2 max-w-96 text-wrap break-words rounded bg-indigo-900 p-1 text-white hover:bg-indigo-500"-->
+    <!--        @click="handleSubmitQuestionClicked(questionThree)"-->
+    <!--    >-->
+    <!--        {{ questionThree }}-->
+    <!--    </button>-->
 </template>
 <script setup>
 const props = defineProps({
@@ -43,6 +43,8 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(["send"]);
+
 // gets question clicked
 const handleSubmitQuestionClicked = questionClicked => {
     try {
@@ -51,7 +53,7 @@ const handleSubmitQuestionClicked = questionClicked => {
         // now send questions to chatbot
 
         // cant do below line because in chat.vue
-        // sendMessage();
+        sendMessage();
     } catch {
         console.log("Error when clicking a question");
     }

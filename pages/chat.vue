@@ -63,6 +63,7 @@
                         :question-one="questionOne"
                         :question-two="questionTwo"
                         :question-three="questionThree"
+                        @send="callAgain"
                     />
                 </div>
 
@@ -194,8 +195,14 @@ const returnSeparateQuestions = async () => {
         console.log("error: ", error.data.message);
     }
 };
+
+function callAgain(chosen) {
+    console.log("clicked: ", chosen);
+    userMessage.value = chosen;
+    sendMessage();
+}
 //
-// // gets question clicked
+// gets question clicked
 // const handleSubmitQuestionClicked = questionClicked => {
 //     if (questionArr.value) {
 //         console.log("clicked: ", questionClicked);
