@@ -26,14 +26,14 @@
     </button>
 </template>
 <script setup>
-// props to take array of questions form parent chat.vue
-const props = defineProps({
+// prop to take array of questions form parent chat.vue
+defineProps({
     questionArray: {
         type: Array,
         default: () => [],
     },
 });
 
-// emits to call function 'askClickedQuestionToChatBot' from parent chat.vue
-const emit = defineEmits(["askToChatBot"]);
+// emit to call function 'askClickedQuestionToChatBot' from parent chat.vue
+defineEmits(["askToChatBot"]);
 </script>

@@ -101,9 +101,9 @@ const sendMessage = () => {
                 question: message,
             }),
             onclose: () => {
-                // after assistant message is loaded ask for suggested questions
-                returnSuggestedQuestionsArray();
                 generating.value = false;
+                // after assistant message is loaded get suggested questions
+                returnSuggestedQuestionsArray();
             },
             onmessage: event => {
                 console.log("Message:", event);
@@ -142,17 +142,17 @@ const returnSuggestedQuestionsArray = async () => {
         }),
     });
 
-    // error handling for if valid response from post request
-    if (jsonSent.value) {
+    // exception handling for if valid response from post request
+    try {
         // parses value as json
         const obj = JSON.stringify(jsonSent.value);
         const jsonObj = JSON.parse(obj);
 
         // gets array of questions from key 'questions'
         questionArray.value = jsonObj.questions;
-    } else {
+    } catch {
         // failed request
-        console.log("error: ", error.data.message);
+        console.log("error getting json array: ", error.data.message);
     }
 };
 
