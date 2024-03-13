@@ -29,12 +29,12 @@
                 </div>
 
                 <!-- suggested qs output here -->
-                <div v-if="questionArray">
-                    <SuggestedQuestions
-                        :question-array="questionArray"
-                        @ask-to-chat-bot="askClickedQuestionToChatBot"
-                    />
-                </div>
+                <SuggestedQuestions
+                    v-if="questionArray"
+                    :question-array="questionArray"
+                    @ask-to-chat-bot="askClickedQuestionToChatBot"
+                />
+
                 <!-- end of suggestion qs -->
             </div>
 
@@ -147,12 +147,8 @@ const returnSuggestedQuestionsArray = async () => {
 
     // exception handling for if valid response from post request
     try {
-        // parses value as json
-        const obj = JSON.stringify(jsonSent.value);
-        const jsonObj = JSON.parse(obj);
-
         // gets array of questions from key 'questions'
-        questionArray.value = jsonObj.questions;
+        questionArray.value = jsonSent.value.questions;
     } catch {
         // failed request
         console.log("error getting json array: ", error.data.message);
