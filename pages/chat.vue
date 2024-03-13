@@ -24,6 +24,8 @@
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
+                    <CopyButton :content="message.content" />
+                    <TTSResponse :content="message.content" />
                 </div>
 
                 <!-- suggested qs output here -->
@@ -41,7 +43,7 @@
                 <textarea
                     v-model="userMessage"
                     placeholder="Message the ChatBot..."
-                    class="box-border h-20 w-full resize-none rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
+                    class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
                     style="color: rgb(6, 5, 5)"
                 ></textarea>
 
@@ -57,6 +59,7 @@
     </div>
 </template>
 <script setup>
+// get variables from nuxt.config.ts
 const config = useRuntimeConfig();
 
 import { fetchEventSource } from "@microsoft/fetch-event-source";
@@ -118,7 +121,7 @@ const sendMessage = () => {
             },
             onerror: error => {
                 console.error("Error:", error);
-                alert("An error occurred while genering the response");
+                alert("An error occurred while generating the response");
                 generating.value = false;
                 // throw the error, so that we don't retry the request
                 throw error;
