@@ -78,10 +78,14 @@ const sendMessage = () => {
         const assistantMessage = ref("");
         chatMessages.value.push({ content: assistantMessage, role: "assistant" });
 
+        const { token } = useAuth();
+
         fetchEventSource(`${config.public.apiURL}/chat`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                // add authorization header if token is present
+                ...(token.value && { Authorization: token.value }),
             },
             body: JSON.stringify({
                 // everything but last two messages, since they're the ones we're generating
