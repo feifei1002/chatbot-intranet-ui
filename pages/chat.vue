@@ -98,6 +98,15 @@ const sendMessage = () => {
                     body: JSON.stringify({
                         chat_messages: chatMessages.value,
                     }),
+                })
+                $fetch(`${config.public.apiURL}/store-conversation`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    chat_messages: chatMessages.value,
+                  }),
                 });
 
                 generating.value = false;
