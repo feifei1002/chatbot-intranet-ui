@@ -1,6 +1,6 @@
 <template>
     <!-- outputs suggested questions when the array is filled -->
-    <div v-if="questionArray.length !== 0">
+    <div v-if="questionArray.length > 0">
         <!-- class used for styling, using tailwind's pink used to match the UI of the chatbot's conversation-->
         <p class="mb-2 max-w-96 text-wrap break-words rounded p-1 text-left text-pink-200">
             Ask a follow up question...
@@ -20,6 +20,7 @@
         </div>
     </div>
 </template>
+
 <script setup>
 // suggested questions to ask
 const questionArray = ref([]);
@@ -33,9 +34,6 @@ const props = defineProps({
     },
 });
 
-// set reference of chatMessages from parent
-const messages = ref(props.chatMessages);
-
 // emit to call function 'askClickedQuestionToChatBot' from parent chat.vue
 defineEmits(["askToChatBot"]);
 
@@ -43,13 +41,13 @@ const fetchSuggestedQuestions = async () => {
     // post request to /suggested
     // sends chat messages in post request
     // returns json array (jsonSent) of 3 questions in key 'questions'
-    const { data: jsonSent, error } = await useFetch(`${config.public.apiURL}/suggested`, {
+    const { data: jsonSent, error } = await $fetch(`${config.public.apiURL}/suggested`, {
         method: "post",
         headers: {
             "Content-Type": "application/json",
         },
         body: {
-            chat_messages: messages.value,
+            chat_messages: props.chatMessages,
         },
     });
 
