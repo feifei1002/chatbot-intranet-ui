@@ -11,7 +11,7 @@ async function checkPermissions() {
     return permission.state;
 }
 
-onMount(async () => {
+onMounted(async () => {
     canRecord = (await checkPermissions()) !== 'denied';
 });
 
@@ -55,8 +55,8 @@ function toggleRecording() {
 
 <template>
     <div class="absolute right-10 rounded-full">
-        <button @click={
-             toggleRecording } @disabled={ !canRecord } class="text-xl" :class="{
+        <button @click="toggleRecording" :disabled="!canRecord" class="text-xl"
+        :class="{
             'text-blue-500': isRecording,
             'text-red-500': !isRecording
         }"></button>
