@@ -29,7 +29,11 @@
                 </div>
 
                 <!-- suggested qs output here -->
-                <SuggestedQuestions :chat-messages="chatMessages" @ask-to-chat-bot="askClickedQuestionToChatBot" />
+                <SuggestedQuestions
+                    ref="suggestedQuestions"
+                    :chat-messages="chatMessages"
+                    @ask-to-chat-bot="askClickedQuestionToChatBot"
+                />
                 <!-- end of suggestion qs -->
             </div>
 
@@ -62,8 +66,7 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 const userMessage = ref("");
 const chatMessages = ref([]);
 
-// suggested questions to ask
-// const questionArray = ref("");
+const suggestedQuestions = ref(null);
 
 const generating = ref(false);
 
@@ -75,10 +78,6 @@ const sendMessage = () => {
     const message = userMessage.value.trim();
     if (message !== "") {
         generating.value = true;
-
-        // empties suggested questions at the start of response generation
-        // so doesn't clutter screen when generating a response
-        // questionArray.value = "";
 
         // add user message
         chatMessages.value.push({ content: message, role: "user" });
@@ -101,7 +100,7 @@ const sendMessage = () => {
             onclose: () => {
                 generating.value = false;
                 // after assistant message is loaded get suggested questions
-                // returnSuggestedQuestionsArray();
+                suggestedQuestions.value.setSuggestedQuestionsArray();
             },
             onmessage: event => {
                 console.log("Message:", event);
@@ -124,31 +123,6 @@ const sendMessage = () => {
         });
     }
 };
-
-// // gets questions from backend and set variables to them
-// const returnSuggestedQuestionsArray = async () => {
-//     post request to /suggested
-//     sends chat messages in post request
-//     returns json array (jsonSent) of 3 questions in key 'questions'
-//     const { data: jsonSent, error } = await useFetch(`${config.public.apiURL}/suggested`, {
-//         method: "post",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//             chat_messages: chatMessages.value,
-//         }),
-//     });
-//
-//     // exception handling for if valid response from post request
-//     try {
-//         // gets array of questions from key 'questions'
-//         questionArray.value = jsonSent.value.questions;
-//     } catch {
-//         // failed request
-//         console.log("error getting json array: ", error.data.message);
-//     }
-// };
 
 // sends question clicked to the chatBot
 const askClickedQuestionToChatBot = chosen => {
