@@ -63,13 +63,13 @@ const fetchSuggestedQuestions = async () => {
 
 // empties suggested questions at the start of response generation
 // so doesn't clutter screen when generating a response
-const setQuestionArrayEmpty = () => {
+const clear = () => {
     questionArray.value = [];
 };
 
 // define expose so getSuggestedQs is called when 'suggestedQ.value.getSuggestedQs();' is written in chat.vue
 defineExpose({
     fetchSuggestedQuestions,
-    setQuestionArrayEmpty,
+    clear,
 });
 </script>

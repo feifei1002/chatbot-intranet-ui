@@ -57,6 +57,7 @@
         </div>
     </div>
 </template>
+
 <script setup>
 // get variables from nuxt.config.ts
 const config = useRuntimeConfig();
@@ -79,7 +80,7 @@ const sendMessage = () => {
     if (message !== "") {
         generating.value = true;
         // set array of suggested questions to zero, to hide template in SuggestedQuestions during response generation
-        suggestedQuestions.value.setQuestionArrayEmpty();
+        suggestedQuestions.value.clear();
 
         // add user message
         chatMessages.value.push({ content: message, role: "user" });
