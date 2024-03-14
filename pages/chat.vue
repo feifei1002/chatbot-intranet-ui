@@ -27,6 +27,14 @@
                     <CopyButton :content="message.content" />
                     <TTSResponse :content="message.content" />
                 </div>
+
+                <!-- suggested qs output here -->
+                <SuggestedQuestions
+                    ref="suggestedQuestions"
+                    :chat-messages="chatMessages"
+                    @ask-to-chat-bot="submitQuestion"
+                />
+                <!-- end of suggestion qs -->
             </div>
 
             <div class="flex justify-end">
@@ -59,6 +67,8 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 const userMessage = ref("");
 const chatMessages = ref([]);
 
+const suggestedQuestions = ref(null);
+
 const generating = ref(false);
 
 const newChat = () => {
@@ -69,6 +79,8 @@ const sendMessage = () => {
     const message = userMessage.value.trim();
     if (message !== "") {
         generating.value = true;
+        // set array of suggested questions to zero, to hide template in SuggestedQuestions during response generation
+        suggestedQuestions.value.clear();
 
         // add user message
         chatMessages.value.push({ content: message, role: "user" });
@@ -78,10 +90,14 @@ const sendMessage = () => {
         const assistantMessage = ref("");
         chatMessages.value.push({ content: assistantMessage, role: "assistant" });
 
+        const { token } = useAuth();
+
         fetchEventSource(`${config.public.apiURL}/chat`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                // add authorization header if token is present
+                ...(token.value && { Authorization: token.value }),
             },
             body: JSON.stringify({
                 // everything but last two messages, since they're the ones we're generating
@@ -89,18 +105,9 @@ const sendMessage = () => {
                 question: message,
             }),
             onclose: () => {
-                // sends chat history and returns suggested questions
-                $fetch(`${config.public.apiURL}/suggested`, {
-                    method: "post",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        chat_messages: chatMessages.value,
-                    }),
-                });
-
                 generating.value = false;
+                // after assistant message is loaded get suggested questions
+                suggestedQuestions.value.fetchSuggestedQuestions();
             },
             onmessage: event => {
                 console.log("Message:", event);
@@ -122,5 +129,12 @@ const sendMessage = () => {
             },
         });
     }
+};
+
+// sends question clicked to the chatBot
+const submitQuestion = question => {
+    // sets value of user message, so it gets submitted to chatBot
+    userMessage.value = question;
+    sendMessage();
 };
 </script>
