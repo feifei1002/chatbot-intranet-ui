@@ -78,6 +78,8 @@ const sendMessage = () => {
     const message = userMessage.value.trim();
     if (message !== "") {
         generating.value = true;
+        // set array of suggested questions to zero, to hide template in SuggestedQuestions during response generation
+        suggestedQuestions.value.setQuestionArrayEmpty();
 
         // add user message
         chatMessages.value.push({ content: message, role: "user" });

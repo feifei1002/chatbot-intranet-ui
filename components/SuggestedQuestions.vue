@@ -1,4 +1,5 @@
 <template>
+    <!-- outputs suggested questions when the array is filled -->
     <div v-if="questionArray.length !== 0">
         <!-- class used for styling, using tailwind's pink used to match the UI of the chatbot's conversation-->
         <p class="mb-2 max-w-96 text-wrap break-words rounded p-1 text-left text-pink-200">
@@ -10,15 +11,12 @@
             <button
                 type="submit"
                 class="mb-2 max-w-96 cursor-pointer text-wrap break-words rounded border-2 border-pink-900 bg-pink-600 p-1 text-left text-pink-100 shadow-lg hover:bg-pink-700"
-                @click="
-                    $emit('askToChatBot', question);
-                    setQuestionArrayEmpty();
-                "
+                @click="$emit('askToChatBot', question)"
             >
                 <!-- two functions called so question is asked to chatbot (using emit to call function from parent)
                 then questionArray is emptied so removes this div from being displayed while assistant message is generated -->
-                {{ question }}</button
-            ><br />
+                {{ question }}
+            </button>
         </div>
     </div>
 </template>
@@ -61,7 +59,7 @@ const fetchSuggestedQuestions = async () => {
         questionArray.value = jsonSent.value.questions;
     } catch {
         // cannot get array of suggested questions from key 'questions'
-        console.log("error getting json array: ", error.data.message);
+        console.log("error getting json array: ", error.value);
     }
 };
 
@@ -74,5 +72,6 @@ const setQuestionArrayEmpty = () => {
 // define expose so getSuggestedQs is called when 'suggestedQ.value.getSuggestedQs();' is written in chat.vue
 defineExpose({
     fetchSuggestedQuestions,
+    setQuestionArrayEmpty,
 });
 </script>
