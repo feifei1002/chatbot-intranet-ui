@@ -32,7 +32,7 @@
                 <SuggestedQuestions
                     ref="suggestedQuestions"
                     :chat-messages="chatMessages"
-                    @ask-to-chat-bot="askClickedQuestionToChatBot"
+                    @ask-to-chat-bot="submitQuestion"
                 />
                 <!-- end of suggestion qs -->
             </div>
@@ -100,7 +100,7 @@ const sendMessage = () => {
             onclose: () => {
                 generating.value = false;
                 // after assistant message is loaded get suggested questions
-                suggestedQuestions.value.setSuggestedQuestionsArray();
+                suggestedQuestions.value.fetchSuggestedQuestions();
             },
             onmessage: event => {
                 console.log("Message:", event);
@@ -125,9 +125,9 @@ const sendMessage = () => {
 };
 
 // sends question clicked to the chatBot
-const askClickedQuestionToChatBot = chosen => {
+const submitQuestion = question => {
     // sets value of user message, so it gets submitted to chatBot
-    userMessage.value = chosen;
+    userMessage.value = question;
     sendMessage();
 };
 </script>

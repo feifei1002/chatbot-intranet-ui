@@ -1,5 +1,5 @@
 <template>
-    <div v-if="questionArray">
+    <div v-if="questionArray.length !== 0">
         <!-- class used for styling, using tailwind's pink used to match the UI of the chatbot's conversation-->
         <p class="mb-2 max-w-96 text-wrap break-words rounded p-1 text-left text-pink-200">
             Ask a follow up question...
@@ -24,7 +24,7 @@
 </template>
 <script setup>
 // suggested questions to ask
-const questionArray = ref("");
+const questionArray = ref([]);
 const config = useRuntimeConfig();
 
 // prop to take array of questions form parent chat.vue
@@ -41,7 +41,7 @@ const messages = ref(props.chatMessages);
 // emit to call function 'askClickedQuestionToChatBot' from parent chat.vue
 defineEmits(["askToChatBot"]);
 
-const setSuggestedQuestionsArray = async () => {
+const fetchSuggestedQuestions = async () => {
     // post request to /suggested
     // sends chat messages in post request
     // returns json array (jsonSent) of 3 questions in key 'questions'
@@ -50,9 +50,9 @@ const setSuggestedQuestionsArray = async () => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({
+        body: {
             chat_messages: messages.value,
-        }),
+        },
     });
 
     // exception handling for if valid response from post request
@@ -68,11 +68,11 @@ const setSuggestedQuestionsArray = async () => {
 // empties suggested questions at the start of response generation
 // so doesn't clutter screen when generating a response
 const setQuestionArrayEmpty = () => {
-    questionArray.value = "";
+    questionArray.value = [];
 };
 
 // define expose so getSuggestedQs is called when 'suggestedQ.value.getSuggestedQs();' is written in chat.vue
 defineExpose({
-    setSuggestedQuestionsArray,
+    fetchSuggestedQuestions,
 });
 </script>
