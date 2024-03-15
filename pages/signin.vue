@@ -16,12 +16,10 @@ const submitInput = async () => {
 
     // This sends a POST request to the `auth.provider.endpoints.signIn` (/api/token) endpoint with `credentials` as the body
     try {
-        const resp = await signIn(credentials, {
+        await signIn(credentials, {
             redirect: false,
         });
-        if (resp) {
-            navigateTo("/");
-        }
+        navigateTo("/");
     } catch (err) {
         console.error(err);
         // alert the message from the error
