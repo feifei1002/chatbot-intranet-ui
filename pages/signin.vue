@@ -15,18 +15,19 @@ const submitInput = async () => {
     };
 
     // This sends a POST request to the `auth.provider.endpoints.signIn` (/api/token) endpoint with `credentials` as the body
-    await signIn(credentials, {
-        redirect: false,
-    })
-        .catch(err => {
-            console.error(err);
-            // alert the message from the error
-            // if undefined, alert the error itself
-            alert(err?.data?.message ?? err);
-        })
-        .then(() => {
-            navigateTo("/");
+    try {
+        const resp = await signIn(credentials, {
+            redirect: false,
         });
+        if (resp) {
+            navigateTo("/");
+        }
+    } catch (err) {
+        console.error(err);
+        // alert the message from the error
+        // if undefined, alert the error itself
+        alert(err?.data?.message ?? err);
+    }
 };
 </script>
 
