@@ -15,7 +15,7 @@ watch(status, newStatus => {
     <nav class="bg-navbar-blue p-6">
         <div class="container flex items-center">
             <img src="/img/logo.png" width="60em" />
-            <a href="/" class="w-3/4 pl-4 text-xl font-bold text-white">Chatbot</a>
+            <a href="/" class="w-3/4 pl-4 text-xl font-bold text-white">{{ $t("chatbot") }}</a>
             <div class="absolute right-0 flex w-1/4 justify-between pr-6">
                 <a
                     href="/"
@@ -24,7 +24,7 @@ watch(status, newStatus => {
                         'text-chatbot-pink': currentPathObject.fullPath == '/',
                         'text-white': currentPathObject.fullPath != '/',
                     }"
-                    >Home</a
+                    >{{ $t("home") }}</a
                 >
                 <a
                     v-if="!authStatus"
@@ -34,7 +34,7 @@ watch(status, newStatus => {
                         'text-chatbot-pink': currentPathObject.fullPath == '/signin',
                         'text-white': currentPathObject.fullPath != '/signin',
                     }"
-                    >Sign In</a
+                    >{{ $t("signin") }}</a
                 >
                 <a
                     href="chat"
@@ -43,7 +43,7 @@ watch(status, newStatus => {
                         'text-chatbot-pink': currentPathObject.fullPath == '/chat',
                         'text-white': currentPathObject.fullPath != '/chat',
                     }"
-                    >Try Chatbot
+                    >{{ $t("trychatbot") }}
                     <Icon name="material-symbols:arrow-outward" />
                 </a>
             </div>

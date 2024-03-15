@@ -9,6 +9,10 @@ export default defineNuxtPlugin(({ vueApp }) => {
         messages: {
             en: {
                 hello: "Hello",
+                chatbot: "ChatBot",
+                home: "Home",
+                signin: "Sign In",
+                trychatbot: "Try ChatBot",
             },
         },
     });
