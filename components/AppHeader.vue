@@ -3,6 +3,12 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const currentPathObject = router.currentRoute.value;
 console.log(currentPathObject.fullPath);
+
+const { status } = useAuth();
+const authStatus = ref(status.value === "authenticated");
+watch(status, newStatus => {
+    authStatus.value = newStatus === "authenticated";
+});
 </script>
 
 <template class="">
@@ -21,6 +27,7 @@ console.log(currentPathObject.fullPath);
                     >Home</a
                 >
                 <a
+                    v-if="!authStatus"
                     href="signin"
                     class="text-xl font-semibold"
                     :class="{
