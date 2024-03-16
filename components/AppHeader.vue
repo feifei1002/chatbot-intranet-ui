@@ -17,6 +17,14 @@ watch(status, newStatus => {
             <img src="/img/logo.png" width="60em" />
             <a v-t="'titles.chatbot'" href="/" class="w-3/4 pl-4 text-xl font-bold text-white" />
             <div class="absolute right-0 flex w-1/4 justify-between pr-6">
+                <!--                              <form>-->
+                <!--                                <label for="locale-select">{{ $t('language') }}: </label>-->
+                <!--                                <select id="locale-select" v-model="$i18n.locale">-->
+                <!--                                  <option value="en">en</option>-->
+                <!--                                  <option value="cy">cy</option>-->
+                <!--                                </select>-->
+                <!--                              </form>-->
+
                 <a
                     v-t="'titles.home'"
                     href="/"

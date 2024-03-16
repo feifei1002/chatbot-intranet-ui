@@ -40,7 +40,7 @@
                 <!-- Circular Rectangle Box at the bottom -->
                 <textarea
                     v-model="userMessage"
-                    placeholder="Message the ChatBot..."
+                    v-t="'chatbot.message'"
                     class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
                     style="color: rgb(6, 5, 5)"
                 ></textarea>

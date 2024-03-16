@@ -5,6 +5,9 @@
     "signin": "Mewngofnodi",
     "trychatbot": "Rhowch gynnig ar chatbot"
   },
+  "index": {
+    "about": "Mae hwn yn chatbot rhad ac am ddim i'w ddefnyddio a all ddychwelyd unrhyw wybodaeth neu ateb unrhyw gwestiynau sydd gennych am eich bywyd myfyriwr!"
+  },
   "signin": {
     "welcome": "CROESO!",
     "username": "Enw defnyddiwr",
@@ -14,6 +17,7 @@
   },
   "chatbot": {
     "newchat": "Sgwrs newydd",
-    "send": "Anfon"
+    "send": "Anfon",
+    "messsage": "Anfon neges at y chatbot..."
   }
 }

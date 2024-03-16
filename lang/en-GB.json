@@ -5,6 +5,9 @@
         "signin": "Sign In",
         "trychatbot": "Try ChatBot"
     },
+    "index": {
+        "about": "This is a free-to-use chatbot that can return any information or answer any questions you may have relating to your student life!"
+    },
     "signin": {
         "welcome": "WELCOME!",
         "username": "USERNAME",
@@ -14,6 +17,7 @@
     },
     "chatbot": {
         "newchat": "New Chat",
-        "send": "Send"
+        "send": "Send",
+        "messsage": "Message the ChatBot..."
     }
 }
