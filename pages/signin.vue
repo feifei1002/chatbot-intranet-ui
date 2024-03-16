@@ -41,7 +41,7 @@ const submitInput = async () => {
                     <input
                         id="username"
                         v-model="username"
-                        v-t="'signin.username'"
+                        :placeholder="$t('signin.username')"
                         type="text"
                         name="username"
                         required
@@ -52,7 +52,7 @@ const submitInput = async () => {
                     <input
                         id="password"
                         v-model="password"
-                        v-t="'signin.password'"
+                        :placeholder="$t('signin.password')"
                         type="password"
                         name="password"
                         required

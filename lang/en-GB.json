@@ -18,6 +18,6 @@
     "chatbot": {
         "newchat": "New Chat",
         "send": "Send",
-        "messsage": "Message the ChatBot..."
+        "message": "Message the ChatBot..."
     }
 }

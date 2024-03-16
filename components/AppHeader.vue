@@ -17,14 +17,6 @@ watch(status, newStatus => {
             <img src="/img/logo.png" width="60em" />
             <a v-t="'titles.chatbot'" href="/" class="w-3/4 pl-4 text-xl font-bold text-white" />
             <div class="absolute right-0 flex w-1/4 justify-between pr-6">
-                <!--                              <form>-->
-                <!--                                <label for="locale-select">{{ $t('language') }}: </label>-->
-                <!--                                <select id="locale-select" v-model="$i18n.locale">-->
-                <!--                                  <option value="en">en</option>-->
-                <!--                                  <option value="cy">cy</option>-->
-                <!--                                </select>-->
-                <!--                              </form>-->
-
                 <a
                     v-t="'titles.home'"
                     href="/"
@@ -44,15 +36,15 @@ watch(status, newStatus => {
                         'text-white': currentPathObject.fullPath != '/signin',
                     }"
                 />
+                <!-- below translation cannot be added as v-t because icon is within <a> -->
                 <a
-                    v-t="'titles.trychatbot'"
                     href="chat"
                     class="text-xl font-semibold"
                     :class="{
                         'text-chatbot-pink': currentPathObject.fullPath == '/chat',
                         'text-white': currentPathObject.fullPath != '/chat',
                     }"
-                >
+                    >{{ $t("titles.trychatbot") }}
                     <Icon name="material-symbols:arrow-outward" />
                 </a>
             </div>
