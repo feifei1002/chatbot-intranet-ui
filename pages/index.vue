@@ -10,7 +10,7 @@
         </div>
         <div class="flex h-screen w-1/2 items-center justify-center bg-chatbot-red">
             <div class="flex items-center justify-center pt-6">
-                <img src="/img/landingImage.png" />
+                <NuxtImg src="/img/landingImage.png" />
             </div>
         </div>
     </div>
