@@ -5,9 +5,6 @@
                 This is a free-to-use chatbot that can return any information or answer any questions you may have
                 relating to your student life!
             </p>
-            <p>
-                {{ $t("hello") }}
-            </p>
         </div>
         <div class="flex h-screen w-1/2 items-center justify-center bg-chatbot-pink">
             <div class="flex items-center justify-center pt-6">

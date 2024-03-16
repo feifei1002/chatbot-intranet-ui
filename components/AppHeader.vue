@@ -15,35 +15,36 @@ watch(status, newStatus => {
     <nav class="bg-navbar-blue p-6">
         <div class="container flex items-center">
             <img src="/img/logo.png" width="60em" />
-            <a href="/" class="w-3/4 pl-4 text-xl font-bold text-white">{{ $t("chatbot") }}</a>
+            <a v-t="'titles.chatbot'" href="/" class="w-3/4 pl-4 text-xl font-bold text-white" />
             <div class="absolute right-0 flex w-1/4 justify-between pr-6">
                 <a
+                    v-t="'titles.home'"
                     href="/"
                     class="text-xl font-semibold"
                     :class="{
                         'text-chatbot-pink': currentPathObject.fullPath == '/',
                         'text-white': currentPathObject.fullPath != '/',
                     }"
-                    >{{ $t("home") }}</a
-                >
+                />
                 <a
                     v-if="!authStatus"
+                    v-t="'titles.signin'"
                     href="signin"
                     class="text-xl font-semibold"
                     :class="{
                         'text-chatbot-pink': currentPathObject.fullPath == '/signin',
                         'text-white': currentPathObject.fullPath != '/signin',
                     }"
-                    >{{ $t("signin") }}</a
-                >
+                />
                 <a
+                    v-t="'titles.trychatbot'"
                     href="chat"
                     class="text-xl font-semibold"
                     :class="{
                         'text-chatbot-pink': currentPathObject.fullPath == '/chat',
                         'text-white': currentPathObject.fullPath != '/chat',
                     }"
-                    >{{ $t("trychatbot") }}
+                >
                     <Icon name="material-symbols:arrow-outward" />
                 </a>
             </div>

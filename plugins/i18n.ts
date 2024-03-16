@@ -1,4 +1,5 @@
 import { createI18n } from "vue-i18n";
+import en from "../lang/en-GB.json";
 
 // guide from https://vue-i18n.intlify.dev/guide/integrations/nuxt3
 export default defineNuxtPlugin(({ vueApp }) => {
@@ -7,13 +8,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
         globalInjection: true,
         locale: "en",
         messages: {
-            en: {
-                hello: "Hello",
-                chatbot: "ChatBot",
-                home: "Home",
-                signin: "Sign In",
-                trychatbot: "Try ChatBot",
-            },
+            en,
         },
     });
 

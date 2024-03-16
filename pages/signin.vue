@@ -35,7 +35,7 @@ const submitInput = async () => {
         <div class="flex h-screen w-1/2 items-center justify-center bg-chatbot-pink"></div>
         <div class="flex h-screen w-1/2 items-center justify-start bg-white pl-20">
             <div class="flex-col pt-6">
-                <p class="py-6 text-6xl font-bold text-navbar-blue underline">WELCOME!</p>
+                <p class="py-6 text-6xl font-bold text-navbar-blue underline" v-t="'signin.welcome'" />
 
                 <div class="mb-4">
                     <input
@@ -61,11 +61,13 @@ const submitInput = async () => {
                 </div>
                 <div class="my-2 flex">
                     <input id="remember_me" type="checkbox" name="remember_me" />
-                    <label for="remember_me" class="ml-2 block text-sm text-navbar-blue">Remember me</label>
+                    <label for="remember_me" class="ml-2 block text-sm text-navbar-blue" v-t="'signin.remember'" />
                 </div>
-                <button class="w-full rounded-md bg-navbar-blue px-4 py-2 text-white" @click="submitInput">
-                    Sign in
-                </button>
+                <button
+                    class="w-full rounded-md bg-navbar-blue px-4 py-2 text-white"
+                    @click="submitInput"
+                    v-t="'signin.signin'"
+                />
             </div>
         </div>
     </div>

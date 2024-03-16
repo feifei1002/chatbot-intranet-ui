@@ -1,5 +1,15 @@
 {
     "titles": {
-        "home": "Home"
+        "home": "Home",
+        "chatbot": "ChatBot",
+        "signin": "Sign In",
+        "trychatbot": "Try ChatBot"
+    },
+    "signin": {
+        "welcome": "WELCOME!",
+        "username": "USERNAME",
+        "password": "PASSWORD",
+        "remember": "Remember Me",
+        "signin": "Sign in"
     }
 }
