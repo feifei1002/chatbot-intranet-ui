@@ -11,5 +11,9 @@
         "password": "PASSWORD",
         "remember": "Remember Me",
         "signin": "Sign in"
+    },
+    "chatbot": {
+        "newchat": "New Chat",
+        "send": "Send"
     }
 }

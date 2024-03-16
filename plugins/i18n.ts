@@ -1,5 +1,6 @@
 import { createI18n } from "vue-i18n";
 import en from "../lang/en-GB.json";
+import cy from "../lang/cy.json";
 
 // guide from https://vue-i18n.intlify.dev/guide/integrations/nuxt3
 export default defineNuxtPlugin(({ vueApp }) => {
@@ -9,6 +10,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
         locale: "en",
         messages: {
             en,
+            cy,
         },
     });
 

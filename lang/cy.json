@@ -1,0 +1,19 @@
+{
+  "titles": {
+    "home": "Hafan",
+    "chatbot": "ChatBot",
+    "signin": "Mewngofnodi",
+    "trychatbot": "Rhowch gynnig ar chatbot"
+  },
+  "signin": {
+    "welcome": "CROESO!",
+    "username": "Enw defnyddiwr",
+    "password": "Cyfrinair",
+    "remember": "Cofiwch fi",
+    "signin": "Mewngofnodi"
+  },
+  "chatbot": {
+    "newchat": "Sgwrs newydd",
+    "send": "Anfon"
+  }
+}
