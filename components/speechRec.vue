@@ -3,8 +3,9 @@
 const config = useRuntimeConfig();
 let media = [];
 let mediaRecorder = null;
-let isRecording = false;
-let canRecord = false;
+let isRecording = ref(false);
+let canRecord = ref(false);
+const emit = defineEmits(['customEvent'])
 
 async function checkPermissions() {
     const permission = await navigator.permissions.query({ name: 'microphone' });
@@ -19,6 +20,7 @@ function toggleRecording() {
     if (isRecording) {
         mediaRecorder?.stop();
         isRecording = false;
+        console.log(isRecording)
     } else {
         (async () => {
             if (!canRecord) {
@@ -41,24 +43,26 @@ function toggleRecording() {
                 });
 
                 const transcribedText = (await response.json()).text;
-
+                console.log("text:" + transcribedText)
                 // Emit a custom event with the transcribed text
-                this.$emit('transcribed', transcribedText);
+                emit('customEvent', transcribedText);
             };
-
+            console.log("weeee")
             mediaRecorder.start();
             isRecording = true;
+            console.log(isRecording)
         })();
     }
 }
 </script>
 
 <template>
-    <div class="absolute right-10 rounded-full">
-        <button @click="toggleRecording" :disabled="!canRecord" class="text-xl"
-        :class="{
-            'text-blue-500': isRecording,
-            'text-red-500': !isRecording
-        }"></button>
+    <div>
+        <button @click="toggleRecording"
+            class="text-xl h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:text-[#353955]"
+            :class="{
+            'bg-blue-500': isRecording,
+            'bg-red-500': !isRecording
+        }"> TEST </button>
     </div>
 </template>
