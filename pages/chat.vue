@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-full">
         <!-- Blue side with 1/3 of the page -->
-        <div class="flex w-1/5 flex-col bg-[#D73749] p-4">
+        <div class="flex w-1/5 flex-col bg-chatbot-black p-4">
             <!-- New Chat Button -->
             <button
                 class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
@@ -11,7 +11,7 @@
             </button>
         </div>
         <!-- Pink side with 3/4 of the page -->
-        <div class="flex w-4/5 flex-col bg-[#FEFFFE] p-1">
+        <div class="flex w-4/5 flex-col bg-chatbot-white p-1">
             <!-- Add your chatbot content here -->
             <div class="flex h-full flex-col overflow-y-scroll">
                 <div
