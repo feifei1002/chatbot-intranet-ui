@@ -11,6 +11,7 @@
             </button>
 
             <!--            <button @click="fetchTitle">Get title based on conversation</button>-->
+            <ConversationHistory ref="conversationHistory" :chat-messages="chatMessages" />
         </div>
         <!-- Pink side with 3/4 of the page -->
         <div class="flex w-4/5 flex-col bg-pink-500 p-1">
@@ -62,6 +63,8 @@
 
 <script setup>
 // get variables from nuxt.config.ts
+import ConversationHistory from "~/components/ConversationHistory.vue";
+
 const config = useRuntimeConfig();
 
 import { fetchEventSource } from "@microsoft/fetch-event-source";
@@ -70,6 +73,7 @@ const userMessage = ref("");
 const chatMessages = ref([]);
 
 const suggestedQuestions = ref(null);
+const conversationHistory = ref(null);
 
 const generating = ref(false);
 
@@ -107,21 +111,22 @@ const sendMessage = () => {
                 question: message,
             }),
             onclose: () => {
-                const convoTitle = $fetch(`${config.public.apiURL}/store-conversation`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        chat_messages: chatMessages.value,
-                    }),
-                });
+                // const convoTitle = $fetch(`${config.public.apiURL}/store-conversation`, {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                //     body: JSON.stringify({
+                //         chat_messages: chatMessages.value,
+                //     }),
+                // });
 
-                console.log("Conversation title is: ", convoTitle);
+                // console.log("Conversation title is: ", convoTitle);
 
                 generating.value = false;
                 // after assistant message is loaded get suggested questions
                 suggestedQuestions.value.fetchSuggestedQuestions();
+                conversationHistory.value.fetchTitle();
             },
             onmessage: event => {
                 console.log("Message:", event);
@@ -144,23 +149,6 @@ const sendMessage = () => {
         });
     }
 };
-
-// const fetchTitle = async () => {
-//     // post request to /suggested
-//     // sends chat messages in post request
-//     // returns json array (jsonSent) of 3 questions in key 'questions'
-//     const jsonSent = await $fetch(`${config.public.apiURL}/conversation_title`, {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: {
-//             chat_messages: chatMessages.value,
-//         },
-//     });
-//
-//     console.log(jsonSent.title);
-// };
 
 // sends question clicked to the chatBot
 const submitQuestion = question => {
