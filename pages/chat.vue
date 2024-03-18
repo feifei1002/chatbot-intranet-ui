@@ -9,6 +9,8 @@
             >
                 New Chat
             </button>
+
+            <button @click="fetchTitle">Get title based on conversation</button>
         </div>
         <!-- Pink side with 3/4 of the page -->
         <div class="flex w-4/5 flex-col bg-pink-500 p-1">
@@ -98,15 +100,15 @@ const sendMessage = () => {
                     body: JSON.stringify({
                         chat_messages: chatMessages.value,
                     }),
-                })
+                });
                 $fetch(`${config.public.apiURL}/store-conversation`, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    chat_messages: chatMessages.value,
-                  }),
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        chat_messages: chatMessages.value,
+                    }),
                 });
 
                 generating.value = false;
@@ -131,5 +133,20 @@ const sendMessage = () => {
             },
         });
     }
+};
+
+const fetchTitle = async value => {
+    // post request to /suggested
+    // sends chat messages in post request
+    // returns json array (jsonSent) of 3 questions in key 'questions'
+    const jsonSent = await $fetch(`${config.public.apiURL}/conversation_title`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: {
+            chat_messages: value,
+        },
+    });
 };
 </script>
