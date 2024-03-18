@@ -41,7 +41,7 @@ const fetchSuggestedQuestions = async () => {
     // post request to /suggested
     // sends chat messages in post request
     // returns json array (jsonSent) of 3 questions in key 'questions'
-    const { data: jsonSent, error } = await $fetch(`${config.public.apiURL}/suggested`, {
+    const jsonSent = await $fetch(`${config.public.apiURL}/suggested`, {
         method: "post",
         headers: {
             "Content-Type": "application/json",
@@ -54,10 +54,10 @@ const fetchSuggestedQuestions = async () => {
     // exception handling for if valid response from post request
     try {
         // gets array of questions from key 'questions'
-        questionArray.value = jsonSent.value.questions;
+        questionArray.value = jsonSent.questions;
     } catch {
         // cannot get array of suggested questions from key 'questions'
-        console.log("error getting json array: ", error.value);
+        console.log("error getting json array");
     }
 };
 
