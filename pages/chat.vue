@@ -44,6 +44,7 @@
                     placeholder="Message the ChatBot..."
                     class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
                     style="color: rgb(6, 5, 5)"
+                    @keyup.enter="sendMessage"
                 ></textarea>
 
                 <button
