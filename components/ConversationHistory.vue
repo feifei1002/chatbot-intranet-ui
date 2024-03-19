@@ -1,3 +1,20 @@
+<template>
+    <button
+        class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
+        @click="fetchTitle"
+    >
+        Click to output title below based on conversation
+    </button>
+
+    <div v-if="titleVal">
+        <button
+            class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
+        >
+            {{ titleVal[0] }}
+        </button>
+    </div>
+</template>
+
 <script setup>
 const config = useRuntimeConfig();
 const titleVal = ref([]);
@@ -10,36 +27,25 @@ const props = defineProps({
 });
 
 const fetchTitle = async () => {
-    // post request to /suggested
-    // sends chat messages in post request
-    // returns json array (jsonSent) of 3 questions in key 'questions'
-    const convoTitle = $fetch(`${config.public.apiURL}/store-conversation`, {
+    // post request to get a title based on the conversation
+    const convoTitle = await $fetch(`${config.public.apiURL}/store-conversation`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({
+        body: {
             chat_messages: props.chatMessages,
-        }),
+        },
     });
 
     try {
-        // gets array of questions from key 'questions'
+        // gets value of the title from the array
         titleVal.value = convoTitle.title;
     } catch {
-        // cannot get array of suggested questions from key 'questions'
+        // cannot get array of title
         console.log("error getting json array");
     }
 };
-
-defineExpose({
-    fetchTitle,
-});
 </script>
-
-<template>
-    <button @click="fetchTitle">Get title based on conversation</button>
-    <p v-if="titleVal">{{ titleVal[0] }}</p>
-</template>
 
 <style scoped></style>
