@@ -1,4 +1,18 @@
+<template>
+    <div class="mx-4">
+        <button @click="toggleRecording"
+            class="text-s h-20 cursor-pointer rounded-md border-2 border-black hover:text-[#353955] flex items-center justify-center"
+            :class="isRecording ? 'bg-blue-500' : 'bg-red-500'"
+        > 
+            {{ isRecording ? 'Stop Recording' : 'Start Recording' }}
+        </button>
+    </div>
+</template>
+
+
+
 <script setup>
+import { onMounted, ref } from 'vue';
 
 const config = useRuntimeConfig();
 let media = [];
@@ -13,21 +27,20 @@ async function checkPermissions() {
 }
 
 onMounted(async () => {
-    canRecord = (await checkPermissions()) !== 'denied';
+    canRecord.value = (await checkPermissions()) !== 'denied';
 });
 
 function toggleRecording() {
-    if (isRecording) {
+    if (isRecording.value) {
         mediaRecorder?.stop();
-        isRecording = false;
-        console.log(isRecording)
+        isRecording.value = false;
     } else {
         (async () => {
-            if (!canRecord) {
-                canRecord = (await checkPermissions()) !== 'denied';
+            if (!canRecord.value) {
+                canRecord.value = (await checkPermissions()) !== 'denied';
             }
 
-            if (!canRecord) return;
+            if (!canRecord.value) return;
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder = new MediaRecorder(stream);
             mediaRecorder.ondataavailable = (e) => media.push(e.data);
@@ -47,22 +60,10 @@ function toggleRecording() {
                 // Emit a custom event with the transcribed text
                 emit('customEvent', transcribedText);
             };
-            console.log("weeee")
+
             mediaRecorder.start();
-            isRecording = true;
-            console.log(isRecording)
+            isRecording.value = true;
         })();
     }
 }
 </script>
-
-<template>
-    <div>
-        <button @click="toggleRecording"
-            class="text-xl h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:text-[#353955]"
-            :class="{
-            'bg-blue-500': isRecording,
-            'bg-red-500': !isRecording
-        }"> TEST </button>
-    </div>
-</template>

@@ -29,13 +29,13 @@
                 <textarea v-model="userMessage" placeholder="Message the ChatBot..."
                     class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
                     style="color: rgb(6, 5, 5)"></textarea>
-
+                    <speechRec @custom-event="(text) => userMessage = text" />
                 <button
                     class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
                     :disabled="generating" @click="sendMessage">
                     Send
                 </button>
-                <speechRec @custom-event="(text) => userMessage = text" />
+                
             </div>
         </div>
     </div>
