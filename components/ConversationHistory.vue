@@ -1,11 +1,4 @@
 <template>
-    <button
-        class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
-        @click="fetchTitle"
-    >
-        Click to output title below based on conversation
-    </button>
-
     <div v-if="titleVal">
         <button
             class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
@@ -46,6 +39,10 @@ const fetchTitle = async () => {
         console.log("error getting json array");
     }
 };
+
+defineExpose({
+    fetchTitle,
+});
 </script>
 
 <style scoped></style>

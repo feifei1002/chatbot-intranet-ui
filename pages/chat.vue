@@ -10,7 +10,7 @@
                 New Chat
             </button>
 
-            <ConversationHistory :chat-messages="chatMessages" />
+            <ConversationHistory ref="conversationHistory" :chat-messages="chatMessages" />
         </div>
         <!-- Pink side with 3/4 of the page -->
         <div class="flex w-4/5 flex-col bg-pink-500 p-1">
@@ -70,11 +70,16 @@ const userMessage = ref("");
 const chatMessages = ref([]);
 
 const suggestedQuestions = ref(null);
+const conversationHistory = ref(null);
 
 const generating = ref(false);
 
 const newChat = () => {
+    // outputs title of previous conversation to the left pane
+    conversationHistory.value.fetchTitle();
+    // clears all chat history from the screen, including suggested questions
     chatMessages.value = [];
+    suggestedQuestions.value.clear();
 };
 
 const sendMessage = () => {
