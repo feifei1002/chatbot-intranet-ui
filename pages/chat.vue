@@ -71,12 +71,13 @@ const chatMessages = ref([]);
 
 const suggestedQuestions = ref(null);
 const conversationHistory = ref(null);
+const titleGenerated = ref(false);
 
 const generating = ref(false);
 
 const newChat = () => {
     // outputs title of previous conversation to the left pane
-    conversationHistory.value.fetchTitle();
+    // conversationHistory.value.fetchTitle();
     // clears all chat history from the screen, including suggested questions
     chatMessages.value = [];
     suggestedQuestions.value.clear();
@@ -136,6 +137,12 @@ const sendMessage = () => {
                         assistantMessage.value += data.text;
                     }
                 }
+              //   Check if the title is generated, it should not be generated again
+              //   when the user asks a follow up question
+              if (!titleGenerated.value) {
+                conversationHistory.value.fetchTitle();
+                titleGenerated.value = true; // If the title is generated, set the value to true
+              }
             },
             onerror: error => {
                 console.error("Error:", error);
