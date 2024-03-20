@@ -40,8 +40,27 @@ const fetchTitle = async () => {
     }
 };
 
+const fetchMessage = async () => {
+    try {
+        // Post request to get message based on the conversation
+        const convoMessage = await $fetch(`${config.public.apiURL}/store-conversation`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                chat_messages: props.chatMessages,
+            }),
+        });
+    } catch (error) {
+        // Handle errors here
+        console.error("Error fetching conversation message:", error);
+    }
+};
+
 defineExpose({
     fetchTitle,
+    fetchMessage,
 });
 </script>
 

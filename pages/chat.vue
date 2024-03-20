@@ -122,7 +122,7 @@ const sendMessage = () => {
                 //         chat_messages: chatMessages.value,
                 //     }),
                 // });
-
+                conversationHistory.value.fetchMessage();
                 generating.value = false;
                 // after assistant message is loaded get suggested questions
                 suggestedQuestions.value.fetchSuggestedQuestions();
@@ -137,12 +137,12 @@ const sendMessage = () => {
                         assistantMessage.value += data.text;
                     }
                 }
-              //   Check if the title is generated, it should not be generated again
-              //   when the user asks a follow up question
-              if (!titleGenerated.value) {
-                conversationHistory.value.fetchTitle();
-                titleGenerated.value = true; // If the title is generated, set the value to true
-              }
+                //   Check if the title is generated, it should not be generated again
+                //   when the user asks a follow up question
+                if (!titleGenerated.value) {
+                    conversationHistory.value.fetchTitle();
+                    titleGenerated.value = true; // If the title is generated, set the value to true
+                }
             },
             onerror: error => {
                 console.error("Error:", error);
