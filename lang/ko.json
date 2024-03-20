@@ -1,0 +1,23 @@
+{
+  "titles": {
+    "home": "홈",
+    "chatbot": "챗봇",
+    "signin": "로그인",
+    "trychatbot": "챗봇 사용하기"
+  },
+  "index": {
+    "about": "학생 생활에 대한 모든 질문에 대답할 챗봇입니다!"
+  },
+  "signin": {
+    "welcome": "안녕하세요!",
+    "username": "아이디",
+    "password": "비밀번호",
+    "remember": "아이디 저장",
+    "signin": "로그인"
+  },
+  "chatbot": {
+    "newchat": "새로운 채팅",
+    "send": "메시지를 보내다",
+    "message": "챗봇에게 메시지를 보냅니다..."
+  }
+}
