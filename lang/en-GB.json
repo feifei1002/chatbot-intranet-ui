@@ -9,9 +9,9 @@
         "about": "This is a free-to-use chatbot that can return any information or answer any questions you may have relating to your student life!"
     },
     "signin": {
-        "welcome": "WELCOME!",
-        "username": "USERNAME",
-        "password": "PASSWORD",
+        "welcome": "Welcome!",
+        "username": "Username",
+        "password": "Password",
         "remember": "Remember Me",
         "signin": "Sign in"
     },

@@ -1,23 +1,23 @@
 {
   "titles": {
-    "home": "Hafan",
+    "home": "Cartref",
     "chatbot": "ChatBot",
-    "signin": "Mewngofnodi",
-    "trychatbot": "Rhowch gynnig ar chatbot"
+    "signin": "Arwyddo mewn",
+    "trychatbot": "Ceisio ChatBot"
   },
   "index": {
-    "about": "Mae hwn yn chatbot rhad ac am ddim i'w ddefnyddio a all ddychwelyd unrhyw wybodaeth neu ateb unrhyw gwestiynau sydd gennych am eich bywyd myfyriwr!"
+    "about": "Dyma Chatbot am ddim sy’n gallu rhoi unrhyw wybodaeth neu ateb unrhyw gwestiynau am fywyd myfyrwyr!"
   },
   "signin": {
-    "welcome": "CROESO!",
-    "username": "Enw defnyddiwr",
+    "welcome": "Croeso!",
+    "username": "Enw Defnyddiwr",
     "password": "Cyfrinair",
-    "remember": "Cofiwch fi",
+    "remember": "Cofio fi",
     "signin": "Mewngofnodi"
   },
   "chatbot": {
     "newchat": "Sgwrs newydd",
-    "send": "Anfon",
-    "message": "Anfon neges at y chatbot..."
+    "send": "Danfon",
+    "message": "Danfon neges I chatbot..."
   }
 }
