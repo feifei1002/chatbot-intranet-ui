@@ -4,7 +4,6 @@ const authStatus = ref(status.value === "authenticated");
 watch(status, newStatus => {
     authStatus.value = newStatus === "authenticated";
 });
-const switchLocalePath = useSwitchLocalePath();
 </script>
 
 <template>
