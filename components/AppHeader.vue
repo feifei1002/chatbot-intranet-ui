@@ -4,6 +4,7 @@ const authStatus = ref(status.value === "authenticated");
 watch(status, newStatus => {
     authStatus.value = newStatus === "authenticated";
 });
+const switchLocalePath = useSwitchLocalePath();
 </script>
 
 <template>
@@ -12,14 +13,14 @@ watch(status, newStatus => {
             <NuxtImg preload src="/img/logo.png" width="60" />
             <NuxtLink v-t="'titles.chatbot'" to="/" class="w-3/4 pl-4 text-xl font-bold text-chatbot-font" />
             <div class="absolute right-0 flex w-1/4 justify-between pr-6">
-                <NuxtLink
+                <NuxtLinkLocale
                     v-t="'titles.home'"
                     to="/"
                     class="text-xl font-semibold text-chatbot-font"
                     exact-active-class="!text-chatbot-red"
                 />
                 >
-                <NuxtLink
+                <NuxtLinkLocale
                     v-if="!authStatus"
                     v-t="'titles.signin'"
                     to="/signin"
@@ -27,13 +28,13 @@ watch(status, newStatus => {
                     exact-active-class="!text-chatbot-red"
                 />
                 >
-                <NuxtLink
+                <NuxtLinkLocale
                     to="/chat"
                     class="text-xl font-semibold text-chatbot-font"
                     exact-active-class="!text-chatbot-red"
                     >{{ $t("titles.trychatbot") }}
                     <UIcon name="i-heroicons-arrow-up-right" />
-                </NuxtLink>
+                </NuxtLinkLocale>
             </div>
         </div>
     </nav>
