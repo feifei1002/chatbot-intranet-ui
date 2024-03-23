@@ -2,7 +2,6 @@
     <div v-if="titleVal">
         <button
             class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
-            @click="handleConversationHistoryClick"
         >
             {{ titleVal[0] }}
         </button>
