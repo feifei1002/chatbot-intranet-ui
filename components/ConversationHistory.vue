@@ -2,6 +2,7 @@
     <div v-if="titleVal">
         <button
             class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
+            @click="handleConversationHistoryClick"
         >
             {{ titleVal[0] }}
         </button>
@@ -11,6 +12,7 @@
 <script setup>
 const config = useRuntimeConfig();
 const titleVal = ref([]);
+const { token } = useAuth();
 
 const props = defineProps({
     chatMessages: {
@@ -25,6 +27,7 @@ const fetchTitle = async () => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            ...(token.value && { Authorization: token.value }),
         },
         body: {
             chat_messages: props.chatMessages,
