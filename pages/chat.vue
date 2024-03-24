@@ -44,6 +44,7 @@
                     placeholder="Message the ChatBot..."
                     class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
                     style="color: rgb(6, 5, 5)"
+                    @keydown.enter="handleShiftEnter"
                 ></textarea>
 
                 <button
@@ -136,5 +137,14 @@ const submitQuestion = question => {
     // sets value of user message, so it gets submitted to chatBot
     userMessage.value = question;
     sendMessage();
+};
+
+const handleShiftEnter = event => {
+    // if enter key pressed but not alongside the shift key
+    if (event.key === "Enter" && !event.shiftKey) {
+        // sends message to chatbot
+        sendMessage();
+        event.preventDefault();
+    }
 };
 </script>
