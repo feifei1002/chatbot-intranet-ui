@@ -2,6 +2,7 @@
     <div v-if="titleVal.length > 0">
         <button
             class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
+            @click="fetchHistory(titleVal[0])"
         >
             {{ titleVal[0] }}
         </button>
@@ -22,7 +23,7 @@ const props = defineProps({
 
 const fetchTitle = async () => {
     // post request to get a title based on the conversation
-    const convoTitle = await $fetch(`${config.public.apiURL}/store-conversation`, {
+    const convoTitle = await $fetch(`${config.public.apiURL}/store_conversation`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -45,7 +46,7 @@ const fetchTitle = async () => {
 const fetchMessage = async () => {
     try {
         // Post request to get message based on the conversation
-        const convoMessage = await $fetch(`${config.public.apiURL}/store-conversation`, {
+        await $fetch(`${config.public.apiURL}/store_conversation`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -59,6 +60,30 @@ const fetchMessage = async () => {
         // Handle errors here
         console.error("Error fetching conversation message:", error);
     }
+};
+
+// fetch conversation history based on title and authenticated user
+const fetchHistory = async title => {
+    // sends title and token
+    try {
+        console.log(title);
+        // Post request to get message based on the conversation
+        await $fetch(`${config.public.apiURL}/get_conversation_from_title`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                ...(token.value && { Authorization: token.value }),
+            },
+            body: {
+                conversation_title: title,
+            },
+        });
+    } catch (error) {
+        // Handle errors here
+        console.error("Error fetching conversation message:", error);
+    }
+    // returns conversation history to be outputted
+    // call function from chat.vue that sets chat history to page
 };
 
 defineExpose({
