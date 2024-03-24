@@ -10,9 +10,9 @@
             @click="toggleRecording"
         >
             <!-- Display message based on recording state and permission -->
-            <div v-if="!canRecord">Mic Disabled</div>
+            <div v-if="!canRecord" vt-speechRec="micDisabled"></div>
             <div v-else>
-                {{ isRecording ? "Stop Recording" : "Start Recording" }}
+                {{ isRecording ? $t("speechRec.stopRecording") : $t("speechRec.startRecording") }}
             </div>
         </button>
     </div>
