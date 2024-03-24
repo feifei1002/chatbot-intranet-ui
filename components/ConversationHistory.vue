@@ -68,7 +68,7 @@ const fetchHistory = async title => {
     try {
         console.log(title);
         // Post request to get message based on the conversation
-        await $fetch(`${config.public.apiURL}/get_conversation_from_title`, {
+        const history = await $fetch(`${config.public.apiURL}/get_conversation_from_title`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -78,6 +78,8 @@ const fetchHistory = async title => {
                 conversation_title: title,
             },
         });
+
+        console.log(history);
     } catch (error) {
         // Handle errors here
         console.error("Error fetching conversation message:", error);
