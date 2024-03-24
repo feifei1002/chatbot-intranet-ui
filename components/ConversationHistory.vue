@@ -1,5 +1,5 @@
 <template>
-    <div v-if="titleVal">
+    <div v-if="titleVal.length > 0">
         <button
             class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
         >
@@ -49,6 +49,7 @@ const fetchMessage = async () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                ...(token.value && { Authorization: token.value }),
             },
             body: JSON.stringify({
                 chat_messages: props.chatMessages,
