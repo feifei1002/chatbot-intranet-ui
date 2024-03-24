@@ -26,7 +26,7 @@ let media = [];
 let mediaRecorder = null;
 const isRecording = ref(false);
 const canRecord = ref(false);
-const emit = defineEmits(["customEvent"]);
+const emit = defineEmits(["transcriptionEvent"]);
 
 // Function to check microphone permissions
 async function checkPermissions() {
