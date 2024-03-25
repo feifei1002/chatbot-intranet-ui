@@ -34,15 +34,15 @@ const submitInput = async () => {
         <div class="flex h-screen w-1/2 items-center justify-center bg-chatbot-black"></div>
         <div class="flex h-screen w-1/2 items-center justify-start bg-chatbot-red pl-20">
             <div class="flex-col pt-6">
-                <p class="py-6 text-6xl font-bold text-chatbot-black underline">WELCOME!</p>
+                <p v-t="'signin.welcome'" class="py-6 text-6xl font-bold text-chatbot-black underline" />
 
                 <div class="mb-4">
                     <input
                         id="username"
                         v-model="username"
+                        :placeholder="$t('signin.username')"
                         type="text"
                         name="username"
-                        placeholder="USERNAME"
                         required
                         class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue"
                     />
@@ -51,20 +51,22 @@ const submitInput = async () => {
                     <input
                         id="password"
                         v-model="password"
+                        :placeholder="$t('signin.password')"
                         type="password"
                         name="password"
-                        placeholder="PASSWORD"
                         required
                         class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue"
                     />
                 </div>
                 <div class="my-2 flex">
                     <input id="remember_me" type="checkbox" name="remember_me" />
-                    <label for="remember_me" class="ml-2 block text-sm text-chatbot-white">Remember me</label>
+                    <label v-t="'signin.remember'" for="remember_me" class="ml-2 block text-sm text-chatbot-white" />
                 </div>
-                <button class="w-full rounded-md bg-chatbot-black px-4 py-2 text-chatbot-white" @click="submitInput">
-                    Sign in
-                </button>
+                <button
+                    v-t="'signin.signin'"
+                    class="w-full rounded-md bg-chatbot-black px-4 py-2 text-chatbot-white"
+                    @click="submitInput"
+                />
             </div>
         </div>
     </div>
