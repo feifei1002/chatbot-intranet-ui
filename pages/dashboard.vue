@@ -2,36 +2,63 @@
     <div class="flex justify-center">
         <!-- All content goes here -->
         <div>
-            <div>
+            <div class="mt-10">
                 <!-- First set of divs -->
-                <div class="mt-5 flex">
-                    <div class="mr-8 h-28 w-64 rounded border border-gray-300 p-12">1</div>
-                    <div class="mr-8 h-28 w-64 rounded border border-gray-300 p-12">2</div>
-                    <div class="mr-8 h-28 w-64 rounded border border-gray-300 p-12">3</div>
-                    <div class="mr-8 h-28 w-64 rounded border border-gray-300 p-12">4</div>
-                    <div class="mr-8 h-28 w-64 rounded border border-gray-300 p-12">5</div>
-                    <div class="h-28 w-64 rounded border border-gray-300 p-12">6</div>
+                <div class="flex">
+                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">1</div>
+                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">2</div>
+                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">3</div>
+                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">4</div>
+                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">5</div>
+                    <div class="h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">6</div>
                 </div>
 
                 <!-- Second set of divs -->
-                <div class="mt-4">
+                <div class="mt-10">
                     <div>
-                        <h1>Activity this hour</h1>
+                        <h1 class="font-mono text-xl">ACTIVITY THIS HOUR</h1>
                         <div class="flex">
-                            <div class="mr-4 h-20 w-64 grow rounded border border-gray-300 p-12">Graph 1</div>
-                            <div class="mr-4 h-20 w-64 grow rounded border border-gray-300 p-12">Graph 2</div>
-                            <div class="h-20 w-64 grow rounded border border-gray-300 p-12">Graph 3</div>
+                            <div class="relative mr-8 size-64 grow rounded bg-chatbot-white p-12">
+                                <span
+                                    class="absolute left-0 top-0 inline-block w-full bg-gray-300 py-2 text-xs font-semibold uppercase text-black"
+                                    >Active conversations</span
+                                >
+                            </div>
+                            <div class="relative mr-8 size-64 grow rounded bg-chatbot-white p-12">
+                                <span
+                                    class="absolute left-0 top-0 inline-block w-full bg-gray-300 py-2 text-xs font-semibold uppercase text-black"
+                                    >Message count</span
+                                >
+                            </div>
+                            <div class="relative size-64 grow rounded bg-chatbot-white p-12">
+                                <span
+                                    class="absolute left-0 top-0 inline-block w-full bg-gray-300 py-2 text-xs font-semibold uppercase text-black"
+                                    >Message direction last hour</span
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Third set of divs -->
-                <div class="mt-4">
+                <div class="mt-10">
                     <div>
-                        <h1>Historical stats</h1>
+                        <h1 class="font-mono text-xl">HISTORICAL STATS</h1>
                         <div class="flex">
-                            <div class="mr-4 h-20 w-64 grow rounded border border-gray-300 p-12">Graph 1</div>
-                            <div class="h-20 w-64 grow rounded border border-gray-300 p-12">Graph 2</div>
+                            <div class="relative mr-8 h-80 w-64 grow rounded bg-chatbot-white p-12">
+                                <span
+                                    class="absolute left-0 top-0 inline-block w-full bg-gray-300 py-2 text-xs font-semibold uppercase text-black"
+                                    >Number of conversations (24h)</span
+                                >
+                                <!-- Graph 1 content goes here -->
+                            </div>
+                            <div class="relative h-80 w-64 grow rounded bg-chatbot-white p-12">
+                                <span
+                                    class="absolute left-0 top-0 inline-block w-full bg-gray-300 py-2 text-xs font-semibold uppercase text-black"
+                                    >Number of conversations (7d)</span
+                                >
+                                <!-- Graph 2 content goes here -->
+                            </div>
                         </div>
                     </div>
                 </div>
