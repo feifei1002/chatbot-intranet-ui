@@ -1,5 +1,3 @@
-<script></script>
-
 <template>
     <div class="flex h-screen justify-center bg-chatbot-black">
         <!-- All content goes here -->
@@ -60,18 +58,21 @@
                                 class="absolute left-0 top-0 inline-block w-full rounded-t bg-gray-300 py-2 text-xs font-semibold uppercase text-black"
                                 >Active conversations</span
                             >
+                            <LineChart />
                         </div>
                         <div class="relative mr-8 size-64 grow rounded bg-chatbot-white p-12">
                             <span
                                 class="absolute left-0 top-0 inline-block w-full rounded-t bg-gray-300 py-2 text-xs font-semibold uppercase text-black"
                                 >Message count</span
                             >
+                            <LineChart />
                         </div>
                         <div class="relative size-64 grow rounded bg-chatbot-white p-12">
                             <span
                                 class="absolute left-0 top-0 inline-block w-full rounded-t bg-gray-300 py-2 text-xs font-semibold uppercase text-black"
                                 >Message direction last hour</span
                             >
+                            <PieChart />
                         </div>
                     </div>
                 </div>
@@ -87,14 +88,14 @@
                                 class="absolute left-0 top-0 inline-block w-full rounded-t bg-gray-300 py-2 text-xs font-semibold uppercase text-black"
                                 >Number of conversations (24h)</span
                             >
-                            <!-- Graph 1 content goes here -->
+                            <LineChart />
                         </div>
                         <div class="relative h-80 w-64 grow rounded bg-chatbot-white p-12">
                             <span
                                 class="absolute left-0 top-0 inline-block w-full rounded-t bg-gray-300 py-2 text-xs font-semibold uppercase text-black"
                                 >Number of conversations (7d)</span
                             >
-                            <!-- Graph 2 content goes here -->
+                            <LineChart />
                         </div>
                     </div>
                 </div>
