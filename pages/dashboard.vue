@@ -1,3 +1,5 @@
+<script></script>
+
 <template>
     <div class="flex h-screen justify-center bg-chatbot-black">
         <!-- All content goes here -->
