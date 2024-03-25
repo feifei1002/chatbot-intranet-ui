@@ -4,13 +4,37 @@
         <div>
             <div class="mt-10">
                 <!-- First set of divs -->
-                <div class="flex">
-                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">1</div>
-                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">2</div>
-                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">3</div>
-                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">4</div>
-                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">5</div>
-                    <div class="h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">6</div>
+                <div class="flex text-black">
+                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                    </div>
+                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                    </div>
+                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                    </div>
+                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                    </div>
+                    <div class="mr-8 h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                    </div>
+                    <div class="h-32 w-64 rounded border border-gray-300 bg-chatbot-white p-12">
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                    </div>
                 </div>
 
                 <!-- Second set of divs -->
