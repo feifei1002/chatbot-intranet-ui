@@ -81,6 +81,7 @@ const newChat = () => {
     // clears all chat history from the screen, including suggested questions
     chatMessages.value = [];
     suggestedQuestions.value.clear();
+    conversationHistory.value.newConversation();
 };
 
 const sendMessage = () => {

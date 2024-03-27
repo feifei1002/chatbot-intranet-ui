@@ -43,18 +43,15 @@ const fetchTitle = async () => {
     }
 };
 
-const fetchMessage = async () => {
+const newConversation = async () => {
     try {
-        // Post request to get message based on the conversation
-        await $fetch(`${config.public.apiURL}/store_conversation`, {
+        // Post request to create new conversation for authenticated user
+        await $fetch(`${config.public.apiURL}/conversations/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 ...(token.value && { Authorization: token.value }),
             },
-            body: JSON.stringify({
-                chat_messages: props.chatMessages,
-            }),
         });
     } catch (error) {
         // Handle errors here
@@ -90,7 +87,7 @@ const fetchHistory = async title => {
 
 defineExpose({
     fetchTitle,
-    fetchMessage,
+    newConversation,
 });
 </script>
 
