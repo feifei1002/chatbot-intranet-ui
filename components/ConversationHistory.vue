@@ -1,10 +1,19 @@
 <template>
-    <div v-for="(conversation, index) in conversations" :key="index">
-        <button
-            class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
-        >
-            {{ conversation.title }}
-        </button>
+    <div
+        v-for="(conversation, index) in conversations"
+        :key="index"
+        class="mt-4 flex cursor-pointer items-center justify-between rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
+    >
+        {{ conversation.title }}
+        <UButton
+            icon="i-heroicons-trash-16-solid"
+            size="2xs"
+            color="black"
+            square
+            variant="ghost"
+            title="Click to delete the conversation"
+            @click="deleteConversation(conversation.id)"
+        />
     </div>
 </template>
 
@@ -70,7 +79,7 @@ const getConversations = async () => {
             ...(token.value && { Authorization: token.value }),
         },
     });
-    console.log(conversations.value);
+    console.log(conversations);
 };
 
 // get_conversation_history
@@ -103,20 +112,27 @@ const addMessages = async inputConversationId => {
 
 // delete_conversation
 const deleteConversation = async inputConversationId => {
-    const isConversationDeleted = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            ...(token.value && { Authorization: token.value }),
-        },
-    });
-    console.log(isConversationDeleted);
+    if (window.confirm("Are you sure you want to delete this conversation?")) {
+        const isConversationDeleted = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                ...(token.value && { Authorization: token.value }),
+            },
+        });
+        if (isConversationDeleted) {
+            // Remove the deleted conversation from the conversations array
+            conversations.value = conversations.value.filter(conversation => conversation.id !== inputConversationId);
+        }
+        console.log(isConversationDeleted);
+    }
 };
 
 defineExpose({
     fetchTitle,
     newConversation,
     getConversations,
+    deleteConversation,
 });
 </script>
 
