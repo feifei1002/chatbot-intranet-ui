@@ -1,10 +1,9 @@
 <template>
-    <div v-if="titleVal.length > 0">
+    <div v-for="(conversation, index) in conversations" :key="index">
         <button
             class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
-            @click="fetchHistory(titleVal[0])"
         >
-            {{ titleVal[0] }}
+            {{ conversation.title }}
         </button>
     </div>
 </template>
@@ -12,6 +11,7 @@
 <script setup>
 const config = useRuntimeConfig();
 const titleVal = ref([]);
+const conversations = ref([]);
 const { token } = useAuth();
 
 const props = defineProps({
@@ -59,44 +59,18 @@ const newConversation = async () => {
     }
 };
 
-// fetch conversation history based on title and authenticated user
-const fetchHistory = async title => {
-    // sends title and token
-    try {
-        console.log(title);
-        // Post request to get message based on the conversation
-        const history = await $fetch(`${config.public.apiURL}/get_conversation_from_title`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                ...(token.value && { Authorization: token.value }),
-            },
-            body: {
-                conversation_title: title,
-            },
-        });
-
-        console.log(history);
-    } catch (error) {
-        // Handle errors here
-        console.error("Error fetching conversation message:", error);
-    }
-    // returns conversation history to be outputted
-    // call function from chat.vue that sets chat history to page
-};
-
 // calling functions from backend - will use and update asap
 
 // get_conversations
 const getConversations = async () => {
-    const conversations = await $fetch(`${config.public.apiURL}/conversations`, {
+    conversations.value = await $fetch(`${config.public.apiURL}/conversations`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
             ...(token.value && { Authorization: token.value }),
         },
     });
-    console.log(conversations);
+    console.log(conversations.value);
 };
 
 // get_conversation_history
@@ -142,6 +116,7 @@ const deleteConversation = async inputConversationId => {
 defineExpose({
     fetchTitle,
     newConversation,
+    getConversations,
 });
 </script>
 

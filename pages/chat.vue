@@ -62,6 +62,8 @@
 
 <script setup>
 // get variables from nuxt.config.ts
+import ConversationHistory from "~/components/ConversationHistory.vue";
+
 const config = useRuntimeConfig();
 
 import { fetchEventSource } from "@microsoft/fetch-event-source";
@@ -70,10 +72,14 @@ const userMessage = ref("");
 const chatMessages = ref([]);
 
 const suggestedQuestions = ref(null);
-const conversationHistory = ref(null);
+const conversationHistory = ref([]);
 const titleGenerated = ref(false);
 
 const generating = ref(false);
+
+onMounted(() => {
+    conversationHistory.value.getConversations();
+});
 
 const newChat = () => {
     // outputs title of previous conversation to the left pane
@@ -123,7 +129,6 @@ const sendMessage = () => {
                 //         chat_messages: chatMessages.value,
                 //     }),
                 // });
-                conversationHistory.value.fetchMessage();
                 generating.value = false;
                 // after assistant message is loaded get suggested questions
                 suggestedQuestions.value.fetchSuggestedQuestions();
