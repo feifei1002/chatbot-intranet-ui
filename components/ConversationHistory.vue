@@ -85,6 +85,60 @@ const fetchHistory = async title => {
     // call function from chat.vue that sets chat history to page
 };
 
+// calling functions from backend - will use and update asap
+
+// get_conversations
+const getConversations = async () => {
+    const conversations = await $fetch(`${config.public.apiURL}/conversations`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            ...(token.value && { Authorization: token.value }),
+        },
+    });
+    console.log(conversations);
+};
+
+// get_conversation_history
+const getConversationHistory = async inputConversationId => {
+    const conversationHistory = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            ...(token.value && { Authorization: token.value }),
+        },
+    });
+    console.log(conversationHistory);
+};
+
+// add_messages
+const addMessages = async inputConversationId => {
+    const isTitleUpdated = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}/add_messages`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            ...(token.value && { Authorization: token.value }),
+        },
+        body: {
+            // currently for all chat messages so will need to change to the new chat messages only
+            chat_messages: props.chatMessages,
+        },
+    });
+    console.log(isTitleUpdated);
+};
+
+// delete_conversation
+const deleteConversation = async inputConversationId => {
+    const isConversationDeleted = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            ...(token.value && { Authorization: token.value }),
+        },
+    });
+    console.log(isConversationDeleted);
+};
+
 defineExpose({
     fetchTitle,
     newConversation,
