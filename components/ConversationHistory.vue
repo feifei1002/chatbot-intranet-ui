@@ -3,7 +3,7 @@
         v-for="(conversation, index) in conversations"
         :key="index"
         class="mt-4 flex cursor-pointer items-center justify-between rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
-        @click="getConversationHistory(conversation.id)"
+        @click="handleClick(conversation)"
     >
         {{ conversation.title }}
         <UButton
@@ -31,7 +31,7 @@ const props = defineProps({
 });
 
 // emit to call parent function
-const emit = defineEmits(["showHistory"]);
+const emit = defineEmits(["showHistory", "conversation-selected"]);
 
 const newConversation = async () => {
     try {
@@ -93,8 +93,8 @@ const addMessages = async inputConversationId => {
             ...(token.value && { Authorization: token.value }),
         },
         body: {
-            // currently for all chat messages so will need to change to the new chat messages only
-            chat_messages: props.chatMessages,
+            // only get the last 2 messages
+            chat_messages: props.chatMessages.slice(-2),
         },
     });
     console.log(isTitleUpdated);
@@ -116,6 +116,10 @@ const deleteConversation = async inputConversationId => {
         }
         console.log(isConversationDeleted);
     }
+};
+const handleClick = conversation => {
+    getConversationHistory(conversation.id);
+    emit("conversation-selected", conversation.id);
 };
 
 defineExpose({

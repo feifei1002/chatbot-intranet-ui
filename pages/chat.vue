@@ -14,6 +14,7 @@
                 ref="conversationHistory"
                 :chat-messages="chatMessages"
                 @show-history="setChatMessages"
+                @conversation-selected="handleConversationSelected"
             />
         </div>
         <!-- Pink side with 3/4 of the page -->
@@ -170,5 +171,10 @@ const submitQuestion = question => {
 const setChatMessages = messages => {
     // outputs the chat history for the chosen conversation to the page
     chatMessages.value = messages;
+};
+
+// fetch the id of current conversation to add in new messages
+const handleConversationSelected = conversationId => {
+    currentConversationId.value = conversationId;
 };
 </script>
