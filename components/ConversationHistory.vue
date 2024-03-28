@@ -1,6 +1,6 @@
 <template>
     <div
-        v-for="(conversation, index) in conversations"
+        v-for="(conversation, index) in reversedConversations"
         :key="index"
         class="mt-4 flex cursor-pointer items-center justify-between rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
         @click="handleClick(conversation)"
@@ -121,6 +121,10 @@ const handleClick = conversation => {
     getConversationHistory(conversation.id);
     emit("conversation-selected", conversation.id);
 };
+
+const reversedConversations = computed(() => {
+    return [...conversations.value].reverse();
+});
 
 defineExpose({
     newConversation,
