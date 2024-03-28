@@ -10,7 +10,11 @@
                 New Chat
             </button>
 
-            <ConversationHistory ref="conversationHistory" :chat-messages="chatMessages" />
+            <ConversationHistory
+                ref="conversationHistory"
+                :chat-messages="chatMessages"
+                @show-history="setChatMessages"
+            />
         </div>
         <!-- Pink side with 3/4 of the page -->
         <div class="flex w-4/5 flex-col bg-pink-500 p-1">
@@ -96,8 +100,13 @@ const sendMessage = () => {
     const message = userMessage.value.trim();
     if (message !== "") {
         generating.value = true;
+
         // set array of suggested questions to zero, to hide template in SuggestedQuestions during response generation
         suggestedQuestions.value.clear();
+
+        // only if the first question to the chatbot do this...
+        // create the new conversation by inserting username into conversations table
+        // currentConversationId.value = await conversationHistory.value.newConversation();
 
         // add user message
         chatMessages.value.push({ content: message, role: "user" });
@@ -156,5 +165,10 @@ const submitQuestion = question => {
     // sets value of user message, so it gets submitted to chatBot
     userMessage.value = question;
     sendMessage();
+};
+
+const setChatMessages = messages => {
+    // outputs the chat history for the chosen conversation to the page
+    chatMessages.value = messages;
 };
 </script>

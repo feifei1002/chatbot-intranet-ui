@@ -34,7 +34,7 @@ const props = defineProps({
     },
 });
 
-// emit to call function 'askClickedQuestionToChatBot' from parent chat.vue
+// emit to call function 'submitQuestion' from parent chat.vue
 defineEmits(["askToChatBot"]);
 
 const fetchSuggestedQuestions = async () => {

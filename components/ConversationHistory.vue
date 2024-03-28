@@ -20,7 +20,6 @@
 
 <script setup>
 const config = useRuntimeConfig();
-// const titleVal = ref([]);
 const conversations = ref([]);
 const { token } = useAuth();
 
@@ -31,27 +30,8 @@ const props = defineProps({
     },
 });
 
-// const fetchTitle = async () => {
-//     // post request to get a title based on the conversation
-//     const convoTitle = await $fetch(`${config.public.apiURL}/store_conversation`, {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//             ...(token.value && { Authorization: token.value }),
-//         },
-//         body: {
-//             chat_messages: props.chatMessages,
-//         },
-//     });
-//
-//     try {
-//         // gets value of the title from the array
-//         titleVal.value = convoTitle.title;
-//     } catch {
-//         // cannot get array of title
-//         console.log("error getting json array");
-//     }
-// };
+// emit to call parent function
+const emit = defineEmits(["showHistory"]);
 
 const newConversation = async () => {
     try {
@@ -71,11 +51,9 @@ const newConversation = async () => {
         return conv_id.conversation_id[0];
     } catch (error) {
         // Handle errors here
-        console.error("Error fetching conversation message:", error);
+        console.error("Error fetching conversation message: ", error);
     }
 };
-
-// calling functions from backend - will use and update asap
 
 // get_conversations
 const getConversations = async () => {
@@ -91,14 +69,19 @@ const getConversations = async () => {
 
 // get_conversation_history
 const getConversationHistory = async inputConversationId => {
-    const conversationHistory = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            ...(token.value && { Authorization: token.value }),
-        },
-    });
-    console.log("history is: ", conversationHistory);
+    try {
+        const conversationHistory = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                ...(token.value && { Authorization: token.value }),
+            },
+        });
+        // posts history to the page using parent function
+        emit("showHistory", conversationHistory);
+    } catch (error) {
+        console.error("Error fetching conversation history: ", error);
+    }
 };
 
 // add_messages
@@ -136,7 +119,6 @@ const deleteConversation = async inputConversationId => {
 };
 
 defineExpose({
-    // fetchTitle,
     newConversation,
     getConversations,
     deleteConversation,
