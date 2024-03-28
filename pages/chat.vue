@@ -84,7 +84,7 @@ const currentConversationId = ref(null);
 const generating = ref(false);
 
 onMounted(() => {
-    // conversations.value = conversationHistory.value.getConversations();
+    conversationHistory.value.newConversation();
     conversationHistory.value.getConversations();
 });
 
