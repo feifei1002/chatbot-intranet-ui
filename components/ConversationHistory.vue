@@ -63,7 +63,12 @@ const newConversation = async () => {
                 ...(token.value && { Authorization: token.value }),
             },
         });
-        console.log("conv id is ", conv_id.conversation_id);
+
+        // console.log(conv_id.conversation_id[0]);
+
+        // console.log("conv id is ", conv_id.conversation_id.rawValue.value);
+        console.log("conv id is ", conv_id.conversation_id[0]);
+        return conv_id.conversation_id[0];
     } catch (error) {
         // Handle errors here
         console.error("Error fetching conversation message:", error);

@@ -73,22 +73,23 @@ const chatMessages = ref([]);
 
 const suggestedQuestions = ref(null);
 const conversationHistory = ref([]);
-// const titleGenerated = ref(false);
-const conversations = ref(null);
+// const conversations = ref(null);
+const currentConversationId = ref(null);
 
 const generating = ref(false);
 
 onMounted(() => {
-    conversations.value = conversationHistory.value.getConversations();
+    // conversations.value = conversationHistory.value.getConversations();
+    conversationHistory.value.getConversations();
 });
 
-const newChat = () => {
+const newChat = async () => {
     // clears all chat history from the screen, including suggested questions
     chatMessages.value = [];
     suggestedQuestions.value.clear();
 
     // create the new conversation by inserting username into conversations table
-    conversationHistory.value.newConversation();
+    currentConversationId.value = await conversationHistory.value.newConversation();
 };
 
 const sendMessage = () => {
@@ -121,23 +122,12 @@ const sendMessage = () => {
                 question: message,
             }),
             onclose: () => {
-                // deleted request /store-conversation
-                // const convoTitle = $fetch(`${config.public.apiURL}/store-conversation`, {
-                //     method: "POST",
-                //     headers: {
-                //         "Content-Type": "application/json",
-                //     },
-                //     body: JSON.stringify({
-                //         chat_messages: chatMessages.value,
-                //     }),
-                // });
                 generating.value = false;
                 // after assistant message is loaded get suggested questions
                 suggestedQuestions.value.fetchSuggestedQuestions();
 
-                // add new messages to conversation_history and messages tables
-                console.log("conversations.value is ", conversations.value);
-                conversationHistory.value.addMessages(conversations.value.id);
+                // add new messages to tables
+                conversationHistory.value.addMessages(currentConversationId.value);
             },
             onmessage: event => {
                 console.log("Message:", event);
@@ -149,14 +139,6 @@ const sendMessage = () => {
                         assistantMessage.value += data.text;
                     }
                 }
-
-                // not needed anymore?
-                //   Check if the title is generated, it should not be generated again
-                //   when the user asks a follow up question
-                // if (!titleGenerated.value) {
-                //     conversationHistory.value.fetchTitle();
-                //     titleGenerated.value = true; // If the title is generated, set the value to true
-                // }
             },
             onerror: error => {
                 console.error("Error:", error);
