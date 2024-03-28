@@ -3,6 +3,7 @@
         v-for="(conversation, index) in conversations"
         :key="index"
         class="mt-4 flex cursor-pointer items-center justify-between rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
+        @click="getConversationHistory(conversation.id)"
     >
         {{ conversation.title }}
         <UButton
@@ -19,7 +20,7 @@
 
 <script setup>
 const config = useRuntimeConfig();
-const titleVal = ref([]);
+// const titleVal = ref([]);
 const conversations = ref([]);
 const { token } = useAuth();
 
@@ -30,38 +31,39 @@ const props = defineProps({
     },
 });
 
-const fetchTitle = async () => {
-    // post request to get a title based on the conversation
-    const convoTitle = await $fetch(`${config.public.apiURL}/store_conversation`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            ...(token.value && { Authorization: token.value }),
-        },
-        body: {
-            chat_messages: props.chatMessages,
-        },
-    });
-
-    try {
-        // gets value of the title from the array
-        titleVal.value = convoTitle.title;
-    } catch {
-        // cannot get array of title
-        console.log("error getting json array");
-    }
-};
+// const fetchTitle = async () => {
+//     // post request to get a title based on the conversation
+//     const convoTitle = await $fetch(`${config.public.apiURL}/store_conversation`, {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//             ...(token.value && { Authorization: token.value }),
+//         },
+//         body: {
+//             chat_messages: props.chatMessages,
+//         },
+//     });
+//
+//     try {
+//         // gets value of the title from the array
+//         titleVal.value = convoTitle.title;
+//     } catch {
+//         // cannot get array of title
+//         console.log("error getting json array");
+//     }
+// };
 
 const newConversation = async () => {
     try {
         // Post request to create new conversation for authenticated user
-        await $fetch(`${config.public.apiURL}/conversations/create`, {
+        const conv_id = await $fetch(`${config.public.apiURL}/conversations/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 ...(token.value && { Authorization: token.value }),
             },
         });
+        console.log("conv id is ", conv_id.conversation_id);
     } catch (error) {
         // Handle errors here
         console.error("Error fetching conversation message:", error);
@@ -91,7 +93,7 @@ const getConversationHistory = async inputConversationId => {
             ...(token.value && { Authorization: token.value }),
         },
     });
-    console.log(conversationHistory);
+    console.log("history is: ", conversationHistory);
 };
 
 // add_messages
@@ -129,10 +131,11 @@ const deleteConversation = async inputConversationId => {
 };
 
 defineExpose({
-    fetchTitle,
+    // fetchTitle,
     newConversation,
     getConversations,
     deleteConversation,
+    addMessages,
 });
 </script>
 

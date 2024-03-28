@@ -73,20 +73,21 @@ const chatMessages = ref([]);
 
 const suggestedQuestions = ref(null);
 const conversationHistory = ref([]);
-const titleGenerated = ref(false);
+// const titleGenerated = ref(false);
+const conversations = ref(null);
 
 const generating = ref(false);
 
 onMounted(() => {
-    conversationHistory.value.getConversations();
+    conversations.value = conversationHistory.value.getConversations();
 });
 
 const newChat = () => {
-    // outputs title of previous conversation to the left pane
-    // conversationHistory.value.fetchTitle();
     // clears all chat history from the screen, including suggested questions
     chatMessages.value = [];
     suggestedQuestions.value.clear();
+
+    // create the new conversation by inserting username into conversations table
     conversationHistory.value.newConversation();
 };
 
@@ -120,6 +121,7 @@ const sendMessage = () => {
                 question: message,
             }),
             onclose: () => {
+                // deleted request /store-conversation
                 // const convoTitle = $fetch(`${config.public.apiURL}/store-conversation`, {
                 //     method: "POST",
                 //     headers: {
@@ -132,6 +134,10 @@ const sendMessage = () => {
                 generating.value = false;
                 // after assistant message is loaded get suggested questions
                 suggestedQuestions.value.fetchSuggestedQuestions();
+
+                // add new messages to conversation_history and messages tables
+                console.log("conversations.value is ", conversations.value);
+                conversationHistory.value.addMessages(conversations.value.id);
             },
             onmessage: event => {
                 console.log("Message:", event);
@@ -143,12 +149,14 @@ const sendMessage = () => {
                         assistantMessage.value += data.text;
                     }
                 }
+
+                // not needed anymore?
                 //   Check if the title is generated, it should not be generated again
                 //   when the user asks a follow up question
-                if (!titleGenerated.value) {
-                    conversationHistory.value.fetchTitle();
-                    titleGenerated.value = true; // If the title is generated, set the value to true
-                }
+                // if (!titleGenerated.value) {
+                //     conversationHistory.value.fetchTitle();
+                //     titleGenerated.value = true; // If the title is generated, set the value to true
+                // }
             },
             onerror: error => {
                 console.error("Error:", error);
