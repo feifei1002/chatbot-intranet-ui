@@ -9,7 +9,6 @@ module.exports = {
                 "chatbot-black": "#23201F",
                 "chatbot-white": "#FEFFFE",
                 "chatbot-font": "#383634",
-                "chatbot-dark-grey": "#A9A9A9",
                 "chatbot-dark-red": "#8B2D33",
             },
         },

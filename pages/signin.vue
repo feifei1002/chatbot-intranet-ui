@@ -31,7 +31,7 @@ const submitInput = async () => {
 
 <template>
     <div class="flex">
-        <div class="flex h-screen w-1/2 items-center justify-center bg-chatbot-black dark:bg-chatbot-dark-grey"></div>
+        <div class="flex h-screen w-1/2 items-center justify-center bg-chatbot-black dark:bg-chatbot-font"></div>
         <div class="flex h-screen w-1/2 items-center justify-start bg-chatbot-red pl-20 dark:bg-chatbot-dark-red">
             <div class="flex-col pt-6">
                 <p
@@ -73,7 +73,7 @@ const submitInput = async () => {
             </div>
         </div>
         <div class="fixed bottom-0 left-0">
-            <DarkMode></DarkMode>
+            <DarkMode class="fixed bottom-0 left-0"></DarkMode>
         </div>
     </div>
 </template>

@@ -1,7 +1,7 @@
 <template class="h-screen w-screen">
     <div class="flex">
         <div
-            class="dark: flex h-screen w-1/2 flex-col items-center justify-center bg-chatbot-black dark:bg-chatbot-dark-grey"
+            class="dark: flex h-screen w-1/2 flex-col items-center justify-center bg-chatbot-black dark:bg-chatbot-font"
         >
             <p
                 v-t="'index.about'"

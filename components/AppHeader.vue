@@ -7,7 +7,7 @@ watch(status, newStatus => {
 </script>
 
 <template>
-    <nav class="bg-chatbot-white p-6 dark:bg-chatbot-dark-grey">
+    <nav class="bg-chatbot-white p-6 dark:bg-chatbot-black">
         <div class="container flex items-center">
             <NuxtImg preload src="/img/logo.png" width="60" />
             <NuxtLink
@@ -22,7 +22,6 @@ watch(status, newStatus => {
                     class="text-xl font-semibold text-chatbot-font dark:text-chatbot-white"
                     exact-active-class="!text-chatbot-red"
                 />
-                >
                 <NuxtLinkLocale
                     v-if="!authStatus"
                     v-t="'titles.signin'"
@@ -30,7 +29,6 @@ watch(status, newStatus => {
                     class="text-xl font-semibold text-chatbot-font dark:text-chatbot-white"
                     exact-active-class="!text-chatbot-red"
                 />
-                >
                 <NuxtLinkLocale
                     to="/chat"
                     class="text-xl font-semibold text-chatbot-font dark:text-chatbot-white"
