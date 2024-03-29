@@ -16,6 +16,7 @@ const isDark = computed({
         size="lg"
         color="blue"
         variant="link"
+        :title="isDark ? 'Light mode' : 'Dark mode'"
         @click="isDark = !isDark"
     />
 </template>
