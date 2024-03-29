@@ -57,7 +57,7 @@ const fetchSuggestedQuestions = async () => {
         questionArray.value = jsonSent.questions;
     } catch {
         // cannot get array of suggested questions from key 'questions'
-        console.log("error getting json array");
+        console.log("error getting json array of suggested questions");
     }
 };
 
