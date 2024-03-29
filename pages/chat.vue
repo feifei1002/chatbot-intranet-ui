@@ -82,20 +82,14 @@ const currentConversationId = ref(null);
 
 const generating = ref(false);
 
-onMounted(async () => {
+onMounted(() => {
     conversationHistory.value.getConversations();
 });
 
-const newChat = async () => {
+const newChat = () => {
     // clears all chat history from the screen, including suggested questions
     chatMessages.value = [];
     suggestedQuestions.value.clear();
-
-    // not needed below code anymore because checks conversation length in sendMessage
-    // // create the new conversation by inserting username into conversations table
-    // currentConversationId.value = await conversationHistory.value.newConversation();
-    // // once created new conversation update left panel of conversations
-    // conversationHistory.value.getConversations();
 };
 
 const sendMessage = () => {
@@ -134,8 +128,6 @@ const sendMessage = () => {
                 if (chatMessages.value.length === 2) {
                     // if first question asked create new conversation
                     currentConversationId.value = await conversationHistory.value.newConversation();
-                    // update left panel of conversations
-                    conversationHistory.value.getConversations();
                 }
 
                 // after assistant message is loaded get suggested questions
@@ -143,6 +135,9 @@ const sendMessage = () => {
 
                 // add new messages to tables
                 conversationHistory.value.addMessages(currentConversationId.value);
+
+                // update left panel of conversations
+                conversationHistory.value.getConversations();
             },
             onmessage: event => {
                 console.log("Message:", event);
