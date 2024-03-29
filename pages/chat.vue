@@ -82,8 +82,7 @@ const currentConversationId = ref(null);
 
 const generating = ref(false);
 
-onMounted(() => {
-    conversationHistory.value.newConversation();
+onMounted(async () => {
     conversationHistory.value.getConversations();
 });
 
@@ -92,8 +91,11 @@ const newChat = async () => {
     chatMessages.value = [];
     suggestedQuestions.value.clear();
 
-    // create the new conversation by inserting username into conversations table
-    currentConversationId.value = await conversationHistory.value.newConversation();
+    // not needed below code anymore because checks conversation length in sendMessage
+    // // create the new conversation by inserting username into conversations table
+    // currentConversationId.value = await conversationHistory.value.newConversation();
+    // // once created new conversation update left panel of conversations
+    // conversationHistory.value.getConversations();
 };
 
 const sendMessage = () => {
@@ -103,10 +105,6 @@ const sendMessage = () => {
 
         // set array of suggested questions to zero, to hide template in SuggestedQuestions during response generation
         suggestedQuestions.value.clear();
-
-        // only if the first question to the chatbot do this...
-        // create the new conversation by inserting username into conversations table
-        // currentConversationId.value = await conversationHistory.value.newConversation();
 
         // add user message
         chatMessages.value.push({ content: message, role: "user" });
@@ -130,8 +128,16 @@ const sendMessage = () => {
                 previous_messages: chatMessages.value.slice(0, -2),
                 question: message,
             }),
-            onclose: () => {
+            onclose: async () => {
                 generating.value = false;
+
+                if (chatMessages.value.length === 2) {
+                    // if first question asked create new conversation
+                    currentConversationId.value = await conversationHistory.value.newConversation();
+                    // update left panel of conversations
+                    conversationHistory.value.getConversations();
+                }
+
                 // after assistant message is loaded get suggested questions
                 suggestedQuestions.value.fetchSuggestedQuestions();
 
