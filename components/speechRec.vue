@@ -17,8 +17,8 @@
         </button>
     </div>
 </template>
-<script setup>
 
+<script setup>
 const config = useRuntimeConfig();
 let media = [];
 let mediaRecorder = null;
