@@ -45,7 +45,7 @@
                     style="color: rgb(6, 5, 5)"
                     @keydown.enter="handleShiftEnter"
                 ></textarea>
-                <speechRec @transcription-event="text => (userMessage = text)" />
+                <speechRec @on-transcribed="text => (userMessage = text)" />
                 <button
                     v-t="'chatbot.send'"
                     class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
@@ -62,7 +62,6 @@
 const config = useRuntimeConfig();
 
 import { fetchEventSource } from "@microsoft/fetch-event-source";
-import speechRec from "~/components/speechRec.vue";
 
 const userMessage = ref("");
 const chatMessages = ref([]);

@@ -1,7 +1,7 @@
 <template>
     <div class="mx-4">
         <button
-            class="text-s flex h-20 cursor-pointer items-center justify-center rounded-md border-2 border-black hover:text-[#353955]"
+            class="flex h-20 cursor-pointer items-center justify-center rounded-md border-2 border-black hover:text-[#353955]"
             :class="{
                 'bg-blue-500': isRecording && canRecord,
                 'bg-red-500': !isRecording && canRecord,
@@ -17,16 +17,14 @@
         </button>
     </div>
 </template>
-
 <script setup>
-import { onMounted, ref } from "vue";
 
 const config = useRuntimeConfig();
 let media = [];
 let mediaRecorder = null;
 const isRecording = ref(false);
 const canRecord = ref(false);
-const emit = defineEmits(["transcriptionEvent"]);
+const emit = defineEmits(["onTranscribed"]);
 
 // Function to check microphone permissions
 async function checkPermissions() {
@@ -76,7 +74,7 @@ function toggleRecording() {
                     const transcribedText = (await response.json()).text;
                     console.log("text:" + transcribedText);
                     // Emit a custom event with the transcribed text
-                    emit("transcriptionEvent", transcribedText);
+                    emit("onTranscribed", transcribedText);
                 };
                 // Start recording
                 mediaRecorder.start();
