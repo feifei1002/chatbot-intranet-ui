@@ -30,10 +30,12 @@ const submitInput = async () => {
 </script>
 
 <template>
-    <div class="flex">
-        <div class="flex h-screen w-1/2 items-center justify-center bg-chatbot-black"></div>
-        <div class="flex h-screen w-1/2 items-center justify-start bg-chatbot-red pl-20">
-            <div class="flex-col pt-6">
+    <div class="flex h-screen flex-col md:flex-row">
+        <!-- Black section -->
+        <div class="flex h-1/3 w-screen items-center justify-center bg-chatbot-black md:h-screen md:w-1/2"></div>
+        <!-- Red section -->
+        <div class="flex h-2/3 w-screen items-center justify-center bg-chatbot-red md:h-screen md:w-1/2">
+            <div class="pt-6 md:w-96">
                 <p v-t="'signin.welcome'" class="py-6 text-6xl font-bold text-chatbot-black underline" />
 
                 <div class="mb-4">
@@ -66,7 +68,7 @@ const submitInput = async () => {
                     v-t="'signin.signin'"
                     class="w-full rounded-md bg-chatbot-black px-4 py-2 text-chatbot-white"
                     @click="submitInput"
-                />
+                ></button>
             </div>
         </div>
     </div>

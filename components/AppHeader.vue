@@ -10,26 +10,24 @@ watch(status, newStatus => {
     <nav class="bg-chatbot-white p-6">
         <div class="container flex items-center">
             <NuxtImg preload src="/img/logo.png" width="60" />
-            <NuxtLink v-t="'titles.chatbot'" to="/" class="w-3/4 pl-4 text-xl font-bold text-chatbot-font" />
-            <div class="absolute right-0 flex w-1/4 justify-between pr-6">
+            <NuxtLink v-t="'titles.chatbot'" to="/" class="grow pl-4 text-xl font-bold text-chatbot-font" />
+            <div class="flex grow items-center justify-end">
                 <NuxtLinkLocale
                     v-t="'titles.home'"
                     to="/"
-                    class="text-xl font-semibold text-chatbot-font"
+                    class="px-4 text-xl font-semibold text-chatbot-font"
                     exact-active-class="!text-chatbot-red"
                 />
-                >
                 <NuxtLinkLocale
                     v-if="!authStatus"
                     v-t="'titles.signin'"
                     to="/signin"
-                    class="text-xl font-semibold text-chatbot-font"
+                    class="px-4 text-xl font-semibold text-chatbot-font"
                     exact-active-class="!text-chatbot-red"
                 />
-                >
                 <NuxtLinkLocale
                     to="/chat"
-                    class="text-xl font-semibold text-chatbot-font"
+                    class="px-4 text-xl font-semibold text-chatbot-font"
                     exact-active-class="!text-chatbot-red"
                     >{{ $t("titles.trychatbot") }}
                     <UIcon name="i-heroicons-arrow-up-right" />
