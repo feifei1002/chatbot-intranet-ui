@@ -9,6 +9,7 @@
                 @click="newChat"
             />
 
+            <!-- output previous conversations ordered by title (when authenticated user logged in) -->
             <ConversationHistory
                 ref="conversationHistory"
                 :chat-messages="chatMessages"
@@ -66,8 +67,6 @@
 
 <script setup>
 // get variables from nuxt.config.ts
-import ConversationHistory from "~/components/ConversationHistory.vue";
-
 const config = useRuntimeConfig();
 
 import { fetchEventSource } from "@microsoft/fetch-event-source";
@@ -76,13 +75,15 @@ const userMessage = ref("");
 const chatMessages = ref([]);
 
 const suggestedQuestions = ref(null);
+
 const conversationHistory = ref([]);
-// const conversations = ref(null);
 const currentConversationId = ref(null);
 
 const generating = ref(false);
 
+// runs after component has finished initial rendering and creating DOM nodes
 onMounted(() => {
+    // gets conversations to update the values on the left panel
     conversationHistory.value.getConversations();
 });
 
@@ -133,10 +134,9 @@ const sendMessage = () => {
                 // after assistant message is loaded get suggested questions
                 suggestedQuestions.value.fetchSuggestedQuestions();
 
-                // add new messages to tables
+                // adds new messages to the tables
                 conversationHistory.value.addMessages(currentConversationId.value);
-
-                // update left panel of conversations
+                // updates left panel of conversations again
                 conversationHistory.value.getConversations();
             },
             onmessage: event => {
@@ -168,13 +168,15 @@ const submitQuestion = question => {
     sendMessage();
 };
 
+// outputs the chat history for the chosen conversation to the page
 const setChatMessages = messages => {
-    // outputs the chat history for the chosen conversation to the page
+    // sets chat messages to previous history
     chatMessages.value = messages;
 };
 
 // fetch the id of current conversation to add in new messages
 const handleConversationSelected = conversationId => {
+    // sets conversation id to new value
     currentConversationId.value = conversationId;
 };
 
