@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="conversations.length > 0"
         class="mt-4 flex items-center justify-between rounded-full border-2 border-white bg-transparent p-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
     >
         <!-- list the titles from the database -->
@@ -16,7 +17,7 @@
             <!-- icon to allow the conversation to be deleted by clicking and calling deleteConversation(ID) -->
             <UButton
                 icon="i-heroicons-trash-16-solid"
-                class="mr-2 px-1 py-2"
+                class="mr-2 px-2 py-2"
                 size="2xs"
                 color="black"
                 square
@@ -27,7 +28,7 @@
             <!-- icon to copy the link to share the conversation -->
             <UButton
                 icon="i-heroicons-share-16-solid"
-                class="px-4 py-2"
+                class="px-2 py-2"
                 size="2xs"
                 color="black"
                 square
