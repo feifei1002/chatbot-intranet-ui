@@ -17,7 +17,7 @@
             <!-- icon to allow the conversation to be deleted by clicking and calling deleteConversation(ID) -->
             <UButton
                 icon="i-heroicons-trash-16-solid"
-                class="mr-2 px-2 py-2"
+                class="mr-2 p-2"
                 size="2xs"
                 color="black"
                 square
@@ -28,7 +28,7 @@
             <!-- icon to copy the link to share the conversation -->
             <UButton
                 icon="i-heroicons-share-16-solid"
-                class="px-2 py-2"
+                class="p-2"
                 size="2xs"
                 color="black"
                 square
