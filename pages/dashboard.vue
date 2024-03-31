@@ -27,16 +27,16 @@
                 </div>
                 <div class="relative mr-8 flex h-32 w-72 flex-col rounded border border-gray-300 bg-chatbot-white p-12">
                     <div class="absolute left-2 top-2 flex flex-col uppercase">
-                        <span class="font-sans font-bold">messages/conversations</span>
+                        <span class="font-sans font-bold">Authenicated User Messages</span>
                         <span>average over last 24h</span>
                         <span class="font-sans font-bold">69</span>
                     </div>
                 </div>
                 <div class="relative mr-8 flex h-32 w-72 flex-col rounded border border-gray-300 bg-chatbot-white p-12">
                     <div class="absolute left-2 top-2 flex flex-col uppercase">
-                        <span class="font-sans font-bold">conversation length</span>
+                        <span class="font-sans font-bold">Unauthenicated User Messages</span>
                         <span>average over last 24h</span>
-                        <span class="font-sans font-bold">69:69:69</span>
+                        <span class="font-sans font-bold">69</span>
                     </div>
                 </div>
                 <div class="relative flex h-32 w-72 flex-col rounded border border-gray-300 bg-chatbot-white p-12">
