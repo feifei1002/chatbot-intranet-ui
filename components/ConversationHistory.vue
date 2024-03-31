@@ -1,22 +1,41 @@
 <template>
-    <!-- lists each conversation in reverse order, displaying the title -->
     <div
-        v-for="(conversation, index) in reversedConversations"
-        :key="index"
-        class="mt-4 flex cursor-pointer items-center justify-between rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
-        @click="handleTitleClick(conversation)"
+        class="mt-4 flex items-center justify-between rounded-full border-2 border-white bg-transparent p-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
     >
-        {{ conversation.title }}
-        <!-- icon to allow the conversation to be deleted by clicking and calling deleteConversation(ID) -->
-        <UButton
-            icon="i-heroicons-trash-16-solid"
-            size="2xs"
-            color="black"
-            square
-            variant="ghost"
-            title="Click to delete the conversation"
-            @click="deleteConversation(conversation.id)"
-        />
+        <!-- list the titles from the database -->
+        <div
+            v-for="(conversation, index) in reversedConversations"
+            :key="index"
+            class="flex cursor-pointer items-center"
+            @click="handleTitleClick(conversation)"
+        >
+            {{ conversation.title }}
+        </div>
+
+        <div class="flex items-center">
+            <!-- icon to allow the conversation to be deleted by clicking and calling deleteConversation(ID) -->
+            <UButton
+                icon="i-heroicons-trash-16-solid"
+                class="mr-2 px-1 py-2"
+                size="2xs"
+                color="black"
+                square
+                variant="ghost"
+                title="Click to delete the conversation"
+                @click="deleteConversation(conversation.id)"
+            />
+            <!-- icon to copy the link to share the conversation -->
+            <UButton
+                icon="i-heroicons-share-16-solid"
+                class="px-4 py-2"
+                size="2xs"
+                color="black"
+                square
+                variant="ghost"
+                title="Click to share the conversation"
+                @click="shareConversation(conversation.id)"
+            />
+        </div>
     </div>
 </template>
 
@@ -141,6 +160,11 @@ const handleTitleClick = conversation => {
 const reversedConversations = computed(() => {
     return [...conversations.value].reverse();
 });
+
+// gets a link to share the conversation
+const shareConversation = conversationId => {
+    console.log("ID is: ", conversationId);
+};
 
 defineExpose({
     newConversation,
