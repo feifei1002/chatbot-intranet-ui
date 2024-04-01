@@ -1,51 +1,13 @@
 <template>
-    <div class="flex h-screen justify-center bg-chatbot-black">
+    <div class="flex h-screen justify-center   bg-chatbot-black">
         <!-- All content goes here -->
         <div>
             <div class="mt-10 flex text-black">
-                <!-- First set of divs -->
-                <div class="relative mr-8 flex h-32 w-72 flex-col rounded border border-gray-300 bg-chatbot-white p-12">
-                    <div class="absolute left-2 top-2 flex flex-col uppercase">
-                        <span class="font-sans font-bold">conversations</span>
-                        <span>last minute</span>
-                        <span class="font-sans font-bold">69</span>
-                    </div>
-                </div>
-                <div class="relative mr-8 flex h-32 w-72 flex-col rounded border border-gray-300 bg-chatbot-white p-12">
-                    <div class="absolute left-2 top-2 flex flex-col uppercase">
-                        <span class="font-sans font-bold">conversations</span>
-                        <span>average over last hour</span>
-                        <span class="font-sans font-bold">69</span>
-                    </div>
-                </div>
-                <div class="relative mr-8 flex h-32 w-72 flex-col rounded border border-gray-300 bg-chatbot-white p-12">
-                    <div class="absolute left-2 top-2 flex flex-col uppercase">
-                        <span class="font-sans font-bold">conversations</span>
-                        <span>average over last 24h</span>
-                        <span class="font-sans font-bold">69</span>
-                    </div>
-                </div>
-                <div class="relative mr-8 flex h-32 w-72 flex-col rounded border border-gray-300 bg-chatbot-white p-12">
-                    <div class="absolute left-2 top-2 flex flex-col uppercase">
-                        <span class="font-sans font-bold">Authenicated User Messages</span>
-                        <span>average over last 24h</span>
-                        <span class="font-sans font-bold">69</span>
-                    </div>
-                </div>
-                <div class="relative mr-8 flex h-32 w-72 flex-col rounded border border-gray-300 bg-chatbot-white p-12">
-                    <div class="absolute left-2 top-2 flex flex-col uppercase">
-                        <span class="font-sans font-bold">Unauthenicated User Messages</span>
-                        <span>average over last 24h</span>
-                        <span class="font-sans font-bold">69</span>
-                    </div>
-                </div>
-                <div class="relative flex h-32 w-72 flex-col rounded border border-gray-300 bg-chatbot-white p-12">
-                    <div class="absolute left-2 top-2 flex flex-col uppercase">
-                        <span class="font-sans font-bold">message count</span>
-                        <span>sent+received last 24h</span>
-                        <span class="font-sans font-bold">69</span>
-                    </div>
-                </div>
+                <TopStats statTitle="Conversations" statTimerange="Last Minute" statValue=69></TopStats>
+                <TopStats statTitle="Conversations" statTimerange="Average over last hour" statValue=69></TopStats>
+                <TopStats statTitle="Authenicated User Messages" statTimerange="Average over last 24h" statValue=69></TopStats>
+                <TopStats statTitle="Unauthenicated User Messages" statTimerange="Average over last 24h" statValue=69></TopStats>
+                <TopStats statTitle="Message count" statTimerange="Sent+Received last 24h" statValue=69></TopStats>
             </div>
 
             <!-- Second set of divs -->
@@ -103,3 +65,7 @@
         </div>
     </div>
 </template>
+
+<script>
+import TopStats from "@/components/TopStats.vue"
+</script>
