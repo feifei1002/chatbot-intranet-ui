@@ -3,19 +3,19 @@
         <!-- All content goes here -->
         <div>
             <div class="mt-10 flex text-black">
-                <TopStats statTitle="Conversations" statTimerange="Last Minute" statValue="69"> </TopStats>
-                <TopStats statTitle="Conversations" statTimerange="Average over last hour" statValue="69"></TopStats>
+                <TopStats stat-title="Conversations" stat-timerange="Last Minute" stat-value="69"> </TopStats>
+                <TopStats stat-title="Conversations" stat-timerange="Average over last hour" stat-value="69"></TopStats>
                 <TopStats
-                    statTitle="Authenicated User Messages"
-                    statTimerange="Average over last 24h"
-                    statValue="69"
+                    stat-title="Authenicated User Messages"
+                    stat-timerange="Average over last 24h"
+                    stat-value="69"
                 ></TopStats>
                 <TopStats
-                    statTitle="Unauthenicated User Messages"
-                    statTimerange="Average over last 24h"
-                    statValue="69"
+                    stat-title="Unauthenicated User Messages"
+                    stat-timerange="Average over last 24h"
+                    stat-value="69"
                 ></TopStats>
-                <TopStats statTitle="Message count" statTimerange="Sent+Received last 24h" statValue="69"></TopStats>
+                <TopStats stat-title="Message count" stat-timerange="Sent+Received last 24h" stat-value="69"></TopStats>
             </div>
 
             <!-- Second set of divs -->
@@ -23,13 +23,13 @@
                 <div>
                     <h1 class="font-mono text-xl">ACTIVITY THIS HOUR</h1>
                     <div class="flex">
-                        <MidStats statTitle="Active Conversations">
+                        <MidStats stat-title="Active Conversations">
                             <LineChart />
                         </MidStats>
-                        <MidStats statTitle="Message Count">
+                        <MidStats stat-title="Message Count">
                             <LineChart />
                         </MidStats>
-                        <MidStats statTitle="Tool Usage">
+                        <MidStats stat-title="Tool Usage">
                             <PieChart />
                         </MidStats>
                     </div>
@@ -41,10 +41,10 @@
                 <div>
                     <h1 class="font-mono text-xl">HISTORICAL STATS</h1>
                     <div class="flex">
-                        <BottomStats statTitle="Number of conversations (24hr)">
+                        <BottomStats stat-title="Number of conversations (24hr)">
                             <LineChart />
                         </BottomStats>
-                        <BottomStats statTitle="Number of conversations (7d)">
+                        <BottomStats stat-title="Number of conversations (7d)">
                             <LineChart />
                         </BottomStats>
                     </div>
