@@ -8,7 +8,7 @@ watch(status, newStatus => {
 
 <template>
     <nav class="bg-chatbot-white p-6">
-        <div class="container flex items-center">
+        <div class="flex items-center">
             <NuxtImg preload src="/img/logo.png" width="60" />
             <NuxtLink v-t="'titles.chatbot'" to="/" class="grow pl-4 text-xl font-bold text-chatbot-font" />
             <div class="flex grow items-center justify-end">
