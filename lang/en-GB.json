@@ -1,5 +1,28 @@
 {
     "titles": {
-        "home": "Home"
+        "home": "Home",
+        "chatbot": "ChatBot",
+        "signin": "Sign In",
+        "trychatbot": "Try ChatBot"
+    },
+    "index": {
+        "about": "This is a free-to-use chatbot that can return any information or answer any questions you may have relating to your student life!"
+    },
+    "signin": {
+        "welcome": "Welcome!",
+        "username": "Username",
+        "password": "Password",
+        "remember": "Remember Me",
+        "signin": "Sign in"
+    },
+    "chatbot": {
+        "newchat": "New Chat",
+        "send": "Send",
+        "message": "Message the ChatBot..."
+    },
+    "speechRec": {
+        "micDisabled": "Mic Disabled",
+        "stopRecording": "Stop Recording",
+        "startRecording": "Start Recording"
     }
 }

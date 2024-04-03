@@ -4,11 +4,10 @@
         <div class="flex w-1/5 flex-col bg-chatbot-black p-4">
             <!-- New Chat Button -->
             <button
+                v-t="'chatbot.newchat'"
                 class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
                 @click="newChat"
-            >
-                New Chat
-            </button>
+            />
         </div>
         <!-- Pink side with 3/4 of the page -->
         <div class="flex w-4/5 flex-col bg-chatbot-white p-1">
@@ -41,18 +40,18 @@
                 <!-- Circular Rectangle Box at the bottom -->
                 <textarea
                     v-model="userMessage"
-                    placeholder="Message the ChatBot..."
+                    :placeholder="$t('chatbot.message')"
                     class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
                     style="color: rgb(6, 5, 5)"
+                    @keydown.enter="handleShiftEnter"
                 ></textarea>
-
+                <speechRec @on-transcribed="text => (userMessage = text)" />
                 <button
+                    v-t="'chatbot.send'"
                     class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
                     :disabled="generating"
                     @click="sendMessage"
-                >
-                    Send
-                </button>
+                />
             </div>
         </div>
     </div>
@@ -136,5 +135,14 @@ const submitQuestion = question => {
     // sets value of user message, so it gets submitted to chatBot
     userMessage.value = question;
     sendMessage();
+};
+
+const handleShiftEnter = event => {
+    // if enter key pressed but not alongside the shift key
+    if (event.key === "Enter" && !event.shiftKey) {
+        // sends message to chatbot
+        sendMessage();
+        event.preventDefault();
+    }
 };
 </script>
