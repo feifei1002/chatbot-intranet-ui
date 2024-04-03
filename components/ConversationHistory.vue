@@ -18,21 +18,16 @@
             @click="deleteConversation(conversation.id)"
         />
     </div>
+    <div v-if="errorMessage">
+        {{ errorMessage }}
+    </div>
 </template>
 
 <script setup>
 const config = useRuntimeConfig();
-
+const errorMessage = ref("");
 const conversations = ref([]);
 const { token } = useAuth();
-
-// gets chat messages array as prop from parent chat.vue
-const props = defineProps({
-    chatMessages: {
-        type: Array,
-        default: () => [],
-    },
-});
 
 // emit to call parent function
 const emit = defineEmits(["showHistory", "conversation-selected"]);
@@ -67,7 +62,11 @@ const getConversations = async () => {
             },
         });
     } catch (error) {
-        console.error("Error fetching conversations: ", error);
+        if (error.status === 401) {
+            errorMessage.value = "Please login to access the conversation history.";
+        } else {
+            console.error("Error fetching conversations: ", error);
+        }
     }
 };
 
@@ -85,30 +84,6 @@ const getConversationHistory = async inputConversationId => {
         emit("showHistory", conversationHistory);
     } catch (error) {
         console.error("Error fetching conversation history: ", error);
-    }
-};
-
-// adds the recent two messages to the tables
-// if it's the first question to the chatbot, the title is updated in the database
-const addMessages = async inputConversationId => {
-    try {
-        const isTitleUpdated = await $fetch(
-            `${config.public.apiURL}/conversations/${inputConversationId}/add_messages`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    ...(token.value && { Authorization: token.value }),
-                },
-                body: {
-                    // only get the last 2 messages
-                    chat_messages: props.chatMessages.slice(-2),
-                },
-            },
-        );
-        console.log(isTitleUpdated);
-    } catch (error) {
-        console.error("Error adding to conversation history: ", error);
     }
 };
 
@@ -146,7 +121,6 @@ defineExpose({
     newConversation,
     getConversations,
     deleteConversation,
-    addMessages,
 });
 </script>
 

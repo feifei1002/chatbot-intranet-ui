@@ -71,6 +71,7 @@ const config = useRuntimeConfig();
 
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
+const route = useRoute();
 const userMessage = ref("");
 const chatMessages = ref([]);
 
@@ -83,6 +84,10 @@ const generating = ref(false);
 
 // runs after component has finished initial rendering and creating DOM nodes
 onMounted(() => {
+    const id = route.params.id;
+    if (id) {
+        conversationHistory.value.getConversationHistory(id);
+    }
     // gets conversations to update the values on the left panel
     conversationHistory.value.getConversations();
 });
@@ -135,7 +140,7 @@ const sendMessage = () => {
                 suggestedQuestions.value.fetchSuggestedQuestions();
 
                 // adds new messages to the tables
-                conversationHistory.value.addMessages(currentConversationId.value);
+                await addMessages(currentConversationId.value);
                 // updates left panel of conversations again
                 conversationHistory.value.getConversations();
             },
@@ -158,6 +163,31 @@ const sendMessage = () => {
                 throw error;
             },
         });
+    }
+};
+// adds the recent two messages to the tables
+// if it's the first question to the chatbot, the title is updated in the database
+const addMessages = async inputConversationId => {
+    const { token } = useAuth();
+    try {
+        const isTitleUpdated = await $fetch(
+            `${config.public.apiURL}/conversations/${inputConversationId}/add_messages`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(token.value && { Authorization: token.value }),
+                },
+                body: {
+                    // only get the last 2 messages
+                    // chat_messages: props.chatMessages.slice(-2),
+                    chat_messages: chatMessages.value.slice(-2),
+                },
+            },
+        );
+        console.log(isTitleUpdated);
+    } catch (error) {
+        console.error("Error adding to conversation history: ", error);
     }
 };
 
