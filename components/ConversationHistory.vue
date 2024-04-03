@@ -28,6 +28,7 @@ const config = useRuntimeConfig();
 const errorMessage = ref("");
 const conversations = ref([]);
 const { token } = useAuth();
+const { status } = useAuth();
 
 // emit to call parent function
 const emit = defineEmits(["showHistory", "conversation-selected"]);
@@ -62,7 +63,7 @@ const getConversations = async () => {
             },
         });
     } catch (error) {
-        if (error.status === 401) {
+        if (status.value !== "authenticated") {
             errorMessage.value = "Please login to access the conversation history.";
         } else {
             console.error("Error fetching conversations: ", error);
