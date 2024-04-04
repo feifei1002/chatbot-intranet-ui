@@ -1,9 +1,27 @@
 <script setup>
+import { useI18n } from "vue-i18n";
 const { status } = useAuth();
 const authStatus = ref(status.value === "authenticated");
+const { locale } = useI18n();
+const cookieLocale = useCookie("locale");
 watch(status, newStatus => {
     authStatus.value = newStatus === "authenticated";
 });
+
+if (cookieLocale.value) {
+    locale.value = cookieLocale.value;
+} else {
+    locale.value = "en";
+    cookieLocale.value = locale.value;
+}
+
+watch(
+    locale,
+    newLocale => {
+        cookieLocale.value = newLocale;
+    },
+    { immediate: true },
+);
 </script>
 
 <template>
@@ -16,7 +34,7 @@ watch(status, newStatus => {
                     <select
                         id="locale-select"
                         v-model="$i18n.locale"
-                        class="bg-white border-solid border-2 border-black text-chatbot-red"
+                        class="border-2 border-solid border-black bg-white text-chatbot-red"
                     >
                         <option value="en">en</option>
                         <option value="cy">cy</option>
