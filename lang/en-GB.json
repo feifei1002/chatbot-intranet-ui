@@ -19,5 +19,10 @@
         "newchat": "New Chat",
         "send": "Send",
         "message": "Message the ChatBot..."
+    },
+    "speechRec": {
+        "micDisabled": "Mic Disabled",
+        "stopRecording": "Stop Recording",
+        "startRecording": "Start Recording"
     }
 }
