@@ -19,5 +19,10 @@
     "newchat": "새로운 채팅",
     "send": "메시지를 보내다",
     "message": "챗봇에게 메시지를 보냅니다..."
-  }
+  },
+  "speechRec": {
+    "micDisabled": "마이크 비활성화됨",
+    "stopRecording": "녹음 중지",
+    "startRecording": "녹음 시작"
+}
 }
