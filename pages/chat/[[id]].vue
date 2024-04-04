@@ -10,12 +10,7 @@
             />
 
             <!-- output previous conversations ordered by title (when authenticated user logged in) -->
-            <ConversationHistory
-                ref="conversationHistory"
-                :chat-messages="chatMessages"
-                @show-history="setChatMessages"
-                @conversation-selected="handleConversationSelected"
-            />
+            <ConversationHistory ref="conversationHistory" @conversation-selected="handleConversationSelected" />
         </div>
         <!-- Pink side with 3/4 of the page -->
         <div class="flex w-4/5 flex-col bg-pink-500 p-1">
@@ -74,7 +69,6 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 const route = useRoute();
 const userMessage = ref("");
 const chatMessages = ref([]);
-
 const suggestedQuestions = ref(null);
 
 const conversationHistory = ref([]);
@@ -86,7 +80,7 @@ const generating = ref(false);
 onMounted(() => {
     const id = route.params.id;
     if (id) {
-        conversationHistory.value.getConversationHistory(id);
+        getConversationHistory(id);
     }
     // gets conversations to update the values on the left panel
     conversationHistory.value.getConversations();
@@ -165,6 +159,25 @@ const sendMessage = () => {
         });
     }
 };
+
+// returns conversation history for a given user and specific conversation ID
+const getConversationHistory = async inputConversationId => {
+    const { token } = useAuth();
+    try {
+        const conversationHistory = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                ...(token.value && { Authorization: token.value }),
+            },
+        });
+        // posts history to the page using parent function
+        setChatMessages(conversationHistory);
+    } catch (error) {
+        console.error("Error fetching conversation history: ", error);
+    }
+};
+
 // adds the recent two messages to the tables
 // if it's the first question to the chatbot, the title is updated in the database
 const addMessages = async inputConversationId => {

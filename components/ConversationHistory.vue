@@ -29,9 +29,10 @@ const errorMessage = ref("");
 const conversations = ref([]);
 const { token } = useAuth();
 const { status } = useAuth();
+const router = useRouter();
 
 // emit to call parent function
-const emit = defineEmits(["showHistory", "conversation-selected"]);
+const emit = defineEmits(["conversation-selected"]);
 
 // create new conversation for a given authenticated user
 const newConversation = async () => {
@@ -71,23 +72,6 @@ const getConversations = async () => {
     }
 };
 
-// returns conversation history for a given user and specific conversation ID
-const getConversationHistory = async inputConversationId => {
-    try {
-        const conversationHistory = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                ...(token.value && { Authorization: token.value }),
-            },
-        });
-        // posts history to the page using parent function
-        emit("showHistory", conversationHistory);
-    } catch (error) {
-        console.error("Error fetching conversation history: ", error);
-    }
-};
-
 // deletes the conversation in the database
 const deleteConversation = async inputConversationId => {
     // popup window to confirm the user's choice
@@ -109,7 +93,7 @@ const deleteConversation = async inputConversationId => {
 
 // when clicking a title, sets the conversation ID to the correct one for the conversation
 const handleTitleClick = conversation => {
-    getConversationHistory(conversation.id);
+    router.push({ path: `/chat/${conversation.id}` });
     emit("conversation-selected", conversation.id);
 };
 
