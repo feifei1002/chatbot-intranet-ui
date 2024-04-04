@@ -1,27 +1,19 @@
 <script setup>
-import { useI18n } from "vue-i18n";
 const { status } = useAuth();
 const authStatus = ref(status.value === "authenticated");
-const { locale } = useI18n();
-const cookieLocale = useCookie("locale");
+
 watch(status, newStatus => {
     authStatus.value = newStatus === "authenticated";
 });
 
-if (cookieLocale.value) {
-    locale.value = cookieLocale.value;
-} else {
-    locale.value = "en";
-    cookieLocale.value = locale.value;
-}
+const { locale } = useI18n({ useScope: "global" });
+const cookieLocale = useCookie("locale");
 
-watch(
-    locale,
-    newLocale => {
-        cookieLocale.value = newLocale;
-    },
-    { immediate: true },
-);
+locale.value = cookieLocale.value ?? "en";
+
+watch(locale, () => {
+    cookieLocale.value = locale.value;
+});
 </script>
 
 <template>
