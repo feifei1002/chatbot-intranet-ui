@@ -82,8 +82,6 @@ onMounted(() => {
     if (id) {
         getConversationHistory(id);
     }
-    // gets conversations to update the values on the left panel
-    conversationHistory.value.getConversations();
 });
 
 const newChat = () => {

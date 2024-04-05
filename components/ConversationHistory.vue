@@ -1,7 +1,7 @@
 <template>
     <!-- lists each conversation in reverse order, displaying the title -->
     <div
-        v-for="(conversation, index) in reversedConversations"
+        v-for="(conversation, index) in conversations"
         :key="index"
         class="mt-4 flex cursor-pointer items-center justify-between rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
         @click="handleTitleClick(conversation)"
@@ -34,6 +34,10 @@ const router = useRouter();
 // emit to call parent function
 const emit = defineEmits(["conversation-selected"]);
 
+onMounted(() => {
+    getConversations();
+});
+
 // create new conversation for a given authenticated user
 const newConversation = async () => {
     try {
@@ -54,21 +58,24 @@ const newConversation = async () => {
 
 // returns conversations to update the left panel of titles to click
 const getConversations = async () => {
+    if (status.value !== "authenticated") {
+        errorMessage.value = "Please login to access the conversation history.";
+        return;
+    }
     try {
         // sets 'conversations' to values from get request
-        conversations.value = await $fetch(`${config.public.apiURL}/conversations`, {
+        await $fetch(`${config.public.apiURL}/conversations`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 ...(token.value && { Authorization: token.value }),
             },
+            // reverse the order of titles to show recent conversations at the top
+        }).then(response => {
+            conversations.value = response.reverse();
         });
     } catch (error) {
-        if (status.value !== "authenticated") {
-            errorMessage.value = "Please login to access the conversation history.";
-        } else {
-            console.error("Error fetching conversations: ", error);
-        }
+        console.error("Error fetching conversations: ", error);
     }
 };
 
@@ -96,11 +103,6 @@ const handleTitleClick = conversation => {
     router.push({ path: `/chat/${conversation.id}` });
     emit("conversation-selected", conversation.id);
 };
-
-// reverse the order of titles to show recent conversations at the top
-const reversedConversations = computed(() => {
-    return [...conversations.value].reverse();
-});
 
 defineExpose({
     newConversation,
