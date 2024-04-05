@@ -14,7 +14,7 @@ const isDark = computed({
     <UButton
         :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
         size="lg"
-        color="blue"
+        :color="isDark ? 'blue' : 'yellow'"
         variant="link"
         :title="isDark ? 'Light mode' : 'Dark mode'"
         @click="isDark = !isDark"

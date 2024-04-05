@@ -30,7 +30,7 @@ watch(locale, () => {
                     <select
                         id="locale-select"
                         v-model="$i18n.locale"
-                        class="border-2 border-solid border-black bg-white text-chatbot-red"
+                        class="border-2 border-solid border-black bg-white text-chatbot-red dark:border-chatbot-white dark:bg-chatbot-black dark:text-chatbot-white"
                     >
                         <option value="en">en</option>
                         <option value="cy">cy</option>
