@@ -77,10 +77,10 @@ const currentConversationId = ref(null);
 const generating = ref(false);
 
 // runs after component has finished initial rendering and creating DOM nodes
-onMounted(() => {
+onBeforeMount(async () => {
     const id = route.params.id;
     if (id) {
-        getConversationHistory(id);
+        await getConversationHistory(id);
     }
 });
 
