@@ -76,14 +76,6 @@ const currentConversationId = ref(null);
 
 const generating = ref(false);
 
-// runs after component has finished initial rendering and creating DOM nodes
-onBeforeMount(async () => {
-    const id = route.params.id;
-    if (id) {
-        await getConversationHistory(id);
-    }
-});
-
 const newChat = () => {
     // clears all chat history from the screen, including suggested questions
     chatMessages.value = [];
@@ -175,6 +167,12 @@ const getConversationHistory = async inputConversationId => {
         console.error("Error fetching conversation history: ", error);
     }
 };
+
+// runs after component has finished initial rendering and creating DOM nodes
+const id = route.params.id;
+if (id) {
+    getConversationHistory(id);
+}
 
 // adds the recent two messages to the tables
 // if it's the first question to the chatbot, the title is updated in the database
