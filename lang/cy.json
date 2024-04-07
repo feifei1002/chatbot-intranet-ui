@@ -19,5 +19,11 @@
     "newchat": "Sgwrs newydd",
     "send": "Danfon",
     "message": "Danfon neges I chatbot..."
-  }
+  },
+  "speechRec": {
+    "micDisabled": "Mic Anabl",
+    "stopRecording": "Stopio Recordio",
+    "startRecording": "Dechrau Recordio"
+}
+  
 }
