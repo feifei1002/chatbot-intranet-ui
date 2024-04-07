@@ -1,9 +1,9 @@
 <template>
-    <Line :data="data" :options="options" />
+    <LineChart :data="data" :options="options" />
 </template>
 
 <script>
-import { Line } from "vue-chartjs";
+import { Line as LineChart } from "vue-chartjs";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -21,7 +21,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 export default {
     name: "LineChart",
     components: {
-        Line,
+        LineChart,
     },
     data() {
         return LineChartConfig;
