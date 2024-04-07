@@ -54,5 +54,11 @@
     </div>
 </template>
 
-<script>
+<script setup>
+const { data } = useAuth();
+
+if (!data.value?.admin) {
+    navigateTo("/");
+    console.log(data.value.admin);
+}
 </script>

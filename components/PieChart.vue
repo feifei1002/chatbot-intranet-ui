@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import { Doughnut} from "vue-chartjs"
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from "vue-chartjs";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 import * as PieChartConfig from "../config/PieChartConfig";
 
