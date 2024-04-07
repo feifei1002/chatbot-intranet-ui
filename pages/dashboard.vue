@@ -55,10 +55,12 @@
 </template>
 
 <script setup>
+// Utilise the useAuth hook to retrieve the authentication data.
 const { data } = useAuth();
 
+// Check if the 'admin' property exists and has a truthy value in the 'data.value' object.
 if (!data.value?.admin) {
+    // If the 'admin' property is missing, undefined, or false, redirect the user to the homepage.
     navigateTo("/");
-    console.log(data.value.admin);
 }
 </script>
