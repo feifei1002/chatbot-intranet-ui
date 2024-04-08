@@ -161,17 +161,15 @@ const getConversationHistory = async inputConversationId => {
                 Authorization: token.value,
             },
         });
-        // posts history to the page using parent function
-        setChatMessages(conversationHistory);
+        chatMessages.value = conversationHistory;
     } catch (error) {
         console.error("Error fetching conversation history: ", error);
     }
 };
 
-// runs after component has finished initial rendering and creating DOM nodes
 const id = route.params.id;
 if (id) {
-    getConversationHistory(id);
+    await getConversationHistory(id);
 }
 
 // adds the recent two messages to the tables
@@ -205,12 +203,6 @@ const submitQuestion = question => {
     // sets value of user message, so it gets submitted to chatBot
     userMessage.value = question;
     sendMessage();
-};
-
-// outputs the chat history for the chosen conversation to the page
-const setChatMessages = messages => {
-    // sets chat messages to previous history
-    chatMessages.value = messages;
 };
 
 // fetch the id of current conversation to add in new messages

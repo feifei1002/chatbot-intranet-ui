@@ -34,10 +34,6 @@ const router = useRouter();
 // emit to call parent function
 const emit = defineEmits(["conversation-selected"]);
 
-onMounted(() => {
-    getConversations();
-});
-
 // create new conversation for a given authenticated user
 const newConversation = async () => {
     try {
@@ -109,6 +105,8 @@ defineExpose({
     getConversations,
     deleteConversation,
 });
+
+await getConversations();
 </script>
 
 <style scoped></style>
