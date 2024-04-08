@@ -7,9 +7,8 @@ import * as PieChartConfig from "../config/PieChartConfig";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const { data, options } = PieChartConfig;
-
 </script>
 
 <template>
-  <Doughnut :data="data" :options="options" />
+    <Doughnut :data="data" :options="options" />
 </template>
