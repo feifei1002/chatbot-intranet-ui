@@ -46,7 +46,7 @@ const newConversation = async () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                ...(token.value && { Authorization: token.value }),
+                Authorization: token.value,
             },
         });
         return conv_id.conversation_id[0];
@@ -68,7 +68,7 @@ const getConversations = async () => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                ...(token.value && { Authorization: token.value }),
+                Authorization: token.value,
             },
             // reverse the order of titles to show recent conversations at the top
         }).then(response => {
@@ -87,7 +87,7 @@ const deleteConversation = async inputConversationId => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                ...(token.value && { Authorization: token.value }),
+                Authorization: token.value,
             },
         });
         if (isConversationDeleted) {

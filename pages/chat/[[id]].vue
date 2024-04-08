@@ -158,7 +158,7 @@ const getConversationHistory = async inputConversationId => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                ...(token.value && { Authorization: token.value }),
+                Authorization: token.value,
             },
         });
         // posts history to the page using parent function
@@ -185,7 +185,7 @@ const addMessages = async inputConversationId => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    ...(token.value && { Authorization: token.value }),
+                    Authorization: token.value,
                 },
                 body: {
                     // only get the last 2 messages
