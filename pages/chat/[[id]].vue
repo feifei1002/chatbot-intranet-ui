@@ -10,7 +10,12 @@
             />
 
             <!-- output previous conversations ordered by title (when authenticated user logged in) -->
-            <ConversationHistory ref="conversationHistory" @conversation-selected="handleConversationSelected" />
+            <ConversationHistory
+                v-if="authStatus !== 'unauthenticated'"
+                ref="conversationHistory"
+                @conversation-selected="handleConversationSelected"
+            />
+            <span v-else v-t="'chatbot.history_login'" class="mt-2 text-center text-xl text-white"></span>
         </div>
         <!-- Pink side with 3/4 of the page -->
         <div class="flex w-4/5 flex-col bg-pink-500 p-1">
@@ -75,6 +80,8 @@ const conversationHistory = ref([]);
 const currentConversationId = ref(null);
 
 const generating = ref(false);
+
+const { status: authStatus } = useAuth();
 
 const newChat = () => {
     // clears all chat history from the screen, including suggested questions

@@ -18,17 +18,12 @@
             @click="deleteConversation(conversation.id)"
         />
     </div>
-    <div v-if="errorMessage">
-        {{ errorMessage }}
-    </div>
 </template>
 
 <script setup>
 const config = useRuntimeConfig();
-const errorMessage = ref("");
 const conversations = ref([]);
 const { token } = useAuth();
-const { status } = useAuth();
 const router = useRouter();
 
 // emit to call parent function
@@ -54,10 +49,6 @@ const newConversation = async () => {
 
 // returns conversations to update the left panel of titles to click
 const getConversations = async () => {
-    if (status.value !== "authenticated") {
-        errorMessage.value = "Please login to access the conversation history.";
-        return;
-    }
     try {
         // sets 'conversations' to values from get request
         await $fetch(`${config.public.apiURL}/conversations`, {
