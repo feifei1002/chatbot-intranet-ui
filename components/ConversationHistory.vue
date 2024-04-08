@@ -29,24 +29,6 @@ const router = useRouter();
 // emit to call parent function
 const emit = defineEmits(["conversation-selected"]);
 
-// create new conversation for a given authenticated user
-const newConversation = async () => {
-    try {
-        // Post request to create new conversation for authenticated user
-        const conv_id = await $fetch(`${config.public.apiURL}/conversations/create`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: token.value,
-            },
-        });
-        return conv_id.conversation_id[0];
-    } catch (error) {
-        // Handle errors here
-        console.error("Error fetching conversation message: ", error);
-    }
-};
-
 // returns conversations to update the left panel of titles to click
 const getConversations = async () => {
     try {
@@ -92,7 +74,6 @@ const handleTitleClick = conversation => {
 };
 
 defineExpose({
-    newConversation,
     getConversations,
     deleteConversation,
 });

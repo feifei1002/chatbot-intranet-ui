@@ -10,11 +10,7 @@
             />
 
             <!-- output previous conversations ordered by title (when authenticated user logged in) -->
-            <ConversationHistory
-                v-if="authStatus !== 'unauthenticated'"
-                ref="conversationHistory"
-                @conversation-selected="handleConversationSelected"
-            />
+            <ConversationHistory v-if="authStatus !== 'unauthenticated'" ref="conversationHistory" />
             <span v-else v-t="'chatbot.history_login'" class="mt-2 text-center text-xl text-white"></span>
         </div>
         <!-- Pink side with 3/4 of the page -->
@@ -77,16 +73,22 @@ const chatMessages = ref([]);
 const suggestedQuestions = ref(null);
 
 const conversationHistory = ref([]);
-const currentConversationId = ref(null);
 
 const generating = ref(false);
 
 const { status: authStatus } = useAuth();
 
+const conversationId = ref(route.params.id);
+const needsRefresh = ref(false);
+
 const newChat = () => {
-    // clears all chat history from the screen, including suggested questions
-    chatMessages.value = [];
-    suggestedQuestions.value.clear();
+    if (route.path !== "/chat") {
+        navigateTo("/chat");
+    }
+    // url bar shows a conversation ID, but this instance is without one
+    else if (needsRefresh.value) {
+        location.href = "/chat";
+    }
 };
 
 const sendMessage = () => {
@@ -122,18 +124,31 @@ const sendMessage = () => {
             onclose: async () => {
                 generating.value = false;
 
-                if (chatMessages.value.length === 2) {
-                    // if first question asked create new conversation
-                    currentConversationId.value = await conversationHistory.value.newConversation();
+                if (authStatus.value === "authenticated") {
+                    const isNewChat = !conversationId.value;
+
+                    if (isNewChat) {
+                        // if first question asked create new conversation
+                        conversationId.value = await createConversation();
+
+                        history.pushState(null, "", `/chat/${conversationId.value}`);
+
+                        // reload the page on next new conversation, since this is
+                        // still technically `/chat` withouth an ID
+                        needsRefresh.value = true;
+                    }
+
+                    // send new messages to the server
+                    addMessages(conversationId.value).then(() => {
+                        if (isNewChat) {
+                            // update conversation list of left
+                            conversationHistory.value.getConversations();
+                        }
+                    });
                 }
 
                 // after assistant message is loaded get suggested questions
                 suggestedQuestions.value.fetchSuggestedQuestions();
-
-                // adds new messages to the tables
-                await addMessages(currentConversationId.value);
-                // updates left panel of conversations again
-                conversationHistory.value.getConversations();
             },
             onmessage: event => {
                 console.log("Message:", event);
@@ -174,9 +189,8 @@ const getConversationHistory = async inputConversationId => {
     }
 };
 
-const id = route.params.id;
-if (id) {
-    await getConversationHistory(id);
+if (conversationId.value) {
+    await getConversationHistory(conversationId.value);
 }
 
 // adds the recent two messages to the tables
@@ -212,12 +226,6 @@ const submitQuestion = question => {
     sendMessage();
 };
 
-// fetch the id of current conversation to add in new messages
-const handleConversationSelected = conversationId => {
-    // sets conversation id to new value
-    currentConversationId.value = conversationId;
-};
-
 const handleShiftEnter = event => {
     // if enter key pressed but not alongside the shift key
     if (event.key === "Enter" && !event.shiftKey) {
@@ -226,4 +234,10 @@ const handleShiftEnter = event => {
         event.preventDefault();
     }
 };
+
+onActivated(() => {
+    if (needsRefresh.value) {
+        location.reload();
+    }
+});
 </script>
