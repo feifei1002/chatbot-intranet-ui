@@ -1,8 +1,4 @@
-<template>
-    <Doughnut :data="data" :options="options" />
-</template>
-
-<script>
+<script setup>
 import { Doughnut } from "vue-chartjs";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
@@ -10,13 +6,10 @@ import * as PieChartConfig from "../config/PieChartConfig";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default {
-    name: "App",
-    components: {
-        Doughnut,
-    },
-    data() {
-        return PieChartConfig;
-    },
-};
+const { data, options } = PieChartConfig;
+
 </script>
+
+<template>
+  <Doughnut :data="data" :options="options" />
+</template>

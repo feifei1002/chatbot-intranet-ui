@@ -2,7 +2,7 @@
     <LineChart :data="data" :options="options" />
 </template>
 
-<script>
+<script setup>
 import { Line as LineChart } from "vue-chartjs";
 import {
     Chart as ChartJS,
@@ -18,13 +18,5 @@ import * as LineChartConfig from "../config/LineChartConfig";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-export default {
-    name: "LineChart",
-    components: {
-        LineChart,
-    },
-    data() {
-        return LineChartConfig;
-    },
-};
+const { data, options } = LineChartConfig;
 </script>
