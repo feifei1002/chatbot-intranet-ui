@@ -198,22 +198,18 @@ if (conversationId.value) {
 const addMessages = async inputConversationId => {
     const { token } = useAuth();
     try {
-        const isTitleUpdated = await $fetch(
-            `${config.public.apiURL}/conversations/${inputConversationId}/add_messages`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: token.value,
-                },
-                body: {
-                    // only get the last 2 messages
-                    // chat_messages: props.chatMessages.slice(-2),
-                    chat_messages: chatMessages.value.slice(-2),
-                },
+        await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}/add_messages`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: token.value,
             },
-        );
-        console.log(isTitleUpdated);
+            body: {
+                // only get the last 2 messages
+                // chat_messages: props.chatMessages.slice(-2),
+                chat_messages: chatMessages.value.slice(-2),
+            },
+        });
     } catch (error) {
         console.error("Error adding to conversation history: ", error);
     }
