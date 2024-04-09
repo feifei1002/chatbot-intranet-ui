@@ -28,7 +28,7 @@
                 square
                 variant="ghost"
                 title="Click to delete the conversation"
-                @click="deleteConversation(conversation.id)"
+                @click.stop="deleteConversation(conversation.id)"
             />
             <!-- icon to copy the link to share the conversation -->
             <UButton
@@ -39,8 +39,17 @@
                 square
                 variant="ghost"
                 title="Click to share the conversation"
-                @click="shareConversation(conversation.id)"
+                @click.stop="shareConversation(conversation.id)"
             />
+
+            <UModal v-model="showLinkPopup" :overlay="false">
+                <div class="p-4">
+                    <h2>Share a Link of this Conversation</h2>
+                    <p>Link: {{ copiedUrl }}</p>
+                    <button class="hover:text-chatbot-red" @click="copiedConversationLink">Copy Link</button>
+                    <!-- maybe add icon here too -->
+                </div>
+            </UModal>
         </div>
     </div>
 </template>
@@ -50,6 +59,10 @@ const config = useRuntimeConfig();
 const conversations = ref([]);
 const { token } = useAuth();
 const router = useRouter();
+// whether to show link to copy conversation
+const showLinkPopup = ref(false);
+// url of copied conversation to share
+const copiedUrl = ref("");
 
 // emit to call parent function
 const emit = defineEmits(["conversation-selected"]);
@@ -103,13 +116,25 @@ const shareConversation = conversationId => {
     // console.log("ID is: ", conversationId);
 
     // sets url for unique conversation id
-    const copiedUrl = `http://localhost:3000/chat/${conversationId}`;
+    copiedUrl.value = `http://localhost:3000/chat/${conversationId}`;
     // console.log("URL is: ", copiedUrl);
 
     // copy to clipboard
     // from https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 09-04-24
-    navigator.clipboard.writeText(copiedUrl);
-    alert("Copied the URL");
+    // navigator.clipboard.writeText(copiedUrl);
+    // alert("Copied the URL");
+
+    showLinkPopup.value = true;
+};
+
+const copiedConversationLink = () => {
+    // console.log("Link copied"); // for testing
+    // copy to clipboard
+    // from https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 09-04-24
+    navigator.clipboard.writeText(copiedUrl.value);
+
+    // small popup to say link copied
+    alert("Link Copied");
 };
 
 defineExpose({
