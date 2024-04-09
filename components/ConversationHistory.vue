@@ -1,17 +1,22 @@
 <template>
+    <!--        v-if="conversations.length > 0"-->
+    <!--        class="mt-4 flex items-center justify-between rounded-full border-2 border-white bg-transparent p-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"-->
+
     <div
-        v-if="conversations.length > 0"
-        class="mt-4 flex items-center justify-between rounded-full border-2 border-white bg-transparent p-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
+        v-for="(conversation, index) in conversations"
+        :key="index"
+        class="mt-4 flex cursor-pointer items-center justify-between rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
+        @click="handleTitleClick(conversation)"
     >
         <!-- list the titles from the database -->
-        <div
-            v-for="(conversation, index) in reversedConversations"
-            :key="index"
-            class="flex cursor-pointer items-center"
-            @click="handleTitleClick(conversation)"
-        >
-            {{ conversation.title }}
-        </div>
+        <!--        <div-->
+        <!--            v-for="(conversation, index) in reversedConversations"-->
+        <!--            :key="index"-->
+        <!--            class="flex cursor-pointer items-center"-->
+        <!--            @click="handleTitleClick(conversation)"-->
+        <!--        >-->
+        {{ conversation.title }}
+        <!--        </div>-->
 
         <div class="flex items-center">
             <!-- icon to allow the conversation to be deleted by clicking and calling deleteConversation(ID) -->
@@ -42,93 +47,29 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
 const conversations = ref([]);
 const { token } = useAuth();
-
-// gets chat messages array as prop from parent chat.vue
-const props = defineProps({
-    chatMessages: {
-        type: Array,
-        default: () => [],
-    },
-});
+const router = useRouter();
 
 // emit to call parent function
-const emit = defineEmits(["showHistory", "conversation-selected"]);
-
-// create new conversation for a given authenticated user
-const newConversation = async () => {
-    try {
-        // Post request to create new conversation for authenticated user
-        const conv_id = await $fetch(`${config.public.apiURL}/conversations/create`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                ...(token.value && { Authorization: token.value }),
-            },
-        });
-        return conv_id.conversation_id[0];
-    } catch (error) {
-        // Handle errors here
-        console.error("Error fetching conversation message: ", error);
-    }
-};
+const emit = defineEmits(["conversation-selected"]);
 
 // returns conversations to update the left panel of titles to click
 const getConversations = async () => {
     try {
         // sets 'conversations' to values from get request
-        conversations.value = await $fetch(`${config.public.apiURL}/conversations`, {
+        await $fetch(`${config.public.apiURL}/conversations`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                ...(token.value && { Authorization: token.value }),
+                Authorization: token.value,
             },
+            // reverse the order of titles to show recent conversations at the top
+        }).then(response => {
+            conversations.value = response.reverse();
         });
     } catch (error) {
         console.error("Error fetching conversations: ", error);
-    }
-};
-
-// returns conversation history for a given user and specific conversation ID
-const getConversationHistory = async inputConversationId => {
-    try {
-        const conversationHistory = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                ...(token.value && { Authorization: token.value }),
-            },
-        });
-        // posts history to the page using parent function
-        emit("showHistory", conversationHistory);
-    } catch (error) {
-        console.error("Error fetching conversation history: ", error);
-    }
-};
-
-// adds the recent two messages to the tables
-// if it's the first question to the chatbot, the title is updated in the database
-const addMessages = async inputConversationId => {
-    try {
-        const isTitleUpdated = await $fetch(
-            `${config.public.apiURL}/conversations/${inputConversationId}/add_messages`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    ...(token.value && { Authorization: token.value }),
-                },
-                body: {
-                    // only get the last 2 messages
-                    chat_messages: props.chatMessages.slice(-2),
-                },
-            },
-        );
-        console.log(isTitleUpdated);
-    } catch (error) {
-        console.error("Error adding to conversation history: ", error);
     }
 };
 
@@ -140,7 +81,7 @@ const deleteConversation = async inputConversationId => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                ...(token.value && { Authorization: token.value }),
+                Authorization: token.value,
             },
         });
         if (isConversationDeleted) {
@@ -153,14 +94,9 @@ const deleteConversation = async inputConversationId => {
 
 // when clicking a title, sets the conversation ID to the correct one for the conversation
 const handleTitleClick = conversation => {
-    getConversationHistory(conversation.id);
+    router.push({ path: `/chat/${conversation.id}` });
     emit("conversation-selected", conversation.id);
 };
-
-// reverse the order of titles to show recent conversations at the top
-const reversedConversations = computed(() => {
-    return [...conversations.value].reverse();
-});
 
 // gets a link to share the conversation
 const shareConversation = conversationId => {
@@ -168,11 +104,11 @@ const shareConversation = conversationId => {
 };
 
 defineExpose({
-    newConversation,
     getConversations,
     deleteConversation,
-    addMessages,
 });
+
+await getConversations();
 </script>
 
 <style scoped></style>
