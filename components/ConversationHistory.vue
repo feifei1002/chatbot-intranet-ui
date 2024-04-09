@@ -22,7 +22,7 @@
             <!-- icon to allow the conversation to be deleted by clicking and calling deleteConversation(ID) -->
             <UButton
                 icon="i-heroicons-trash-16-solid"
-                class="mr-2 p-2 hover:bg-white"
+                class="mr-2 p-2 hover:text-chatbot-red"
                 size="2xs"
                 color="black"
                 square
@@ -33,7 +33,7 @@
             <!-- icon to copy the link to share the conversation -->
             <UButton
                 icon="i-heroicons-share-16-solid"
-                class="p-2 hover:bg-white"
+                class="p-2 hover:text-chatbot-red"
                 size="2xs"
                 color="black"
                 square
@@ -100,16 +100,16 @@ const handleTitleClick = conversation => {
 
 // gets a link to share the conversation
 const shareConversation = conversationId => {
-    console.log("ID is: ", conversationId);
+    // console.log("ID is: ", conversationId);
 
     // sets url for unique conversation id
     const copiedUrl = `http://localhost:3000/chat/${conversationId}`;
-    console.log("URL is: ", copiedUrl);
+    // console.log("URL is: ", copiedUrl);
 
     // copy to clipboard
     // from https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 09-04-24
     navigator.clipboard.writeText(copiedUrl);
-    alert("Copied the text: " + copiedUrl);
+    alert("Copied the URL");
 };
 
 defineExpose({
