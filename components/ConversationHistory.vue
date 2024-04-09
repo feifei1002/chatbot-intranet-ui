@@ -131,22 +131,12 @@ const handleTitleClick = conversation => {
 
 // gets a link to share the conversation
 const shareConversation = conversationId => {
-    // console.log("ID is: ", conversationId);
-
     // sets url for unique conversation id
-    copiedUrl.value = `http://localhost:3000/chat/${conversationId}`;
-    // console.log("URL is: ", copiedUrl);
-
-    // copy to clipboard
-    // from https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 09-04-24
-    // navigator.clipboard.writeText(copiedUrl);
-    // alert("Copied the URL");
-
+    copiedUrl.value = `http://localhost:3000/share/${conversationId}`;
     showLinkPopup.value = true;
 };
 
 const copiedConversationLink = () => {
-    // console.log("Link copied"); // for testing
     // copy to clipboard
     // from https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 09-04-24
     navigator.clipboard.writeText(copiedUrl.value);
