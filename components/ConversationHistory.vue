@@ -1,7 +1,4 @@
 <template>
-    <!--        v-if="conversations.length > 0"-->
-    <!--        class="mt-4 flex items-center justify-between rounded-full border-2 border-white bg-transparent p-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"-->
-
     <div
         v-for="(conversation, index) in conversations"
         :key="index"
@@ -9,14 +6,7 @@
         @click="handleTitleClick(conversation)"
     >
         <!-- list the titles from the database -->
-        <!--        <div-->
-        <!--            v-for="(conversation, index) in reversedConversations"-->
-        <!--            :key="index"-->
-        <!--            class="flex cursor-pointer items-center"-->
-        <!--            @click="handleTitleClick(conversation)"-->
-        <!--        >-->
         {{ conversation.title }}
-        <!--        </div>-->
 
         <div class="flex items-center">
             <!-- icon to allow the conversation to be deleted by clicking and calling deleteConversation(ID) -->
@@ -43,12 +33,40 @@
             />
 
             <UModal v-model="showLinkPopup" :overlay="false">
-                <div class="p-4">
-                    <h2>Share a Link of this Conversation</h2>
-                    <p>Link: {{ copiedUrl }}</p>
-                    <button class="hover:text-chatbot-red" @click="copiedConversationLink">Copy Link</button>
-                    <!-- maybe add icon here too -->
-                </div>
+                <!-- header section of popup -->
+                <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:chatbot-black' }">
+                    <template #header>
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-chatbot-white">
+                                Share a Link to this Conversation
+                            </h3>
+                            <UButton
+                                color="gray"
+                                variant="ghost"
+                                icon="i-heroicons-x-mark-20-solid"
+                                class="-my-1"
+                                @click="showLinkPopup = false"
+                            />
+                        </div>
+                    </template>
+
+                    <div class="flex items-center justify-between text-chatbot-white">
+                        <!-- regular part of text for popup -->
+                        <p>Link: {{ copiedUrl }}</p>
+                        <UButton
+                            icon="i-heroicons-clipboard-document-16-solid"
+                            class="hover:text-chatbot-red"
+                            size="2xs"
+                            color="black"
+                            square
+                            variant="ghost"
+                            title="Click to Copy Link"
+                            @click="copiedConversationLink"
+                        >
+                            Copy Link
+                        </UButton>
+                    </div>
+                </UCard>
             </UModal>
         </div>
     </div>
