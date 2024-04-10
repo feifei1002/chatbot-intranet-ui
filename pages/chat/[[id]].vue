@@ -29,6 +29,7 @@
                     <MarkdownRenderer :content="message.content" />
                     <CopyButton :content="message.content" />
                     <TTSResponse :content="message.content" />
+                    <FeedbackButtons :content="message.content"/>
                 </div>
 
                 <!-- suggested qs output here -->
