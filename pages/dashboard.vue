@@ -34,7 +34,7 @@
             <!-- Second set of divs -->
             <div class="mt-10">
                 <div>
-                    <h1 class="font-mono text-xl uppercase">{{ $t('dashboard.activityThisHour') }}</h1>
+                    <h1 class="font-mono text-xl uppercase">{{ $t("dashboard.activityThisHour") }}</h1>
                     <div class="flex">
                         <MidStats :stat-title="$t('dashboard.activeConversations')">
                             <LineChart />
@@ -52,7 +52,7 @@
             <!-- Third set of divs -->
             <div class="mt-10">
                 <div>
-                    <h1 class="font-mono text-xl uppercase">{{ $t('dashboard.historicalStats') }}</h1>
+                    <h1 class="font-mono text-xl uppercase">{{ $t("dashboard.historicalStats") }}</h1>
                     <div class="flex">
                         <BottomStats :stat-title="$t('dashboard.numberOfConv24h')">
                             <LineChart />
