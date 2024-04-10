@@ -19,8 +19,7 @@
         "newchat": "New Chat",
         "send": "Send",
         "message": "Message the ChatBot...",
-        "history_login": "Please login to access chat history",
-        "unauthorised_share": "You are not authorised to access this conversation..."
+        "history_login": "Please login to access chat history"
     },
     "speechRec": {
         "micDisabled": "Mic Disabled",

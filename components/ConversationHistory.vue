@@ -141,7 +141,6 @@ const shareConversation = conversationId => {
 const copiedConversationLink = async () => {
     // change privacy of conversation from private to public
     try {
-        // sets 'conversations' to values from get request
         await $fetch(`${config.public.apiURL}/conversations/${copiedId.value}/set_public`, {
             method: "POST",
             headers: {
