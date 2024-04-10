@@ -8,14 +8,29 @@ const props = defineProps({
     },
 });
 
-function sendFeedback(isPositive) {
+async function sendFeedback(isPositive) {
     // Confirms user is signed in order to submit feedback
     if (token.value) {
-        console.log(props.content + " is positive? " + isPositive)
+        try {
+            await fetch(`${config.public.apiURL}/feedback`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    message: props.content,
+                    positive: isPositive
+                }),
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle the error as needed, such as showing an error message to the user
+        }
     } else {
         alert("Please sign in to submit feedback");
     }
 }
+
 
 </script>
 <template>
