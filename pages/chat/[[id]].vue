@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-full">
         <!-- Blue side with 1/3 of the page -->
-        <div class="flex w-1/5 flex-col bg-chatbot-black p-4">
+        <div class="flex w-1/5 flex-col bg-amaranth-600 p-4">
             <!-- New Chat Button -->
             <button
                 v-t="'chatbot.newchat'"
@@ -22,8 +22,8 @@
                     :key="index"
                     class="mb-2 max-w-96 text-wrap break-words rounded p-1"
                     :class="{
-                        'mr-1 self-end bg-[#FAD2B7] text-right': message.role === 'user',
-                        'self-start bg-[#F2D5D6] text-left': message.role === 'assistant',
+                        'mr-1 self-end bg-amaranth-300 text-right text-black': message.role === 'user',
+                        'self-start bg-gray-300 text-left text-black': message.role === 'assistant',
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
