@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import { marked } from "marked";
 
 const props = defineProps({

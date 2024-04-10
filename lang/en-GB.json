@@ -18,7 +18,8 @@
     "chatbot": {
         "newchat": "New Chat",
         "send": "Send",
-        "message": "Message the ChatBot..."
+        "message": "Message the ChatBot...",
+        "history_login": "Please login to access chat history"
     },
     "speechRec": {
         "micDisabled": "Mic Disabled",
