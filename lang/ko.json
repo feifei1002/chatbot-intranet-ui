@@ -1,28 +1,47 @@
 {
-  "titles": {
-    "home": "홈",
-    "chatbot": "챗봇",
-    "signin": "로그인",
-    "trychatbot": "챗봇 사용하기"
-  },
-  "index": {
-    "about": "학생 생활에 대한 모든 질문에 대답할 챗봇입니다!"
-  },
-  "signin": {
-    "welcome": "안녕하세요!",
-    "username": "아이디",
-    "password": "비밀번호",
-    "remember": "아이디 저장",
-    "signin": "로그인"
-  },
-  "chatbot": {
-    "newchat": "새로운 채팅",
-    "send": "메시지를 보내다",
-    "message": "챗봇에게 메시지를 보냅니다..."
-  },
-  "speechRec": {
-    "micDisabled": "마이크 비활성화됨",
-    "stopRecording": "녹음 중지",
-    "startRecording": "녹음 시작"
-}
+    "titles": {
+        "home": "홈",
+        "chatbot": "챗봇",
+        "signin": "로그인",
+        "trychatbot": "챗봇 사용하기"
+    },
+    "index": {
+        "about": "학생 생활에 대한 모든 질문에 대답할 챗봇입니다!"
+    },
+    "signin": {
+        "welcome": "안녕하세요!",
+        "username": "아이디",
+        "password": "비밀번호",
+        "remember": "아이디 저장",
+        "signin": "로그인"
+    },
+    "chatbot": {
+        "newchat": "새로운 채팅",
+        "send": "메시지를 보내다",
+        "message": "챗봇에게 메시지를 보냅니다..."
+    },
+    "speechRec": {
+        "micDisabled": "마이크 비활성화됨",
+        "stopRecording": "녹음 중지",
+        "startRecording": "녹음 시작"
+    },
+    "dashboard": {
+      "conversations": "대화",
+      "lastMinute": "지난 분",
+      "avgLasthour": "지난 시간 평균",
+      "authUserMessage": "인증된 사용자 메시지",
+      "unauthUserMessage": "미인증 사용자 메시지",
+      "avg24hr": "지난 24시간 평균",
+      "msgCount": "메시지 수",
+      "sentReceived24h": "지난 24시간 발신/수신",
+      "activeConversations": "활성 대화",
+      "toolUsage": "도구 사용",
+      "numberOfConv24h": "대화 수 (24시간)",
+      "numberOfConv7d": "대화 수 (7일)",
+      "activityThisHour": "이 시간의 활동",
+      "historicalStats": "역사적 통계"
+
+      
+  }
+  
 }

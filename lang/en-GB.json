@@ -24,5 +24,22 @@
         "micDisabled": "Mic Disabled",
         "stopRecording": "Stop Recording",
         "startRecording": "Start Recording"
+    },
+    "dashboard": {
+        "conversations": "Conversations",
+        "lastMinute": "Last Minute",
+        "avgLasthour": "Average over last Hour",
+        "authUserMessage": "Authenicated User Messages",
+        "unauthUserMessage": "Unauthenicated User Messages",
+        "avg24hr": "Average over last 24h",
+        "msgCount": "Message Count",
+        "sentReceived24h": "Sent/Received over last 24h",
+        "activeConversations": "Active Conversations",
+        "toolUsage": "Tool Usage",
+        "numberOfConv24h": "Number of Conversations (24hr)",
+        "numberOfConv7d": "Number of Conversations (7d)",
+        "activityThisHour": "Activity this Hour",
+        "historicalStats": "Historical Stats"
+
     }
 }
