@@ -61,7 +61,7 @@
                             square
                             variant="ghost"
                             title="Click to Copy Link"
-                            @click="copiedConversationLink"
+                            @click="copiedConversationLink(conversation.id)"
                         >
                             Copy Link
                         </UButton>
@@ -132,14 +132,28 @@ const handleTitleClick = conversation => {
 // gets a link to share the conversation
 const shareConversation = conversationId => {
     // sets url for unique conversation id
-    copiedUrl.value = `http://localhost:3000/share/${conversationId}`;
+    copiedUrl.value = `http://localhost:3000/chat/${conversationId}`;
     showLinkPopup.value = true;
 };
 
-const copiedConversationLink = () => {
+const copiedConversationLink = async conversationId => {
+    // change privacy of conversation from private to public
+    try {
+        // sets 'conversations' to values from get request
+        await $fetch(`${config.public.apiURL}/conversations/${conversationId}/set_public`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: token.value,
+            },
+        });
+    } catch (error) {
+        console.error("Error setting conversation to public: ", error);
+    }
+
     // copy to clipboard
     // from https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 09-04-24
-    navigator.clipboard.writeText(copiedUrl.value);
+    await navigator.clipboard.writeText(copiedUrl.value);
 
     // small popup to say link copied
     alert("Link Copied");
