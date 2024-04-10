@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-full">
         <!-- Blue side with 1/3 of the page -->
-        <div class="flex w-1/5 flex-col bg-indigo-950 p-4">
+        <div class="flex w-1/5 flex-col bg-amaranth-600 p-4">
             <!-- New Chat Button -->
             <button
                 v-t="'chatbot.newchat'"
@@ -14,7 +14,7 @@
             <span v-else v-t="'chatbot.history_login'" class="mt-2 text-center text-xl text-white"></span>
         </div>
         <!-- Pink side with 3/4 of the page -->
-        <div class="flex w-4/5 flex-col bg-pink-500 p-1">
+        <div class="flex w-4/5 flex-col bg-chatbot-white p-1">
             <!-- Add your chatbot content here -->
             <div class="flex h-full flex-col overflow-y-scroll">
                 <div
@@ -22,8 +22,8 @@
                     :key="index"
                     class="mb-2 max-w-96 text-wrap break-words rounded p-1"
                     :class="{
-                        'mr-1 self-end bg-pink-600 text-right': message.role === 'user',
-                        'self-start bg-indigo-900 text-left text-white': message.role === 'assistant',
+                        'mr-1 self-end bg-amaranth-300 text-right text-black': message.role === 'user',
+                        'self-start bg-gray-300 text-left text-black': message.role === 'assistant',
                     }"
                 >
                     <MarkdownRenderer :content="message.content" />
