@@ -11,6 +11,10 @@
             <div class="fixed bottom-0 left-0">
                 <DarkMode></DarkMode>
             </div>
+
+            <!-- output previous conversations ordered by title (when authenticated user logged in) -->
+            <ConversationHistory v-if="authStatus !== 'unauthenticated'" ref="conversationHistory" />
+            <span v-else v-t="'chatbot.history_login'" class="mt-2 text-center text-xl text-white"></span>
         </div>
         <!-- Pink side with 3/4 of the page -->
         <div class="flex w-4/5 flex-col bg-pink-500 p-1">
