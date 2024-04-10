@@ -1,5 +1,5 @@
 <script setup>
-
+const { token } = useAuth();
 const config = useRuntimeConfig();
 const props = defineProps({
     content: {
@@ -9,7 +9,12 @@ const props = defineProps({
 });
 
 function sendFeedback(isPositive) {
-    console.log(props.content +" is positive? " + isPositive)
+    // Confirms user is signed in order to submit feedback
+    if (token.value) {
+        console.log(props.content + " is positive? " + isPositive)
+    } else {
+        alert("Please sign in to submit feedback");
+    }
 }
 
 </script>
