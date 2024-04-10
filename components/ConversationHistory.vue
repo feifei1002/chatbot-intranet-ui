@@ -61,7 +61,7 @@
                             square
                             variant="ghost"
                             title="Click to Copy Link"
-                            @click="copiedConversationLink(conversation.id)"
+                            @click="copiedConversationLink()"
                         >
                             Copy Link
                         </UButton>
@@ -79,8 +79,9 @@ const { token } = useAuth();
 const router = useRouter();
 // whether to show link to copy conversation
 const showLinkPopup = ref(false);
-// url of copied conversation to share
+// url and id of copied conversation to share
 const copiedUrl = ref("");
+const copiedId = ref("");
 
 // emit to call parent function
 const emit = defineEmits(["conversation-selected"]);
@@ -131,16 +132,17 @@ const handleTitleClick = conversation => {
 
 // gets a link to share the conversation
 const shareConversation = conversationId => {
-    // sets url for unique conversation id
+    // sets url and id for unique conversation id
+    copiedId.value = conversationId;
     copiedUrl.value = `http://localhost:3000/chat/${conversationId}`;
     showLinkPopup.value = true;
 };
 
-const copiedConversationLink = async conversationId => {
+const copiedConversationLink = async () => {
     // change privacy of conversation from private to public
     try {
         // sets 'conversations' to values from get request
-        await $fetch(`${config.public.apiURL}/conversations/${conversationId}/set_public`, {
+        await $fetch(`${config.public.apiURL}/conversations/${copiedId.value}/set_public`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
