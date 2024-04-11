@@ -1,30 +1,30 @@
 {
     "titles": {
-        "home": "Cartref",
-        "chatbot": "ChatBot",
-        "signin": "Arwyddo mewn",
-        "trychatbot": "Ceisio ChatBot"
+      "home": "Cartref",
+      "chatbot": "ChatBot",
+      "signin": "Arwyddo mewn",
+      "trychatbot": "Ceisio ChatBot"
     },
     "index": {
-        "about": "Dyma Chatbot am ddim sy’n gallu rhoi unrhyw wybodaeth neu ateb unrhyw gwestiynau am fywyd myfyrwyr!"
+      "about": "Dyma Chatbot am ddim sy’n gallu rhoi unrhyw wybodaeth neu ateb unrhyw gwestiynau am fywyd myfyrwyr!"
     },
     "signin": {
-        "welcome": "Croeso!",
-        "username": "Enw Defnyddiwr",
-        "password": "Cyfrinair",
-        "remember": "Cofio fi",
-        "signin": "Mewngofnodi"
+      "welcome": "Croeso!",
+      "username": "Enw Defnyddiwr",
+      "password": "Cyfrinair",
+      "remember": "Cofio fi",
+      "signin": "Mewngofnodi"
     },
     "chatbot": {
-        "newchat": "Sgwrs newydd",
-        "send": "Danfon",
-        "message": "Danfon neges I chatbot..."
+      "newchat": "Sgwrs newydd",
+      "send": "Danfon",
+      "message": "Danfon neges I chatbot..."
     },
     "speechRec": {
-        "micDisabled": "Mic Anabl",
-        "stopRecording": "Stopio Recordio",
-        "startRecording": "Dechrau Recordio"
-    },
+      "micDisabled": "Mic Anabl",
+      "stopRecording": "Stopio Recordio",
+      "startRecording": "Dechrau Recordio"
+  },
     "dashboard": {
       "conversations": "Sgwrsiadau",
       "lastMinute": "Yr Uchafswm Diwethaf",
@@ -40,5 +40,6 @@
       "numberOfConv7d": "Nifer y Sgwrsiadau (7 Diwrnod)",
       "activityThisHour": "Gweithgarwch yr Awr Hon",
       "historicalStats": "Ystadegau Hanesyddol"
-  }
 }
+    
+  }

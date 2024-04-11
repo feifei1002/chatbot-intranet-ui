@@ -1,30 +1,30 @@
 {
     "titles": {
-        "home": "홈",
-        "chatbot": "챗봇",
-        "signin": "로그인",
-        "trychatbot": "챗봇 사용하기"
+      "home": "홈",
+      "chatbot": "챗봇",
+      "signin": "로그인",
+      "trychatbot": "챗봇 사용하기"
     },
     "index": {
-        "about": "학생 생활에 대한 모든 질문에 대답할 챗봇입니다!"
+      "about": "학생 생활에 대한 모든 질문에 대답할 챗봇입니다!"
     },
     "signin": {
-        "welcome": "안녕하세요!",
-        "username": "아이디",
-        "password": "비밀번호",
-        "remember": "아이디 저장",
-        "signin": "로그인"
+      "welcome": "안녕하세요!",
+      "username": "아이디",
+      "password": "비밀번호",
+      "remember": "아이디 저장",
+      "signin": "로그인"
     },
     "chatbot": {
-        "newchat": "새로운 채팅",
-        "send": "메시지를 보내다",
-        "message": "챗봇에게 메시지를 보냅니다..."
+      "newchat": "새로운 채팅",
+      "send": "메시지를 보내다",
+      "message": "챗봇에게 메시지를 보냅니다..."
     },
     "speechRec": {
-        "micDisabled": "마이크 비활성화됨",
-        "stopRecording": "녹음 중지",
-        "startRecording": "녹음 시작"
-    },
+      "micDisabled": "마이크 비활성화됨",
+      "stopRecording": "녹음 중지",
+      "startRecording": "녹음 시작"
+  },
     "dashboard": {
       "conversations": "대화",
       "lastMinute": "지난 분",
@@ -39,9 +39,6 @@
       "numberOfConv24h": "대화 수 (24시간)",
       "numberOfConv7d": "대화 수 (7일)",
       "activityThisHour": "이 시간의 활동",
-      "historicalStats": "역사적 통계"
-
-      
-  }
-  
+      "historicalStats": "역사적 통계" 
+  } 
 }
