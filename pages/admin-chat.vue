@@ -18,6 +18,21 @@ while waiting for the admin page to be finished-->
                 <TTSResponse :content="message.content" />
             </div>
         </div>
+        <div class="mb-2 flex justify-start">
+            <div class="flex space-x-2">
+                <button
+                    v-for="(question, index) in preMadeQuestions"
+                    :key="index"
+                    class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                    @click="
+                        adminQuestion = question;
+                        sendQuestion();
+                    "
+                >
+                    {{ question }}
+                </button>
+            </div>
+        </div>
         <div class="flex justify-end">
             <!-- Circular Rectangle Box at the bottom -->
             <textarea
@@ -27,9 +42,6 @@ while waiting for the admin page to be finished-->
                 style="color: rgb(6, 5, 5)"
                 @keydown.enter="handleShiftEnter"
             ></textarea>
-            <div v-for="(question, index) in preMadeQuestions" :key="index">
-                <button @click="adminQuestion = question">{{ question }}</button>
-            </div>
             <button
                 v-t="'chatbot.send'"
                 class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
@@ -53,7 +65,9 @@ const preMadeQuestions = ref([
     "What are the 5 most asked questions related to the University's website?",
     "What are the 5 most asked questions related to the student life?",
 ]);
-
+onMounted(() => {
+    newChat();
+});
 const newChat = () => {
     chatMessages.value = [];
 };
@@ -83,7 +97,8 @@ const sendQuestion = () => {
             },
             body: JSON.stringify({
                 // everything but last two messages, since they're the ones we're generating
-                content: question,
+                previous_messages: chatMessages.value.slice(0, -2),
+                question: question,
             }),
             onclose: () => {
                 generating.value = false;
@@ -107,6 +122,15 @@ const sendQuestion = () => {
                 throw error;
             },
         });
+    }
+};
+
+const handleShiftEnter = event => {
+    // if enter key pressed but not alongside the shift key
+    if (event.key === "Enter" && !event.shiftKey) {
+        // sends message to chatbot
+        sendQuestion();
+        event.preventDefault();
     }
 };
 </script>
