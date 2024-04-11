@@ -4,6 +4,7 @@
 
 <script setup>
 import { Line as LineChart } from "vue-chartjs";
+import { defineProps } from "vue";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -14,9 +15,20 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
-import * as LineChartConfig from "../config/LineChartConfig";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const { data, options } = LineChartConfig;
+const props = defineProps({
+    data: {
+        type: Object,
+        required: true,
+    },
+    options: {
+        type: Object,
+        default: () => ({
+            responsive: true,
+            maintainAspectRatio: false,
+        }),
+    },
+});
 </script>
