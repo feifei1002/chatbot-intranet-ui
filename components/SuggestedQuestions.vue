@@ -26,7 +26,7 @@
 const questionArray = ref([]);
 const config = useRuntimeConfig();
 
-// prop to take array of questions form parent chat.vue
+// prop to take array of questions form parent [[id]].vue
 const props = defineProps({
     chatMessages: {
         type: Array,
@@ -34,7 +34,7 @@ const props = defineProps({
     },
 });
 
-// emit to call function 'askClickedQuestionToChatBot' from parent chat.vue
+// emit to call function 'submitQuestion' from parent [[id]].vue
 defineEmits(["askToChatBot"]);
 
 const fetchSuggestedQuestions = async () => {
@@ -67,7 +67,7 @@ const clear = () => {
     questionArray.value = [];
 };
 
-// define expose so getSuggestedQs is called when 'suggestedQ.value.getSuggestedQs();' is written in chat.vue
+// define expose so getSuggestedQs is called when 'suggestedQ.value.getSuggestedQs();' is written in [[id]].vue
 defineExpose({
     fetchSuggestedQuestions,
     clear,
