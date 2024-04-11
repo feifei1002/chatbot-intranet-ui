@@ -1,5 +1,5 @@
 export const data = {
-    labels: ["Dylan", "Ayman", "Fei", "Jashan", "Kavin", "Alexs"],
+    labels: ["Dylan", "Ayman", "Fei", "Jashan", "Kavin", "Alex"],
     datasets: [
         {
             backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],

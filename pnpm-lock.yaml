@@ -16,7 +16,7 @@ dependencies:
     version: 4.4.2
   dompurify:
     specifier: ^3.0.9
-    version: 3.0.9
+    version: 3.0.11
   isomorphic-dompurify:
     specifier: ^2.6.0
     version: 2.6.0
