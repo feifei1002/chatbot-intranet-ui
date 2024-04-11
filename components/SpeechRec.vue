@@ -1,21 +1,15 @@
 <template>
-    <div class="mx-4">
-        <button
-            class="flex h-20 cursor-pointer items-center justify-center rounded-md border-2 border-black hover:text-[#353955]"
-            :class="{
-                'bg-blue-500': isRecording && canRecord,
-                'bg-red-500': !isRecording && canRecord,
-                'bg-gray-500': !canRecord,
-            }"
-            @click="toggleRecording"
-        >
-            <!-- Display message based on recording state and permission -->
-            <div v-if="!canRecord" vt-speechRec="micDisabled"></div>
-            <div v-else>
-                {{ isRecording ? $t("speechRec.stopRecording") : $t("speechRec.startRecording") }}
-            </div>
-        </button>
-    </div>
+    <UButton
+        class="flex items-center justify-center rounded-md p-2 text-white"
+        :class="{
+            'bg-blue-500 hover:bg-blue-600': isRecording && canRecord,
+            'bg-amaranth-500 hover:bg-amaranth-600': !isRecording && canRecord,
+            'bg-gray-500 hover:bg-gray-600': !canRecord,
+        }"
+        :label="buttonLabel"
+        :icon="buttonIcon"
+        @click="toggleRecording"
+    />
 </template>
 
 <script setup>
@@ -25,6 +19,18 @@ let mediaRecorder = null;
 const isRecording = ref(false);
 const canRecord = ref(false);
 const emit = defineEmits(["onTranscribed"]);
+
+const { t } = useI18n({ useScope: "global" });
+
+const buttonLabel = computed(() => {
+    if (!canRecord.value) return t("speechRec.micDisabled");
+    return isRecording.value ? t("speechRec.stopRecording") : t("speechRec.startRecording");
+});
+
+const buttonIcon = computed(() => {
+    if (!canRecord.value) return "i-mdi-microphone-minus";
+    return isRecording.value ? "i-mdi-record-circle" : "i-mdi-microphone";
+});
 
 // Function to check microphone permissions
 async function checkPermissions() {

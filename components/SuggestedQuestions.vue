@@ -1,8 +1,8 @@
 <template>
     <!-- outputs suggested questions when the array is filled -->
-    <div v-if="questionArray.length > 0">
+    <div v-if="questionArray.length > 0" class="my-1.5 w-fit bg-slate-300 p-2">
         <!-- class used for styling, using tailwind's pink used to match the UI of the chatbot's conversation-->
-        <p class="mb-2 max-w-96 text-wrap break-words rounded p-1 text-left text-pink-200">
+        <p class="mb-2 max-w-96 text-wrap break-words rounded p-1 text-left text-zinc-900">
             Ask a follow up question...
         </p>
         <!-- hovering the button makes the background colour slightly darker, and changes cursor to pointer -->
@@ -10,7 +10,7 @@
         <div v-for="question in questionArray" :key="question">
             <button
                 type="submit"
-                class="mb-2 max-w-96 cursor-pointer text-wrap break-words rounded border-2 border-pink-900 bg-pink-600 p-1 text-left text-pink-100 shadow-lg hover:bg-pink-700"
+                class="mb-2 max-w-96 cursor-pointer text-wrap break-words rounded border-2 border-slate-600 bg-slate-400 p-1 text-left text-zinc-900 shadow-lg hover:bg-slate-500"
                 @click="$emit('askToChatBot', question)"
             >
                 <!-- two functions called so question is asked to chatbot (using emit to call function from parent)
