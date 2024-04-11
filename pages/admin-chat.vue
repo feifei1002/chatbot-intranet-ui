@@ -21,17 +21,20 @@ while waiting for the admin page to be finished-->
         <div class="flex justify-end">
             <!-- Circular Rectangle Box at the bottom -->
             <textarea
-                v-model="userMessage"
+                v-model="adminQuestion"
                 :placeholder="$t('chatbot.message')"
                 class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
                 style="color: rgb(6, 5, 5)"
                 @keydown.enter="handleShiftEnter"
             ></textarea>
+            <div v-for="(question, index) in preMadeQuestions" :key="index">
+                <button @click="adminQuestion = question">{{ question }}</button>
+            </div>
             <button
                 v-t="'chatbot.send'"
                 class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
                 :disabled="generating"
-                @click="sendMessage"
+                @click="sendQuestion"
             />
         </div>
     </div>
@@ -42,23 +45,28 @@ const config = useRuntimeConfig();
 
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
-const userMessage = ref("");
+const adminQuestion = ref("");
 const chatMessages = ref([]);
 const generating = ref(false);
+const preMadeQuestions = ref([
+    "What are the top 10 most asked questions in general?",
+    "What are the 5 most asked questions related to the University's website?",
+    "What are the 5 most asked questions related to the student life?",
+]);
 
 const newChat = () => {
     chatMessages.value = [];
 };
 
-const sendMessage = () => {
-    const message = userMessage.value.trim();
-    if (message !== "") {
+const sendQuestion = () => {
+    const question = adminQuestion.value.trim();
+    if (question !== "") {
         generating.value = true;
         // set array of suggested questions to zero, to hide template in SuggestedQuestions during response generation
 
         // add user message
-        chatMessages.value.push({ content: message, role: "user" });
-        userMessage.value = "";
+        chatMessages.value.push({ content: question, role: "user" });
+        adminQuestion.value = "";
 
         // add assistant message
         const assistantMessage = ref("");
@@ -75,8 +83,7 @@ const sendMessage = () => {
             },
             body: JSON.stringify({
                 // everything but last two messages, since they're the ones we're generating
-                previous_messages: chatMessages.value.slice(0, -2),
-                question: message,
+                content: question,
             }),
             onclose: () => {
                 generating.value = false;
