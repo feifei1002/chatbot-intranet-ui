@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-screen justify-center bg-chatbot-black">
+    <div class="flex justify-center bg-chatbot-black">
         <!-- All content goes here -->
         <div>
             <div class="mt-10 flex text-black">
