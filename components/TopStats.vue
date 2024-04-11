@@ -10,7 +10,7 @@
 
 <script setup>
 // Define props directly in the script setup block
-const props = defineProps({
+defineProps({
     statTitle: {
         type: String,
         required: true,
