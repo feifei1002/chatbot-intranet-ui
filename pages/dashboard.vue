@@ -37,13 +37,13 @@
                     <h1 class="font-mono text-xl uppercase">{{ $t("dashboard.activityThisHour") }}</h1>
                     <div class="flex">
                         <MidStats :stat-title="$t('dashboard.activeConversations')">
-                            <LineChart />
+                            <LineChart :data="DummyDataLine" />
                         </MidStats>
                         <MidStats :stat-title="$t('dashboard.msgCount')">
-                            <LineChart />
+                            <LineChart :data="DummyDataLine" />
                         </MidStats>
                         <MidStats :stat-title="$t('dashboard.toolUsage')">
-                            <PieChart />
+                            <PieChart :data="DummyDataPie" />
                         </MidStats>
                     </div>
                 </div>
@@ -55,10 +55,10 @@
                     <h1 class="font-mono text-xl uppercase">{{ $t("dashboard.historicalStats") }}</h1>
                     <div class="flex">
                         <BottomStats :stat-title="$t('dashboard.numberOfConv24h')">
-                            <LineChart />
+                            <LineChart :data="DummyDataLine" />
                         </BottomStats>
                         <BottomStats :stat-title="$t('dashboard.numberOfConv7d')">
-                            <LineChart />
+                            <LineChart :data="DummyDataLine" />
                         </BottomStats>
                     </div>
                 </div>
@@ -68,13 +68,34 @@
 </template>
 
 <script setup>
-// Utilise the useAuth hook to retrieve the authentication data.
-// const { data } = useAuth();
+//Utilise the useAuth hook to retrieve the authentication data.
+const { data } = useAuth();
 
-// // Check if the 'admin' property exists and has a truthy value in the 'data.value' object.
-// if (!data.value?.admin) {
-//     // If the 'admin' property is missing, undefined, or false, redirect the user to the homepage.
-//     navigateTo("/");
-//     console.log(data.value.admin);
-// }
+// Check if the 'admin' property exists and has a truthy value in the 'data.value' object.
+if (!data.value?.admin) {
+    // If the 'admin' property is missing, undefined, or false, redirect the user to the homepage.
+    navigateTo("/");
+    console.log(data.value.admin);
+}
+
+const DummyDataLine = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+        {
+            label: "Data One",
+            backgroundColor: "#f87979",
+            data: [40, 39, 10, 40, 39, 80, 40],
+        },
+    ],
+};
+
+const DummyDataPie = {
+    labels: ["Dylan", "Ayman", "Fei", "Jashan", "Kavin", "Alexs"],
+    datasets: [
+        {
+            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
+            data: [40, 20, 80, 10, 50, 60],
+        },
+    ],
+};
 </script>

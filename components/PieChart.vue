@@ -1,14 +1,24 @@
+<template>
+    <Doughnut :data="data" :options="options" />
+</template>
+
 <script setup>
 import { Doughnut } from "vue-chartjs";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-import * as PieChartConfig from "../config/PieChartConfig";
-
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const { data, options } = PieChartConfig;
+const props = defineProps({
+    data: {
+        type: Object,
+        required: true,
+    },
+    options: {
+        type: Object,
+        default: () => ({
+            responsive: true,
+            maintainAspectRatio: false,
+        }),
+    },
+});
 </script>
-
-<template>
-    <Doughnut :data="data" :options="options" />
-</template>
