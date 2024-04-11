@@ -17,7 +17,7 @@ watch(locale, () => {
 </script>
 
 <template>
-    <nav class="bg-chatbot-white p-6">
+    <nav class="bg-chatbot-white p-6 drop-shadow-lg">
         <div class="container flex items-center">
             <NuxtImg preload src="/img/logo.png" width="60" />
             <NuxtLink v-t="'titles.chatbot'" to="/" class="w-3/4 pl-4 text-xl font-bold text-chatbot-font" />
