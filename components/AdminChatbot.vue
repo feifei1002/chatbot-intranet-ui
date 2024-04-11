@@ -1,24 +1,26 @@
-<!--This might just be a temporary file for me to work on the frontend of the admin chatbot
-while waiting for the admin page to be finished-->
-
 <template>
-    <div class="flex h-3/5 w-full flex-col bg-chatbot-font p-1">
+    <div class="flex justify-center text-2xl font-bold">
+        <h1>Admin Chabot</h1>
+    </div>
+    <div class="flex h-3/5 w-full flex-col bg-chatbot-white px-1 pb-1 pt-4">
         <div class="flex h-full flex-col overflow-y-scroll">
             <div
                 v-for="(message, index) in chatMessages"
                 :key="index"
-                class="mb-2 max-w-96 text-wrap break-words rounded p-1"
+                class="mb-2 max-w-xl text-wrap break-words rounded p-1"
                 :class="{
-                    'mr-1 self-end bg-pink-600 text-right': message.role === 'user',
-                    'self-start bg-indigo-900 text-left text-white': message.role === 'assistant',
+                    'mr-1 self-end bg-amaranth-300 text-right text-black': message.role === 'user',
+                    'self-start bg-gray-300 text-left text-black': message.role === 'assistant',
                 }"
             >
                 <MarkdownRenderer :content="message.content" />
-                <CopyButton :content="message.content" />
-                <TTSResponse :content="message.content" />
+                <div class="flex items-center justify-end gap-x-1">
+                    <CopyButton :content="message.content" />
+                    <TTSResponse :content="message.content" />
+                </div>
             </div>
         </div>
-        <div class="mb-2 flex justify-start">
+        <div class="mb-2 flex justify-center">
             <div class="flex space-x-2">
                 <button
                     v-for="(question, index) in preMadeQuestions"
@@ -33,21 +35,23 @@ while waiting for the admin page to be finished-->
                 </button>
             </div>
         </div>
-        <div class="flex justify-end">
+        <div class="relative mx-1">
             <!-- Circular Rectangle Box at the bottom -->
             <textarea
                 v-model="adminQuestion"
                 :placeholder="$t('chatbot.message')"
-                class="box-border flex h-20 w-full resize-none justify-end rounded-2xl border-2 border-black bg-transparent p-5 outline-none"
+                class="h-fit min-h-20 w-full rounded-md bg-amaranth-100 p-2 pr-32 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-amaranth-500"
                 style="color: rgb(6, 5, 5)"
                 @keydown.enter="handleShiftEnter"
             ></textarea>
-            <button
-                v-t="'chatbot.send'"
-                class="h-20 cursor-pointer rounded-md border-2 border-black px-2 py-7 hover:bg-white hover:text-[#353955]"
-                :disabled="generating"
-                @click="sendQuestion"
-            />
+            <div class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center">
+                <button
+                    v-t="'chatbot.send'"
+                    class="rounded-md bg-amaranth-500 px-4 py-2 text-white hover:bg-amaranth-600 focus:outline-none focus:ring-2 focus:ring-amaranth-500 focus:ring-offset-2"
+                    :disabled="generating"
+                    @click="sendQuestion"
+                />
+            </div>
         </div>
     </div>
 </template>

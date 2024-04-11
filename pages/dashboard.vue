@@ -63,12 +63,16 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-10 h-3/5">
+                <AdminChatbot></AdminChatbot>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
 //Utilise the useAuth hook to retrieve the authentication data.
+
 const { data } = useAuth();
 
 // Check if the 'admin' property exists and has a truthy value in the 'data.value' object.
