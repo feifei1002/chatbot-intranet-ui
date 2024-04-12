@@ -52,10 +52,14 @@ async function sendFeedback(isPositive, userInput) {
     }
 }
 
-// TO DO:
+// TO DO for when i pull this onto my pc:
+// Merge main into branch
 // Make buttons unusable to stop duplicate feedback
 // Make text input 250 chars max
 // Make it look nice
+// Make text box disappear after submission or changing page
+// Add a cancel button
+// Submit and Cancel buttons should be translated
 
 </script>
 <template>
