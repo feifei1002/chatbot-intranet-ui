@@ -13,9 +13,6 @@
                 <NuxtImg src="/img/landingImage.png" />
             </div>
         </div>
-        <div class="fixed bottom-0 left-0">
-            <DarkMode></DarkMode>
-        </div>
     </div>
 </template>
 <script setup lang="ts"></script>

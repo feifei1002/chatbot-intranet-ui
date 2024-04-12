@@ -77,8 +77,5 @@ const submitInput = async () => {
                 />
             </div>
         </div>
-        <div class="fixed bottom-0 left-0">
-            <DarkMode class="fixed bottom-0 left-0"></DarkMode>
-        </div>
     </div>
 </template>

@@ -25,7 +25,7 @@ watch(locale, () => {
                 to="/"
                 class="w-3/4 pl-4 text-xl font-bold text-chatbot-font dark:text-chatbot-white"
             />
-            <div class="absolute right-0 flex w-1/4 justify-between pr-6">
+            <div class="absolute right-0 flex w-1/3 justify-between pr-6">
                 <form class="flex">
                     <select
                         id="locale-select"
@@ -37,6 +37,7 @@ watch(locale, () => {
                         <option value="ko">ko</option>
                     </select>
                 </form>
+                <DarkMode></DarkMode>
                 <NuxtLinkLocale
                     v-t="'titles.home'"
                     to="/"

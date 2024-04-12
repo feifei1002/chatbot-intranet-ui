@@ -8,9 +8,6 @@
                 class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black focus:outline-none focus:ring-white dark:hover:bg-black dark:hover:text-white"
                 @click="newChat"
             />
-            <div class="fixed bottom-0 left-0">
-                <DarkMode></DarkMode>
-            </div>
 
             <!-- output previous conversations ordered by title (when authenticated user logged in) -->
             <ConversationHistory v-if="authStatus !== 'unauthenticated'" ref="conversationHistory" />
@@ -51,7 +48,7 @@
                     ref="userMessageTextarea"
                     v-model="userMessage"
                     :placeholder="$t('chatbot.message')"
-                    class="h-fit min-h-20 w-full rounded-md bg-amaranth-100 p-2 pr-32 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-amaranth-500 dark:bg-chatbot-dark-red dark:text-white dark:focus:text-white dark:focus:ring-chatbot-black"
+                    class="h-fit min-h-20 w-full rounded-md bg-amaranth-100 p-2 pr-32 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-amaranth-500 dark:bg-chatbot-black dark:text-white dark:focus:text-white dark:focus:ring-chatbot-black"
                     @keydown.enter="handleShiftEnter"
                     @input="e => autoGrow(e.target)"
                 ></textarea>
