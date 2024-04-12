@@ -2,9 +2,9 @@
 const { token } = useAuth();
 const config = useRuntimeConfig();
 const props = defineProps({
-    content: {
+    id: {
         type: String,
-        default: "",
+        required: true,
     },
 });
 

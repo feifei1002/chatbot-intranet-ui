@@ -29,7 +29,7 @@
                     <MarkdownRenderer :content="message.content" />
                     <CopyButton :content="message.content" />
                     <TTSResponse :content="message.content" />
-                    <FeedbackButtons v-if="message.role === 'assistant'" :content="message.content"/>
+                    <FeedbackButtons v-if="message.role === 'assistant' && message.id" :id="message.id"/>
                 </div>
 
                 <!-- suggested qs output here -->
