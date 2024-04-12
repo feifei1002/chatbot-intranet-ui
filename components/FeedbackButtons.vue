@@ -34,8 +34,10 @@ async function sendFeedback(isPositive) {
 
 </script>
 <template>
-    <UButton icon="i-heroicons-hand-thumb-up" size="sm" color="primary" variant="solid" :trailing="false"
+    <div class="flex justify-around">
+    <UButton icon="i-heroicons-hand-thumb-up" size="sm" color="blue" variant="solid" :trailing="false"
         @click="sendFeedback(true)" />
-    <UButton icon="i-heroicons-hand-thumb-down" size="sm" color="primary" variant="solid" :trailing="false"
+    <UButton icon="i-heroicons-hand-thumb-down" size="sm" color="red" variant="solid" :trailing="false"
         @click="sendFeedback(false)" />
+    </div>
 </template>
