@@ -16,7 +16,7 @@ lint_project:
   stage: lint
   script:
     - pnpm install
-    - pnpm lint --no-fix
+    - pnpm lint --no-fix --max-warnings=0
 
 build_project:
   stage: build
