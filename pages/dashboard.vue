@@ -1,6 +1,9 @@
 <template>
     <div class="flex justify-center bg-chatbot-black">
         <!-- All content goes here -->
+
+        <button @click="getChartData()">Click to test request</button>
+
         <div>
             <div class="mt-10 flex text-black">
                 <TopStats
@@ -70,6 +73,7 @@
 <script setup>
 //Utilise the useAuth hook to retrieve the authentication data.
 const { data } = useAuth();
+const config = useRuntimeConfig();
 
 // Check if the 'admin' property exists and has a truthy value in the 'data.value' object.
 if (!data.value?.admin) {
@@ -90,12 +94,24 @@ const DummyDataLine = {
 };
 
 const DummyDataPie = {
-    labels: ["Dylan", "Ayman", "Fei", "Jashan", "Kavin", "Alexs"],
+    labels: ["Dylan", "Ayman", "Fei", "Jashan", "Kavin", "Alex"],
     datasets: [
         {
             backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
             data: [40, 20, 80, 10, 50, 60],
         },
     ],
+};
+
+const getChartData = async () => {
+    try {
+        // sets 'conversations' to values from get request
+        const json = await $fetch(`${config.public.apiURL}/admin/chat_analytics`, {
+            method: "POST",
+        });
+        console.log("returned json is: ", json);
+    } catch (error) {
+        console.error("Error fetching analytics: ", error);
+    }
 };
 </script>
