@@ -1,10 +1,11 @@
 <template>
     <div class="flex justify-center bg-chatbot-black">
         <!-- All content goes here -->
-
-        <button @click="getChartData()">Click to test request</button>
-
         <div>
+            <div class="mt-10">
+                <button @click="getChartData()">Click to test request</button>
+            </div>
+
             <div class="mt-10 flex text-black">
                 <TopStats
                     :stat-title="$t('dashboard.conversations')"
@@ -105,11 +106,20 @@ const DummyDataPie = {
 
 const getChartData = async () => {
     try {
-        // sets 'conversations' to values from get request
-        const json = await $fetch(`${config.public.apiURL}/admin/chat_analytics`, {
+        // gets response with query id for request
+        const jsonWithQueryID = await $fetch(`${config.public.apiURL}/admin/chat_analytics`, {
             method: "POST",
         });
-        console.log("returned json is: ", json);
+        console.log("returned json including query ID is: ", jsonWithQueryID);
+
+        // get query id from json response
+        const queryId = jsonWithQueryID.id;
+
+        // get request with query id
+        const jsonResponse = await $fetch(`${config.public.apiURL}/admin/get_analytics/${queryId}`, {
+            method: "GET",
+        });
+        console.log("response for that ID is ", jsonResponse);
     } catch (error) {
         console.error("Error fetching analytics: ", error);
     }
