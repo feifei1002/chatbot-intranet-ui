@@ -1,7 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: { enabled: true },
-    modules: ["@nuxt/ui", "@nuxtjs/i18n", "@nuxtjs/eslint-module", "@sidebase/nuxt-auth", "@nuxt/image"],
+    modules: [
+        "@nuxt/ui",
+        "@nuxtjs/i18n",
+        "@nuxtjs/eslint-module",
+        "@sidebase/nuxt-auth",
+        "@nuxt/image",
+        "nuxt3-notifications",
+    ],
     auth: {
         baseURL: "/api/auth",
         provider: {
@@ -26,5 +33,8 @@ export default defineNuxtConfig({
             { code: "ko", file: "ko.json" },
         ],
         defaultLocale: "en",
+    },
+    nuxtNotifications: {
+        componentName: "SuccessNotification",
     },
 });

@@ -53,9 +53,10 @@
                     <div class="flex items-center justify-between text-chatbot-white">
                         <!-- regular part of text for popup -->
                         <p>Link: {{ copiedUrl }}</p>
+                        <!-- conversation is only set to public when clicking the UButton below -->
                         <UButton
                             icon="i-heroicons-clipboard-document-16-solid"
-                            class="hover:text-chatbot-red"
+                            class="font-semibold hover:text-chatbot-red"
                             size="2xs"
                             color="black"
                             square
@@ -63,13 +64,15 @@
                             title="Click to Copy Link"
                             @click="copiedConversationLink()"
                         >
-                            Copy Link
+                            Copy and Share Link
                         </UButton>
                     </div>
                 </UCard>
             </UModal>
         </div>
     </div>
+    <!-- success notification when sharing a conversation and copying link -->
+    <SuccessNotification position="bottom left" :speed="500" />
 </template>
 
 <script setup>
@@ -85,6 +88,8 @@ const copiedId = ref("");
 
 // emit to call parent function
 const emit = defineEmits(["conversation-selected"]);
+
+const { notify } = useNotification();
 
 // returns conversations to update the left panel of titles to click
 const getConversations = async () => {
@@ -148,16 +153,19 @@ const copiedConversationLink = async () => {
                 Authorization: token.value,
             },
         });
+
+        // copy to clipboard
+        // from https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 09-04-24
+        await navigator.clipboard.writeText(copiedUrl.value);
+
+        // small popup to say link copied
+        notify({
+            text: "Link Copied and Conversation Set to Public",
+            type: "success",
+        });
     } catch (error) {
-        console.error("Error setting conversation to public: ", error);
+        console.error("Error when sharing conversation: ", error);
     }
-
-    // copy to clipboard
-    // from https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 09-04-24
-    await navigator.clipboard.writeText(copiedUrl.value);
-
-    // small popup to say link copied
-    alert("Link Copied");
 };
 
 defineExpose({
