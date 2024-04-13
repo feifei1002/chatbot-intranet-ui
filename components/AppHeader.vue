@@ -1,5 +1,5 @@
 <script setup>
-const { status } = useAuth();
+const { status, signOut } = useAuth();
 const authStatus = ref(status.value === "authenticated");
 
 watch(status, newStatus => {
@@ -15,20 +15,10 @@ watch(locale, () => {
     cookieLocale.value = locale.value;
 });
 
-const { token } = useAuth();
-const config = useRuntimeConfig();
-
 const logout = async () => {
-    console.log("clicked");
-
-    await $fetch(`${config.public.apiURL}/logout_two`, {
-        method: "get",
-        headers: {
-            "Content-Type": "application/json",
-            // add authorization header if token is present
-            ...(token.value && { Authorization: token.value }),
-        },
-    });
+    // use signIn function built into useAuth,
+    // send the user to the homepage after
+    await signOut({ callbackUrl: "/" });
 };
 </script>
 
