@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center text-2xl font-bold">
-        <h1>Admin Chabot</h1>
+        <h2>Admin Chabot</h2>
     </div>
     <div class="flex h-3/5 w-full flex-col bg-chatbot-white px-1 pb-1 pt-4">
         <div class="flex h-full flex-col overflow-y-scroll">
@@ -23,9 +23,9 @@
         <div class="mb-2 flex justify-center">
             <div class="flex space-x-2">
                 <button
-                    v-for="(question, index) in preMadeQuestions"
+                    v-for="(question, index) in randomQuestions"
                     :key="index"
-                    class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                    class="rounded bg-blue-500 p-2 font-bold text-white hover:bg-blue-700"
                     @click="
                         adminQuestion = question;
                         sendQuestion();
@@ -60,17 +60,15 @@
 const config = useRuntimeConfig();
 
 import { fetchEventSource } from "@microsoft/fetch-event-source";
+import { preMadeQuestions } from "~/composables/preMadeQuestions.js";
 
 const adminQuestion = ref("");
 const chatMessages = ref([]);
 const generating = ref(false);
-const preMadeQuestions = ref([
-    "What are the top 10 most asked questions in general?",
-    "What are the 5 most asked questions related to the University's website?",
-    "What are the 5 most asked questions related to the student life?",
-]);
+const randomQuestions = ref("");
 onMounted(() => {
     newChat();
+    randomQuestions.value = getRandomQuestions();
 });
 const newChat = () => {
     chatMessages.value = [];
@@ -127,6 +125,16 @@ const sendQuestion = () => {
             },
         });
     }
+};
+
+const getRandomQuestions = () => {
+    const randomQuestions = [];
+    for (let i = 0; i < 3; i++) {
+        const randomIndex = Math.floor(Math.random() * preMadeQuestions.length);
+        randomQuestions.push(preMadeQuestions[randomIndex]);
+        preMadeQuestions.splice(randomIndex, 1);
+    }
+    return randomQuestions;
 };
 
 const handleShiftEnter = event => {
