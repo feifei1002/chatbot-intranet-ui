@@ -3,7 +3,8 @@
         "home": "Home",
         "chatbot": "ChatBot",
         "signin": "Sign In",
-        "trychatbot": "Try ChatBot"
+        "trychatbot": "Try ChatBot",
+        "signout": "Sign Out"
     },
     "index": {
         "about": "This is a free-to-use chatbot that can return any information or answer any questions you may have relating to your student life!"

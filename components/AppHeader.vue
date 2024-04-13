@@ -14,6 +14,22 @@ locale.value = cookieLocale.value ?? "en";
 watch(locale, () => {
     cookieLocale.value = locale.value;
 });
+
+const { token } = useAuth();
+const config = useRuntimeConfig();
+
+const logout = async () => {
+    console.log("clicked");
+
+    await $fetch(`${config.public.apiURL}/logout_two`, {
+        method: "get",
+        headers: {
+            "Content-Type": "application/json",
+            // add authorization header if token is present
+            ...(token.value && { Authorization: token.value }),
+        },
+    });
+};
 </script>
 
 <template>
@@ -46,6 +62,13 @@ watch(locale, () => {
                     to="/signin"
                     class="text-xl font-semibold text-chatbot-font"
                     exact-active-class="!text-chatbot-red"
+                />
+                >
+                <NuxtLinkLocale
+                    v-if="authStatus"
+                    v-t="'titles.signout'"
+                    @click="logout()"
+                    class="text-xl font-semibold text-chatbot-font hover:text-chatbot-red cursor-pointer"
                 />
                 >
                 <NuxtLinkLocale
