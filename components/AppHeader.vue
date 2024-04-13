@@ -46,6 +46,7 @@ const logout = async () => {
                     exact-active-class="!text-chatbot-red"
                 />
                 >
+                <!-- sign in shows when not signed in -->
                 <NuxtLinkLocale
                     v-if="!authStatus"
                     v-t="'titles.signin'"
@@ -54,6 +55,7 @@ const logout = async () => {
                     exact-active-class="!text-chatbot-red"
                 />
                 >
+                <!-- sign out shows when signed in -->
                 <NuxtLinkLocale
                     v-if="authStatus"
                     v-t="'titles.signout'"

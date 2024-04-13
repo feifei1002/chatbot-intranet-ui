@@ -3,7 +3,8 @@
       "home": "Cartref",
       "chatbot": "ChatBot",
       "signin": "Arwyddo mewn",
-      "trychatbot": "Ceisio ChatBot"
+      "trychatbot": "Ceisio ChatBot",
+      "signout": "Allgofnodi"
     },
     "index": {
       "about": "Dyma Chatbot am ddim sy’n gallu rhoi unrhyw wybodaeth neu ateb unrhyw gwestiynau am fywyd myfyrwyr!"
