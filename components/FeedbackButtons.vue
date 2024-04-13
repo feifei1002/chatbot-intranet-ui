@@ -8,6 +8,10 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    content: {
+        type: String,
+        required: true,
+    },
 });
 
 function showInputBox() {
@@ -54,7 +58,7 @@ async function sendFeedback(isPositive, userInput) {
     <div v-show="textBoxShown" class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
         <div class="h-2/4 w-2/6 bg-neutral-300 flex flex-col items-center">
             <div class="text-xl my-6 underline">Feedback Form</div>
-            <div> " {{ props.content }} "</div>
+            <div> "{{ props.content }}" </div>
             <textarea v-model="userInput" placeholder="Please provide feedback on the message above (250 chars)" maxlength="250"
                 class="my-6 h-1/4 w-3/4 text-wrap"></textarea>
             <div class="my-4">
