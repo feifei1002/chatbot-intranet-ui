@@ -67,8 +67,8 @@ const logout = async () => {
                 <NuxtLinkLocale
                     v-if="authStatus"
                     v-t="'titles.signout'"
+                    class="cursor-pointer text-xl font-semibold text-chatbot-font hover:text-chatbot-red"
                     @click="logout()"
-                    class="text-xl font-semibold text-chatbot-font hover:text-chatbot-red cursor-pointer"
                 />
                 >
                 <NuxtLinkLocale
