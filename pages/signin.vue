@@ -1,5 +1,5 @@
 <script setup>
-const { status, signIn } = useAuth();
+const { status, data, signIn } = useAuth();
 
 if (status.value === "authenticated") {
     navigateTo("/");
@@ -19,7 +19,12 @@ const submitInput = async () => {
         await signIn(credentials, {
             redirect: false,
         });
-        navigateTo("/");
+        // Check if the 'admin' property has a truthy value.
+        if (data.value.admin) {
+            navigateTo("/dashboard");
+        } else {
+            navigateTo("/");
+        }
     } catch (err) {
         console.error(err);
         // alert the message from the error
