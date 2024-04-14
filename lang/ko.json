@@ -40,5 +40,12 @@
       "numberOfConv7d": "대화 수 (7일)",
       "activityThisHour": "이 시간의 활동",
       "historicalStats": "역사적 통계" 
-  } 
+  },
+  "feedback":{
+    "feedbackTitle": "피드백 폼",
+    "textareaPlaceholder": "위 메시지에 대한 피드백을 제공해 주세요(영문 250자)",
+    "positiveLabel": "긍정적인 피드백으로 보내기",
+    "negativeLabel": "부정적인 피드백으로 보내기",
+    "close": "닫다"
+}
 }

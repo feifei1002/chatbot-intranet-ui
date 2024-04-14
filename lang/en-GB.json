@@ -41,5 +41,12 @@
         "numberOfConv7d": "Number of Conversations (7d)",
         "activityThisHour": "Activity this Hour",
         "historicalStats": "Historical Stats"
+    },
+    "feedback":{
+        "feedbackTitle": "Feedback Form",
+        "textareaPlaceholder": "Please provide feedback on the message above (250 chars)",
+        "positiveLabel": "Send as Positive Feedback",
+        "negativeLabel": "Send as Negative Feedback",
+        "close": "close"
     }
 }
