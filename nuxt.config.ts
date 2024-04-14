@@ -1,14 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: { enabled: true },
-    modules: [
-        "@nuxt/ui",
-        "@nuxtjs/i18n",
-        "@nuxtjs/eslint-module",
-        "@sidebase/nuxt-auth",
-        "@nuxt/image",
-        "nuxt3-notifications",
-    ],
+    modules: ["@nuxt/ui", "@nuxtjs/i18n", "@nuxtjs/eslint-module", "@sidebase/nuxt-auth", "@nuxt/image", "nuxt3-notifications", "@nuxtjs/tailwindcss",
+        "@nuxtjs/color-mode"],
+    colorMode: {
+        classSuffix: '',
+        preference: 'light',
+    },
     auth: {
         baseURL: "/api/auth",
         provider: {
