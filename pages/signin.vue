@@ -8,6 +8,8 @@ if (status.value === "authenticated") {
 const username = ref("");
 const password = ref("");
 
+const showPassword = ref(false);
+
 const submitInput = async () => {
     const credentials = {
         username: username.value,
@@ -57,15 +59,24 @@ const submitInput = async () => {
                         id="password"
                         v-model="password"
                         :placeholder="$t('signin.password')"
-                        type="password"
+                        :type="showPassword ? 'text' : 'password'"
                         name="password"
                         required
                         class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue"
                     />
                 </div>
                 <div class="my-2 flex">
-                    <input id="remember_me" type="checkbox" name="remember_me" />
-                    <label v-t="'signin.remember'" for="remember_me" class="ml-2 block text-sm text-chatbot-white" />
+                    <input
+                        id="showPasswordCheckbox"
+                        v-model="showPassword"
+                        type="checkbox"
+                        name="showPasswordCheckbox"
+                    />
+                    <label
+                        v-t="'signin.show'"
+                        for="showPasswordCheckbox"
+                        class="ml-2 block text-sm text-chatbot-white"
+                    />
                 </div>
                 <button
                     v-t="'signin.signin'"

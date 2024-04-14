@@ -12,7 +12,7 @@
         "welcome": "Welcome!",
         "username": "Username",
         "password": "Password",
-        "remember": "Remember Me",
+        "show": "Show Password",
         "signin": "Sign in"
     },
     "chatbot": {
