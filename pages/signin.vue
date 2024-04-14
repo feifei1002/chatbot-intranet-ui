@@ -36,10 +36,13 @@ const submitInput = async () => {
 
 <template>
     <div class="flex">
-        <div class="flex h-screen w-1/2 items-center justify-center bg-chatbot-black"></div>
-        <div class="flex h-screen w-1/2 items-center justify-start bg-chatbot-red pl-20">
+        <div class="flex h-screen w-1/2 items-center justify-center bg-chatbot-black dark:bg-chatbot-font"></div>
+        <div class="flex h-screen w-1/2 items-center justify-start bg-chatbot-red pl-20 dark:bg-chatbot-dark-red">
             <div class="flex-col pt-6">
-                <p v-t="'signin.welcome'" class="py-6 text-6xl font-bold text-chatbot-black underline" />
+                <p
+                    v-t="'signin.welcome'"
+                    class="dark: py-6 text-6xl font-bold text-chatbot-black underline dark:text-chatbot-white"
+                />
 
                 <div class="mb-4">
                     <input
@@ -49,7 +52,7 @@ const submitInput = async () => {
                         type="text"
                         name="username"
                         required
-                        class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue"
+                        class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue dark:border-chatbot-dark-red"
                     />
                 </div>
                 <div>
@@ -60,7 +63,7 @@ const submitInput = async () => {
                         type="password"
                         name="password"
                         required
-                        class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue"
+                        class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue dark:border-chatbot-dark-red"
                     />
                 </div>
                 <div class="my-2 flex">
