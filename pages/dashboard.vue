@@ -34,31 +34,32 @@
             <!-- Second set of divs -->
             <div class="mt-10">
                 <div>
-                    <h1 class="font-mono text-xl uppercase">{{ $t("dashboard.activityThisHour") }}</h1>
+                    <h1 class="font-mono text-xl uppercase">{{ $t("dashboard.recentActivity") }}</h1>
                     <div class="flex">
-                        <MidStats :stat-title="$t('dashboard.activeConversations')">
-                            <LineChart :data="conversationsDataLine" :options="tsOptions" />
+                        <MidStats :stat-title="$t('dashboard.numberOfConv24h')">
+                            <LineChart :data="convDayDataLine" :options="tsOptionsHour" />
                         </MidStats>
-                        <MidStats :stat-title="$t('dashboard.msgCount')">
-                            <LineChart :data="messagesDataLine" :options="tsOptions" />
+                        <MidStats :stat-title="$t('dashboard.numberOfConv1h')">
+                            <LineChart :data="convHourDataLine" :options="tsOptionsMinute" />
                         </MidStats>
                         <MidStats :stat-title="$t('dashboard.toolUsage')">
-                            <PieChart :data="DummyDataPie" />
+                            <PieChart :data="toolsPieChart" />
                         </MidStats>
                     </div>
                 </div>
             </div>
 
+<!--            <p>{{ jsonData.conversations_1h_chart }}</p>-->
             <!-- Third set of divs -->
             <div class="mt-10">
                 <div>
                     <h1 class="font-mono text-xl uppercase">{{ $t("dashboard.historicalStats") }}</h1>
                     <div class="flex">
-                        <BottomStats :stat-title="$t('dashboard.numberOfConv24h')">
-                            <LineChart :data="DummyDataLine" />
+                        <BottomStats :stat-title="$t('dashboard.numberOfMessages7d')">
+                            <LineChart :data="messages7DataLine" :options="tsOptionsDay" />
                         </BottomStats>
                         <BottomStats :stat-title="$t('dashboard.numberOfConv7d')">
-                            <LineChart :data="DummyDataLine" />
+                            <LineChart :data="conversations7DataLine" :options="tsOptionsDay" />
                         </BottomStats>
                     </div>
                 </div>
@@ -89,7 +90,7 @@ const { data: jsonData } = await useFetch(`${config.public.apiURL}/admin/query`,
     },
 });
 
-const tsOptions = {
+const tsOptionsDay = {
     maintainAspectRatio: false,
     scales: {
         x: {
@@ -106,10 +107,57 @@ const tsOptions = {
     },
 };
 
+const tsOptionsHour = {
+    maintainAspectRatio: false,
+    scales: {
+        x: {
+            responsive: true,
+            title: {
+                display: true,
+                text: "Time",
+            },
+            type: "time",
+            time: {
+                unit: "hour",
+            },
+            ticks: {
+                stepSize: 2, // set the step size to 2 hours
+                maxRotation: 45,
+                minRotation: 30,
+            },
+        },
+    },
+};
+
+const tsOptionsMinute = {
+    maintainAspectRatio: false,
+    scales: {
+        x: {
+            responsive: true,
+            title: {
+                display: true,
+                text: "Time",
+            },
+            type: "time",
+            time: {
+                unit: "minute",
+            },
+            ticks: {
+                stepSize: 5, // set the step size to 5 minutes
+                maxRotation: 45,
+                minRotation: 30,
+            },
+        },
+    },
+};
+
 const conversationsSevenData = jsonData.value?.conversations_7d_chart || [];
 const messagesSevenData = jsonData.value?.messages_7d_chart || [];
+const conversationsDayData = jsonData.value?.conversations_1d_chart || [];
+const conversationsHourData = jsonData.value?.conversations_1h_chart || [];
 
-const conversationsDataLine = {
+
+const conversations7DataLine = {
     datasets: [
         {
             label: "Conversations",
@@ -123,7 +171,7 @@ const conversationsDataLine = {
     ],
 };
 
-const messagesDataLine = {
+const messages7DataLine = {
     datasets: [
         {
             label: "Messages",
@@ -137,45 +185,43 @@ const messagesDataLine = {
     ],
 };
 
-// const DummyDataLine = {
-//     labels: ["January", "February", "March", "April", "May", "June", "July"],
-//     datasets: [
-//         {
-//             label: "Data One",
-//             backgroundColor: "#f87979",
-//             data: [40, 39, 10, 40, 39, 80, 40],
-//         },
-//     ],
-// };
-
-const DummyDataPie = {
-    labels: ["Dylan", "Ayman", "Fei", "Jashan", "Kavin", "Alex"],
+const convDayDataLine = {
     datasets: [
         {
-            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
-            data: [40, 20, 80, 10, 50, 60],
+            label: "Conversations",
+            data: conversationsDayData.map(item => ({
+                x: new Date(item.x),
+                y: item.y,
+            })),
+            borderColor: "rgb(75, 192, 192)",
+            tension: 0.1,
         },
     ],
 };
 
-// // test chart
-// const renderChart = data => {
-//     const ctx = refs.chart.getContext("2d");
-//     chart = new Chart(ctx, {
-//         type: "bar",
-//         data: {
-//             labels: data.labels,
-//             datasets: [
-//                 {
-//                     label: "Data",
-//                     data: data.values,
-//                     backgroundColor: "rgba(75, 192, 192, 0.2)",
-//                     borderColor: "rgba(75, 192, 192, 1)",
-//                     borderWidth: 1,
-//                 },
-//             ],
-//         },
-//         options: {},
-//     });
-// };
+const convHourDataLine = {
+    datasets: [
+        {
+            label: "Conversations",
+            data: conversationsHourData.map(item => ({
+                x: new Date(item.x),
+                y: item.y,
+            })),
+            borderColor: "rgb(75, 192, 192)",
+            tension: 0.1,
+        },
+    ],
+};
+
+const toolsData = jsonData.value?.tools;
+
+const toolsPieChart = {
+    labels: Object.keys(toolsData),
+    datasets: [
+        {
+            backgroundColor: ["#41B883", "#E46651"],
+            data: Object.values(toolsData),
+        },
+    ],
+};
 </script>
