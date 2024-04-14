@@ -1,5 +1,5 @@
 <script setup>
-const { status,signOut } = useAuth();
+const { status, signOut } = useAuth();
 const authStatus = ref(status.value === "authenticated");
 
 watch(status, newStatus => {
@@ -10,7 +10,6 @@ const { locale } = useI18n({ useScope: "global" });
 const cookieLocale = useCookie("locale");
 
 locale.value = cookieLocale.value ?? "en";
-
 
 watch(locale, () => {
     cookieLocale.value = locale.value;
@@ -62,17 +61,16 @@ const logout = async () => {
                 <NuxtLinkLocale
                     v-if="authStatus"
                     v-t="'titles.signout'"
-                    class="cursor-pointer text-xl font-semibold text-chatbot-font dark:text-chatbot-white dark:hover:text-chatbot-red hover:text-chatbot-red"
+                    class="cursor-pointer text-xl font-semibold text-chatbot-font hover:text-chatbot-red dark:text-chatbot-white dark:hover:text-chatbot-red"
                     @click="logout()"
                 />
                 <NuxtLinkLocale
                     to="/chat"
                     class="text-xl font-semibold text-chatbot-font dark:text-chatbot-white"
                     exact-active-class="!text-chatbot-red"
-                >{{ $t("titles.trychatbot") }}
+                    >{{ $t("titles.trychatbot") }}
                     <UIcon name="i-heroicons-arrow-up-right" />
                 </NuxtLinkLocale>
-
             </div>
         </div>
     </nav>
