@@ -19,7 +19,9 @@
     "chatbot": {
       "newchat": "Sgwrs newydd",
       "send": "Danfon",
-      "message": "Danfon neges I chatbot..."
+      "message": "Danfon neges I chatbot...",
+      "history_login": "Mewngofnodwch i gael mynediad at hanes sgwrsio"
+
     },
     "speechRec": {
       "micDisabled": "Mic Anabl",
@@ -41,6 +43,5 @@
       "numberOfConv7d": "Nifer y Sgwrsiadau (7 Diwrnod)",
       "activityThisHour": "Gweithgarwch yr Awr Hon",
       "historicalStats": "Ystadegau Hanesyddol"
+    }
 }
-    
-  }
