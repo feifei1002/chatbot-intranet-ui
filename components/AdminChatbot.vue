@@ -22,11 +22,11 @@
             </div>
         </div>
         <div class="mb-2 flex justify-center">
-            <div class="flex space-x-2">
+            <div class="flex w-full justify-around space-x-2">
                 <button
                     v-for="(question, index) in randomQuestions"
                     :key="index"
-                    class="rounded bg-blue-500 p-2 font-bold text-white hover:bg-blue-700"
+                    class="rounded bg-blue-500 px-6 py-2 font-bold text-white hover:bg-blue-700"
                     @click="
                         adminQuestion = question;
                         sendQuestion();
