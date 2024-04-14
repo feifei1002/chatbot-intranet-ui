@@ -1,11 +1,11 @@
 <template>
     <div class="flex h-full">
         <!-- Blue side with 1/3 of the page -->
-        <div class="flex w-1/5 flex-col bg-amaranth-600 p-4">
+        <div class="flex w-1/5 flex-col bg-amaranth-600 p-4 dark:bg-chatbot-dark-red">
             <!-- New Chat Button -->
             <button
                 v-t="'chatbot.newchat'"
-                class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black"
+                class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black focus:outline-none focus:ring-white dark:hover:bg-black dark:hover:text-white"
                 @click="newChat"
             />
 
@@ -14,7 +14,7 @@
             <span v-else v-t="'chatbot.history_login'" class="mt-2 text-center text-xl text-white"></span>
         </div>
         <!-- Pink side with 3/4 of the page -->
-        <div class="flex w-4/5 flex-col bg-chatbot-white px-1 pb-1 pt-4">
+        <div class="flex w-4/5 flex-col bg-chatbot-white px-1 pb-1 pt-4 dark:bg-chatbot-font">
             <!-- Add your chatbot content here -->
             <div class="flex h-full flex-col overflow-y-scroll">
                 <div
@@ -22,7 +22,8 @@
                     :key="index"
                     class="mb-2 max-w-xl text-wrap break-words rounded p-1"
                     :class="{
-                        'mr-1 self-end bg-amaranth-300 text-right text-black': message.role === 'user',
+                        'mr-1 self-end bg-amaranth-300 text-right text-black dark:bg-amaranth-800 dark:text-white':
+                            message.role === 'user',
                         'self-start bg-gray-300 text-left text-black': message.role === 'assistant',
                     }"
                 >
@@ -47,7 +48,7 @@
                     ref="userMessageTextarea"
                     v-model="userMessage"
                     :placeholder="$t('chatbot.message')"
-                    class="h-fit min-h-20 w-full rounded-md bg-amaranth-100 p-2 pr-32 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-amaranth-500"
+                    class="h-fit min-h-20 w-full rounded-md bg-amaranth-100 p-2 pr-32 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-amaranth-500 dark:bg-chatbot-black dark:text-white dark:focus:text-white dark:focus:ring-chatbot-black"
                     @keydown.enter="handleShiftEnter"
                     @input="e => autoGrow(e.target)"
                 ></textarea>
@@ -57,7 +58,7 @@
                     <button
                         v-t="'chatbot.send'"
                         :disabled="generating"
-                        class="rounded-md bg-amaranth-500 px-4 py-2 text-white hover:bg-amaranth-600 focus:outline-none focus:ring-2 focus:ring-amaranth-500 focus:ring-offset-2"
+                        class="rounded-md bg-amaranth-500 px-4 py-2 text-white hover:bg-amaranth-600 focus:outline-none focus:ring-2 focus:ring-amaranth-500 focus:ring-offset-2 dark:bg-chatbot-red dark:text-white dark:hover:text-black"
                         @click="sendMessage"
                     />
                 </div>
