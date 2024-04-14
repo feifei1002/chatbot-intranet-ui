@@ -6,6 +6,10 @@
                 <button @click="getChartData()">Click to test request</button>
             </div>
 
+            <div v-if="chart" class="mt-10">
+                <canvas ref="chart" width="400" height="400"></canvas>
+            </div>
+
             <div class="mt-10 flex text-black">
                 <TopStats
                     :stat-title="$t('dashboard.conversations')"
@@ -73,8 +77,13 @@
 
 <script setup>
 //Utilise the useAuth hook to retrieve the authentication data.
+import { Chart } from "chart.js";
+
 const { data } = useAuth();
 const config = useRuntimeConfig();
+
+let chart = null;
+const refs = {};
 
 // Check if the 'admin' property exists and has a truthy value in the 'data.value' object.
 if (!data.value?.admin) {
@@ -104,6 +113,27 @@ const DummyDataPie = {
     ],
 };
 
+// test chart
+const renderChart = data => {
+    const ctx = refs.chart.getContext("2d");
+    chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: data.labels,
+            datasets: [
+                {
+                    label: "Data",
+                    data: data.values,
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {},
+    });
+};
+
 const getChartData = async () => {
     try {
         // gets response with query id for request
@@ -120,6 +150,8 @@ const getChartData = async () => {
             method: "GET",
         });
         console.log("response for that ID is ", jsonResponse);
+
+        renderChart(jsonResponse);
     } catch (error) {
         console.error("Error fetching analytics: ", error);
     }
