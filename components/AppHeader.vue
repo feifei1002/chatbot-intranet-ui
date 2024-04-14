@@ -14,6 +14,12 @@ locale.value = cookieLocale.value ?? "en";
 watch(locale, () => {
     cookieLocale.value = locale.value;
 });
+
+const toggleMenu = () => {
+    showMenu.value = !showMenu.value;
+};
+
+const showMenu = ref(false);
 </script>
 
 <template>
@@ -99,18 +105,3 @@ watch(locale, () => {
         </div>
     </nav>
 </template>
-
-<script>
-export default {
-    data() {
-        return {
-            showMenu: false,
-        };
-    },
-    methods: {
-        toggleMenu() {
-            this.showMenu = !this.showMenu;
-        },
-    },
-};
-</script>
