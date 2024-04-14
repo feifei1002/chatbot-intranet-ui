@@ -2,40 +2,32 @@
     <div class="flex justify-center bg-chatbot-black">
         <!-- All content goes here -->
         <div>
-            <div class="mt-10">
-                <button @click="getChartData()">Click to test request</button>
-            </div>
-
-            <div v-if="chart" class="mt-10">
-                <canvas ref="chart" width="400" height="400"></canvas>
-            </div>
-
             <div class="mt-10 flex text-black">
                 <TopStats
                     :stat-title="$t('dashboard.conversations')"
                     :stat-timerange="$t('dashboard.lastMinute')"
-                    stat-value="69"
+                    :stat-value="jsonData?.conversation_1m"
                 >
                 </TopStats>
                 <TopStats
                     :stat-title="$t('dashboard.conversations')"
                     :stat-timerange="$t('dashboard.avgLasthour')"
-                    stat-value="69"
+                    :stat-value="jsonData?.conversation_1h"
                 ></TopStats>
                 <TopStats
                     :stat-title="$t('dashboard.authUserMessage')"
                     :stat-timerange="$t('dashboard.avg24hr')"
-                    stat-value="69"
+                    :stat-value="jsonData?.authenticated_24h"
                 ></TopStats>
                 <TopStats
                     :stat-title="$t('dashboard.unauthUserMessage')"
                     :stat-timerange="$t('dashboard.avg24hr')"
-                    stat-value="69"
+                    :stat-value="jsonData?.unauthenticated_24h"
                 ></TopStats>
                 <TopStats
                     :stat-title="$t('dashboard.msgCount')"
                     :stat-timerange="$t('dashboard.sentReceived24h')"
-                    stat-value="69"
+                    :stat-value="jsonData?.messages_24h"
                 ></TopStats>
             </div>
 
@@ -45,7 +37,7 @@
                     <h1 class="font-mono text-xl uppercase">{{ $t("dashboard.activityThisHour") }}</h1>
                     <div class="flex">
                         <MidStats :stat-title="$t('dashboard.activeConversations')">
-                            <LineChart :data="DummyDataLine" />
+                            <LineChart :data="conversationsDataLine" :options="tsOptions" />
                         </MidStats>
                         <MidStats :stat-title="$t('dashboard.msgCount')">
                             <LineChart :data="DummyDataLine" />
@@ -76,21 +68,53 @@
 </template>
 
 <script setup>
-//Utilise the useAuth hook to retrieve the authentication data.
-import { Chart } from "chart.js";
+definePageMeta({ middleware: "auth" });
 
-const { data } = useAuth();
-const config = useRuntimeConfig();
-
-let chart = null;
-const refs = {};
+const { data: authData } = useAuth();
 
 // Check if the 'admin' property exists and has a truthy value in the 'data.value' object.
-if (!data.value?.admin) {
+if (!authData.value?.admin) {
     // If the 'admin' property is missing, undefined, or false, redirect the user to the homepage.
     navigateTo("/");
-    console.log(data.value.admin);
 }
+
+const config = useRuntimeConfig();
+const { token } = useAuth();
+
+const { data: jsonData } = await useFetch(`${config.public.apiURL}/admin/query`, {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+        Authorization: token.value,
+    },
+});
+
+const tsOptions = {
+    maintainAspectRatio: false,
+    scales: {
+        x: {
+            responsive: true,
+            title: {
+                display: true,
+                text: "Time",
+            },
+            type: "time",
+            time: {
+                unit: "day",
+            },
+            backgroundColor: "#f87979",
+        },
+    },
+};
+
+const conversationsDataLine = {
+    datasets: [
+        {
+            label: "Conversations",
+            data: jsonData.conversations_7d_chart,
+        },
+    ],
+};
 
 const DummyDataLine = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -113,47 +137,24 @@ const DummyDataPie = {
     ],
 };
 
-// test chart
-const renderChart = data => {
-    const ctx = refs.chart.getContext("2d");
-    chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: data.labels,
-            datasets: [
-                {
-                    label: "Data",
-                    data: data.values,
-                    backgroundColor: "rgba(75, 192, 192, 0.2)",
-                    borderColor: "rgba(75, 192, 192, 1)",
-                    borderWidth: 1,
-                },
-            ],
-        },
-        options: {},
-    });
-};
-
-const getChartData = async () => {
-    try {
-        // gets response with query id for request
-        const jsonWithQueryID = await $fetch(`${config.public.apiURL}/admin/chat_analytics`, {
-            method: "POST",
-        });
-        console.log("returned json including query ID is: ", jsonWithQueryID);
-
-        // get query id from json response
-        const queryId = jsonWithQueryID.id;
-
-        // get request with query id
-        const jsonResponse = await $fetch(`${config.public.apiURL}/admin/get_analytics/${queryId}`, {
-            method: "GET",
-        });
-        console.log("response for that ID is ", jsonResponse);
-
-        renderChart(jsonResponse);
-    } catch (error) {
-        console.error("Error fetching analytics: ", error);
-    }
-};
+// // test chart
+// const renderChart = data => {
+//     const ctx = refs.chart.getContext("2d");
+//     chart = new Chart(ctx, {
+//         type: "bar",
+//         data: {
+//             labels: data.labels,
+//             datasets: [
+//                 {
+//                     label: "Data",
+//                     data: data.values,
+//                     backgroundColor: "rgba(75, 192, 192, 0.2)",
+//                     borderColor: "rgba(75, 192, 192, 1)",
+//                     borderWidth: 1,
+//                 },
+//             ],
+//         },
+//         options: {},
+//     });
+// };
 </script>
