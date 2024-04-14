@@ -49,7 +49,6 @@
                 </div>
             </div>
 
-<!--            <p>{{ jsonData.conversations_1h_chart }}</p>-->
             <!-- Third set of divs -->
             <div class="mt-10">
                 <div>
@@ -89,6 +88,14 @@ const { data: jsonData } = await useFetch(`${config.public.apiURL}/admin/query`,
         Authorization: token.value,
     },
 });
+
+const conversationsSevenData = jsonData.value?.conversations_7d_chart || [];
+const messagesSevenData = jsonData.value?.messages_7d_chart || [];
+
+const conversationsDayData = jsonData.value?.conversations_1d_chart || [];
+const conversationsHourData = jsonData.value?.conversations_1h_chart || [];
+
+const toolsData = jsonData.value?.tools;
 
 const tsOptionsDay = {
     maintainAspectRatio: false,
@@ -151,12 +158,6 @@ const tsOptionsMinute = {
     },
 };
 
-const conversationsSevenData = jsonData.value?.conversations_7d_chart || [];
-const messagesSevenData = jsonData.value?.messages_7d_chart || [];
-const conversationsDayData = jsonData.value?.conversations_1d_chart || [];
-const conversationsHourData = jsonData.value?.conversations_1h_chart || [];
-
-
 const conversations7DataLine = {
     datasets: [
         {
@@ -213,13 +214,11 @@ const convHourDataLine = {
     ],
 };
 
-const toolsData = jsonData.value?.tools;
-
 const toolsPieChart = {
     labels: Object.keys(toolsData),
     datasets: [
         {
-            backgroundColor: ["#41B883", "#E46651"],
+            backgroundColor: ["#41B883", "#E46651"], // change so each tool has one, need to find out how many tools
             data: Object.values(toolsData),
         },
     ],
