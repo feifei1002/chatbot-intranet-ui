@@ -40,7 +40,7 @@
                             <LineChart :data="conversationsDataLine" :options="tsOptions" />
                         </MidStats>
                         <MidStats :stat-title="$t('dashboard.msgCount')">
-                            <LineChart :data="DummyDataLine" />
+                            <LineChart :data="messagesDataLine" :options="tsOptions" />
                         </MidStats>
                         <MidStats :stat-title="$t('dashboard.toolUsage')">
                             <PieChart :data="DummyDataPie" />
@@ -102,30 +102,51 @@ const tsOptions = {
             time: {
                 unit: "day",
             },
-            backgroundColor: "#f87979",
         },
     },
 };
+
+const conversationsSevenData = jsonData.value?.conversations_7d_chart || [];
+const messagesSevenData = jsonData.value?.messages_7d_chart || [];
 
 const conversationsDataLine = {
     datasets: [
         {
             label: "Conversations",
-            data: jsonData.conversations_7d_chart,
+            data: conversationsSevenData.map(item => ({
+                x: new Date(item.x),
+                y: item.y,
+            })),
+            borderColor: "rgb(75, 192, 192)",
+            tension: 0.1,
         },
     ],
 };
 
-const DummyDataLine = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+const messagesDataLine = {
     datasets: [
         {
-            label: "Data One",
-            backgroundColor: "#f87979",
-            data: [40, 39, 10, 40, 39, 80, 40],
+            label: "Messages",
+            data: messagesSevenData.map(item => ({
+                x: new Date(item.x),
+                y: item.y,
+            })),
+            borderColor: "rgb(75, 192, 192)",
+            tension: 0.1,
         },
     ],
 };
+
+// const DummyDataLine = {
+//     labels: ["January", "February", "March", "April", "May", "June", "July"],
+//     datasets: [
+//         {
+//             label: "Data One",
+//             backgroundColor: "#f87979",
+//             data: [40, 39, 10, 40, 39, 80, 40],
+//         },
+//     ],
+// };
 
 const DummyDataPie = {
     labels: ["Dylan", "Ayman", "Fei", "Jashan", "Kavin", "Alex"],
