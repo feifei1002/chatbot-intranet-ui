@@ -12,7 +12,7 @@
       "welcome": "안녕하세요!",
       "username": "아이디",
       "password": "비밀번호",
-      "remember": "아이디 저장",
+      "show": "비밀번호 표시",
       "signin": "로그인"
     },
     "chatbot": {
