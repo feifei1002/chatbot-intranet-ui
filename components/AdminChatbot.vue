@@ -1,8 +1,8 @@
 <template>
-    <div class="flex justify-center text-2xl font-bold">
-        <h2>Admin Chatbot</h2>
-    </div>
     <div class="flex h-3/5 w-full flex-col bg-chatbot-white px-1 pb-1 pt-4 dark:bg-chatbot-font">
+        <div class="flex justify-center text-2xl font-bold text-black dark:text-white">
+            <h2>Admin Chatbot</h2>
+        </div>
         <div class="flex h-full flex-col overflow-y-scroll">
             <div
                 v-for="(message, index) in chatMessages"
@@ -41,8 +41,7 @@
             <textarea
                 v-model="adminQuestion"
                 :placeholder="$t('chatbot.message')"
-                class="h-fit min-h-20 w-full rounded-md bg-amaranth-100 p-2 pr-32 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-amaranth-500 dark:bg-chatbot-black dark:text-white dark:focus:text-white dark:focus:ring-chatbot-black"
-                style="color: rgb(6, 5, 5)"
+                class="h-fit min-h-20 w-full rounded-md bg-amaranth-100 p-2 pr-32 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-amaranth-500 dark:bg-chatbot-black dark:text-chatbot-white dark:focus:text-chatbot-white dark:focus:ring-chatbot-black"
                 @keydown.enter="handleShiftEnter"
             ></textarea>
             <div class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center">
