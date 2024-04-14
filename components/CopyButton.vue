@@ -2,10 +2,9 @@
     <UButton
         icon="i-heroicons-clipboard-document"
         size="sm"
-        color="primary"
+        color="blue"
         variant="solid"
         label="Copy"
-        :trailing="false"
         @click="copyText"
     />
 </template>

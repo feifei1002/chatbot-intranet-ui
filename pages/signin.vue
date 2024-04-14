@@ -1,5 +1,5 @@
 <script setup>
-const { status, signIn } = useAuth();
+const { status, data, signIn } = useAuth();
 
 if (status.value === "authenticated") {
     navigateTo("/");
@@ -19,7 +19,12 @@ const submitInput = async () => {
         await signIn(credentials, {
             redirect: false,
         });
-        navigateTo("/");
+        // Check if the 'admin' property has a truthy value.
+        if (data.value.admin) {
+            navigateTo("/dashboard");
+        } else {
+            navigateTo("/");
+        }
     } catch (err) {
         console.error(err);
         // alert the message from the error
@@ -46,7 +51,7 @@ const submitInput = async () => {
                         type="text"
                         name="username"
                         required
-                        class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue"
+                        class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue dark:border-chatbot-dark-red"
                     />
                 </div>
                 <div>
@@ -57,7 +62,7 @@ const submitInput = async () => {
                         type="password"
                         name="password"
                         required
-                        class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue"
+                        class="mt-1 w-full rounded-md border-2 border-solid border-chatbot-red bg-white text-navbar-blue dark:border-chatbot-dark-red"
                     />
                 </div>
                 <div class="my-2 flex">

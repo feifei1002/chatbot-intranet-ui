@@ -1,10 +1,10 @@
 <template>
     <div>
         <UButton
-            v-if="content !== ''"
+            v-if="content"
             icon="i-heroicons-speaker-wave-16-solid"
             size="2xs"
-            color="gray"
+            color="black"
             square
             variant="ghost"
             title="Click to hear response"
