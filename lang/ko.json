@@ -3,7 +3,8 @@
       "home": "홈",
       "chatbot": "챗봇",
       "signin": "로그인",
-      "trychatbot": "챗봇 사용하기"
+      "trychatbot": "챗봇 사용하기",
+      "signout": "로그아웃"
     },
     "index": {
       "about": "학생 생활에 대한 모든 질문에 대답할 챗봇입니다!"
