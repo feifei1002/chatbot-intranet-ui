@@ -36,19 +36,23 @@ async function sendFeedback(isPositive, userInput) {
         positive: isPositive,
         feedback: userInput,
     };
-    try {
-        await fetch(`${config.public.apiURL}/feedback`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-        });
-    } catch (error) {
-        console.error("Error:", error);
-        // Handle the error as needed, such as showing an error message to the user
+    if (userInput === undefined) {
+        alert("Please type a brief review for your feedback");
+    } else {
+        try {
+            await fetch(`${config.public.apiURL}/feedback`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+        } catch (error) {
+            console.error("Error:", error);
+            // Handle the error as needed, such as showing an error message to the user
+        }
+        close();
     }
-    close();
 }
 </script>
 <template>
@@ -74,6 +78,7 @@ async function sendFeedback(isPositive, userInput) {
                 <MarkdownRenderer :content="chatbotMessagePreview" />
                 <UTextarea
                     v-model="userInput"
+                    aria-required="true"
                     :placeholder="$t('feedback.textareaPlaceholder')"
                     maxlength="250"
                     class="my-6 h-1/4 w-3/4"
