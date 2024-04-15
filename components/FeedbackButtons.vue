@@ -19,7 +19,7 @@ const chatbotMessagePreview =
 
 function showInputBox() {
     // Confirms user is signed in order to submit feedback
-    if (token.value && props.id) {
+    if (token.value) {
         textBoxShown.value = true;
     } else {
         alert("Please sign in to submit feedback");
