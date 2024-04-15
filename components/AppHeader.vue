@@ -74,7 +74,7 @@ const logout = async () => {
                     v-if="!authStatus"
                     v-t="'titles.signin'"
                     to="/signin"
-                    class="px-4 text-xl font-semibold text-chatbot-font"
+                    class="px-4 text-xl font-semibold text-chatbot-font dark:text-chatbot-white"
                     exact-active-class="!text-chatbot-red"
                 />
                 <!-- sign out shows when signed in -->
@@ -86,7 +86,7 @@ const logout = async () => {
                 />
                 <NuxtLinkLocale
                     to="/chat"
-                    class="px-4 text-xl font-semibold text-chatbot-font"
+                    class="px-4 text-xl font-semibold text-chatbot-font dark:text-chatbot-white"
                     exact-active-class="!text-chatbot-red"
                     >{{ $t("titles.trychatbot") }}
                     <UIcon name="i-heroicons-arrow-up-right" />
