@@ -34,7 +34,7 @@
 
             <UModal v-model="showLinkPopup" :overlay="false">
                 <!-- header section of popup -->
-                <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:chatbot-black' }">
+                <UCard class="text-chatbot-black dark:text-chatbot-white">
                     <template #header>
                         <div class="flex items-center justify-between">
                             <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-chatbot-white">
@@ -50,7 +50,7 @@
                         </div>
                     </template>
 
-                    <div class="flex items-center justify-between text-chatbot-white">
+                    <div class="flex items-center justify-between text-chatbot-black dark:text-chatbot-white">
                         <!-- regular part of text for popup -->
                         <p>Link: {{ copiedUrl }}</p>
                         <!-- conversation is only set to public when clicking the UButton below -->
@@ -72,7 +72,7 @@
         </div>
     </div>
     <!-- success notification when sharing a conversation and copying link -->
-    <SuccessNotification position="bottom left" :speed="500" />
+    <UNotifications />
 </template>
 
 <script setup>
@@ -89,7 +89,7 @@ const copiedId = ref("");
 // emit to call parent function
 const emit = defineEmits(["conversation-selected"]);
 
-const { notify } = useNotification();
+const toast = useToast();
 
 // returns conversations to update the left panel of titles to click
 const getConversations = async () => {
@@ -159,9 +159,9 @@ const copiedConversationLink = async () => {
         await navigator.clipboard.writeText(copiedUrl.value);
 
         // small popup to say link copied
-        notify({
-            text: "Link Copied and Conversation Set to Public",
-            type: "success",
+        toast.add({
+            id: "successful_copy",
+            description: "Link Copied and Conversation Set to Public",
         });
     } catch (error) {
         console.error("Error when sharing conversation: ", error);

@@ -9,7 +9,6 @@ export default defineNuxtConfig({
         "@nuxt/image",
         "@nuxtjs/tailwindcss",
         "@nuxtjs/color-mode",
-        "nuxt3-notifications"
     ],
     colorMode: {
         classSuffix: "",
@@ -39,8 +38,5 @@ export default defineNuxtConfig({
             { code: "ko", file: "ko.json" },
         ],
         defaultLocale: "en",
-    },
-    nuxtNotifications: {
-        componentName: "SuccessNotification",
     },
 });
