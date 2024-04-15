@@ -1,29 +1,30 @@
 {
-  "titles": {
-    "home": "Cartref",
-    "chatbot": "ChatBot",
-    "signin": "Arwyddo mewn",
-    "trychatbot": "Ceisio ChatBot"
-  },
-  "index": {
-    "about": "Dyma Chatbot am ddim sy’n gallu rhoi unrhyw wybodaeth neu ateb unrhyw gwestiynau am fywyd myfyrwyr!"
-  },
-  "signin": {
-    "welcome": "Croeso!",
-    "username": "Enw Defnyddiwr",
-    "password": "Cyfrinair",
-    "remember": "Cofio fi",
-    "signin": "Mewngofnodi"
-  },
-  "chatbot": {
-    "newchat": "Sgwrs newydd",
-    "send": "Danfon",
-    "message": "Danfon neges I chatbot..."
-  },
-  "speechRec": {
-    "micDisabled": "Mic Anabl",
-    "stopRecording": "Stopio Recordio",
-    "startRecording": "Dechrau Recordio"
+    "titles": {
+      "home": "Cartref",
+      "chatbot": "ChatBot",
+      "signin": "Arwyddo mewn",
+      "trychatbot": "Ceisio ChatBot",
+      "signout": "Allgofnodi"
+    },
+    "index": {
+      "about": "Dyma Chatbot am ddim sy’n gallu rhoi unrhyw wybodaeth neu ateb unrhyw gwestiynau am fywyd myfyrwyr!"
+    },
+    "signin": {
+      "welcome": "Croeso!",
+      "username": "Enw Defnyddiwr",
+      "password": "Cyfrinair",
+      "show": "Dangos cyfrinair",
+      "signin": "Mewngofnodi"
+    },
+    "chatbot": {
+      "newchat": "Sgwrs newydd",
+      "send": "Danfon",
+      "message": "Danfon neges I chatbot..."
+    },
+    "speechRec": {
+      "micDisabled": "Mic Anabl",
+      "stopRecording": "Stopio Recordio",
+      "startRecording": "Dechrau Recordio"
   },
   "dashboard": {
     "conversations": "Sgwrsiadau",
