@@ -2,7 +2,7 @@
 const { token } = useAuth();
 const config = useRuntimeConfig();
 const textBoxShown = ref(false);
-const userInput = defineModel('userInput')
+const userInput = defineModel({ name: "userInput", type: String });
 const props = defineProps({
     id: {
         type: String,
@@ -14,15 +14,16 @@ const props = defineProps({
     },
 });
 
-var chatbotMessagePreview = props.content.length > 100 ? "\"" + props.content.substring(0,99)  + "...\"" : "\"" + props.content + "\"";
+const chatbotMessagePreview =
+    props.content.length > 100 ? '"' + props.content.substring(0, 99) + '..."' : '"' + props.content + '"';
 
 function showInputBox() {
     // Confirms user is signed in order to submit feedback
-    // if (token.value) {
-    textBoxShown.value = true;
-    //   } else {
-    //       alert("Please sign in to submit feedback");
-    //  }
+    if (token.value && props.id) {
+        textBoxShown.value = true;
+    } else {
+        alert("Please sign in to submit feedback");
+    }
 }
 
 function close() {
@@ -31,10 +32,10 @@ function close() {
 
 async function sendFeedback(isPositive, userInput) {
     const payload = {
-        message: props.content,
+        id: props.id,
         positive: isPositive,
-        feedback: userInput
-    }
+        feedback: userInput,
+    };
     try {
         await fetch(`${config.public.apiURL}/feedback`, {
             method: "POST",
@@ -42,39 +43,70 @@ async function sendFeedback(isPositive, userInput) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(payload),
-        },
-        );
+        });
     } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
         // Handle the error as needed, such as showing an error message to the user
     }
-    close()
+    close();
 }
-
 </script>
 <template>
     <div class="flex justify-around">
-        <UButton icon="i-heroicons-arrows-up-down" size="sm" color="" variant="solid"
-            :trailing="false" @click="showInputBox" />
+        <UButton
+            icon="i-heroicons-arrows-up-down"
+            size="sm"
+            color=""
+            variant="solid"
+            :trailing="false"
+            @click="showInputBox"
+        />
     </div>
 
     <UModal v-model="textBoxShown">
-        <UCard :ui="{
-            background: 'bg-slate-100 dark:bg-slate-800'
-        }">
-            <div class="w-full h-full flex flex-col items-center justify-center text-chatbot-font dark:text-white">
-                <div class="text-xl my-6">{{$t("feedback.feedbackTitle")}}</div>
+        <UCard
+            :ui="{
+                background: 'bg-slate-100 dark:bg-slate-800',
+            }"
+        >
+            <div class="flex size-full flex-col items-center justify-center text-chatbot-font dark:text-white">
+                <div class="my-6 text-xl">{{ $t("feedback.feedbackTitle") }}</div>
                 <MarkdownRenderer :content="chatbotMessagePreview" />
-                <UTextarea v-model="userInput" :placeholder="$t('feedback.textareaPlaceholder')"
-                    maxlength="250" class="my-6 h-1/4 w-3/4" />
+                <UTextarea
+                    v-model="userInput"
+                    :placeholder="$t('feedback.textareaPlaceholder')"
+                    maxlength="250"
+                    class="my-6 h-1/4 w-3/4"
+                />
                 <div class="my-4">
-                    <UButton icon="i-heroicons-hand-thumb-up" size="sm" color="green" variant="solid"
-                        :label="$t('feedback.positiveLabel')" :trailing="false" @click="sendFeedback(true, userInput)" />
-                    <UButton icon="i-heroicons-hand-thumb-down" size="sm" color="red" variant="solid"
-                        :label="$t('feedback.negativeLabel')" :trailing="false" @click="sendFeedback(false, userInput)" />
+                    <UButton
+                        icon="i-heroicons-hand-thumb-up"
+                        size="sm"
+                        color="green"
+                        variant="solid"
+                        :label="$t('feedback.positiveLabel')"
+                        :trailing="false"
+                        @click="sendFeedback(true, userInput)"
+                    />
+                    <UButton
+                        icon="i-heroicons-hand-thumb-down"
+                        size="sm"
+                        color="red"
+                        variant="solid"
+                        :label="$t('feedback.negativeLabel')"
+                        :trailing="false"
+                        @click="sendFeedback(false, userInput)"
+                    />
                 </div>
-                <UButton icon="i-heroicons-x-mark" size="sm" color="gray" variant="solid" :trailing="false"
-                    :label="$t('feedback.close')" @click="close()" />
+                <UButton
+                    icon="i-heroicons-x-mark"
+                    size="sm"
+                    color="gray"
+                    variant="solid"
+                    :trailing="false"
+                    :label="$t('feedback.close')"
+                    @click="close()"
+                />
             </div>
         </UCard>
     </UModal>
