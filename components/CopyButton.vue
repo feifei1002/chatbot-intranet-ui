@@ -1,5 +1,6 @@
 <template>
     <UButton
+        v-if="content"
         icon="i-heroicons-clipboard-document"
         size="sm"
         color="blue"

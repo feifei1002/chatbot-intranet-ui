@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center bg-chatbot-black">
+    <div class="flex justify-center bg-chatbot-black dark:bg-chatbot-font">
         <div>
             <!-- analytics for recent conversations and messages -->
             <div class="mt-10 flex text-black">
@@ -34,7 +34,7 @@
             <!-- line charts for conversations over 1 day and 1 hour, and tool usage pie chart -->
             <div class="mt-10">
                 <div>
-                    <h1 class="font-mono text-xl uppercase">{{ $t("dashboard.recentActivity") }}</h1>
+                    <h1 class="font-mono text-xl uppercase text-white">{{ $t("dashboard.recentActivity") }}</h1>
                     <div class="flex">
                         <MidStats :stat-title="$t('dashboard.numberOfConv24h')">
                             <LineChart :data="convDayDataSet" :options="hourChartOptions" />
@@ -52,7 +52,7 @@
             <!-- line charts for conversations and messages over 7 days -->
             <div class="mt-10">
                 <div>
-                    <h1 class="font-mono text-xl uppercase">{{ $t("dashboard.historicalStats") }}</h1>
+                    <h1 class="font-mono text-xl uppercase text-white">{{ $t("dashboard.historicalStats") }}</h1>
                     <div class="flex">
                         <BottomStats :stat-title="$t('dashboard.numberOfMessages7d')">
                             <LineChart :data="messages7DataSet" :options="dayChartOptions" />
