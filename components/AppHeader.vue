@@ -30,14 +30,28 @@ const logout = async () => {
 
 <template>
     <nav class="bg-chatbot-white p-6 drop-shadow-lg dark:bg-chatbot-black">
-        <div class="container flex items-center">
+        <div class="flex items-center">
             <NuxtImg preload src="/img/logo.png" width="60" />
             <NuxtLink
                 v-t="'titles.chatbot'"
                 to="/"
                 class="w-3/4 pl-4 text-xl font-bold text-chatbot-font dark:text-chatbot-white"
             />
-            <div class="absolute right-0 flex w-1/3 justify-between pr-6">
+            <div class="flex items-center">
+                <div class="md:hidden">
+                    <button class="text-gray-500 hover:text-chatbot-red focus:outline-none" @click="toggleMenu">
+                        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="hidden w-1/3 justify-between pr-6 md:flex">
                 <form class="flex">
                     <select
                         id="locale-select"
@@ -78,21 +92,21 @@ const logout = async () => {
                     <UIcon name="i-heroicons-arrow-up-right" />
                 </NuxtLinkLocale>
             </div>
-            <div class="md:hidden">
-                <button class="block text-gray-500 hover:text-chatbot-red focus:outline-none" @click="toggleMenu">
-                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4 6h16M4 12h16m-7 6h7"
-                        ></path>
-                    </svg>
-                </button>
-            </div>
         </div>
         <div v-if="showMenu" class="md:hidden">
             <div class="flex flex-col items-center">
+                <form class="flex">
+                    <select
+                        id="locale-select-mobile"
+                        v-model="$i18n.locale"
+                        class="block w-full px-4 py-2 text-center text-xl font-semibold text-chatbot-font"
+                    >
+                        <option value="en">en</option>
+                        <option value="cy">cy</option>
+                        <option value="ko">ko</option>
+                    </select>
+                </form>
+                <DarkMode></DarkMode>
                 <NuxtLinkLocale
                     v-t="'titles.home'"
                     to="/"
@@ -107,10 +121,19 @@ const logout = async () => {
                     exact-active-class="!text-chatbot-red"
                 />
                 <NuxtLinkLocale
+                    v-if="authStatus"
+                    v-t="'titles.signout'"
+                    class="block w-full px-4 py-2 text-center text-xl font-semibold text-chatbot-font"
+                    @click="logout()"
+                >
+                    {{ $t("titles.signout") }}
+                </NuxtLinkLocale>
+                <NuxtLinkLocale
                     to="/chat"
                     class="block w-full px-4 py-2 text-center text-xl font-semibold text-chatbot-font"
                     exact-active-class="!text-chatbot-red"
-                    >{{ $t("titles.trychatbot") }}
+                >
+                    {{ $t("titles.trychatbot") }}
                     <UIcon name="i-heroicons-arrow-up-right" />
                 </NuxtLinkLocale>
             </div>
