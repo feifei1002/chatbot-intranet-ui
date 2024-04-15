@@ -30,7 +30,11 @@
                     <div class="flex items-center justify-end gap-x-1">
                         <CopyButton :content="message.content" />
                         <TTSResponse :content="message.content" />
-                    <FeedbackButtons v-if="message.role === 'assistant' && !message.id" :id="message.id" :content="message.content"/>
+                        <FeedbackButtons
+                            v-if="message.role === 'assistant' && message.id"
+                            :id="message.id"
+                            :content="message.content"
+                        />
                     </div>
                 </div>
 
@@ -218,6 +222,10 @@ const addMessages = async inputConversationId => {
                 // chat_messages: props.chatMessages.slice(-2),
                 chat_messages: chatMessages.value.slice(-2),
             },
+        }).then(resp => {
+            resp.message_ids.forEach((messageId, index) => {
+                chatMessages.value[chatMessages.value.length - 2 + index].id = messageId;
+            });
         });
     } catch (error) {
         console.error("Error adding to conversation history: ", error);
