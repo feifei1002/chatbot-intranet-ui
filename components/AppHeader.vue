@@ -1,5 +1,5 @@
 <script setup>
-const { status } = useAuth();
+const { status, signOut } = useAuth();
 const authStatus = ref(status.value === "authenticated");
 
 watch(status, newStatus => {
@@ -14,6 +14,12 @@ locale.value = cookieLocale.value ?? "en";
 watch(locale, () => {
     cookieLocale.value = locale.value;
 });
+
+const logout = async () => {
+    // use signIn function built into useAuth,
+    // send the user to the homepage after
+    await signOut({ callbackUrl: "/" });
+};
 </script>
 
 <template>
@@ -44,7 +50,6 @@ watch(locale, () => {
                     class="text-xl font-semibold text-chatbot-font dark:text-chatbot-white"
                     exact-active-class="!text-chatbot-red"
                 />
-
                 <NuxtLinkLocale
                     v-if="!authStatus"
                     v-t="'titles.signin'"
@@ -52,7 +57,13 @@ watch(locale, () => {
                     class="text-xl font-semibold text-chatbot-font dark:text-chatbot-white"
                     exact-active-class="!text-chatbot-red"
                 />
-
+                <!-- sign out shows when signed in -->
+                <NuxtLinkLocale
+                    v-if="authStatus"
+                    v-t="'titles.signout'"
+                    class="cursor-pointer text-xl font-semibold text-chatbot-font hover:text-chatbot-red dark:text-chatbot-white dark:hover:text-chatbot-red"
+                    @click="logout()"
+                />
                 <NuxtLinkLocale
                     to="/chat"
                     class="text-xl font-semibold text-chatbot-font dark:text-chatbot-white"
