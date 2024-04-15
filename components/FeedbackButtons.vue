@@ -3,6 +3,8 @@ const { token } = useAuth();
 const config = useRuntimeConfig();
 const textBoxShown = ref(false);
 const userInput = defineModel({ name: "userInput", type: String });
+
+// props that come from the chatpage
 const props = defineProps({
     id: {
         type: String,
@@ -14,9 +16,12 @@ const props = defineProps({
     },
 });
 
+// this makes sure that the preview message when submitting feedback isnt super long
 const chatbotMessagePreview =
     props.content.length > 100 ? '"' + props.content.substring(0, 99) + '..."' : '"' + props.content + '"';
 
+
+// when clicked, pops up the form
 function showInputBox() {
     // Confirms user is signed in order to submit feedback
     if (token.value) {
@@ -26,19 +31,23 @@ function showInputBox() {
     }
 }
 
+// when clicked, closes the form
 function close() {
     textBoxShown.value = false;
 }
 
 async function sendFeedback(isPositive, userInput) {
+    // what we are sending to the backend, the ID, whether its positive or not and then the text feedback
     const payload = {
         id: props.id,
         positive: isPositive,
         feedback: userInput,
     };
+    // ensures user does not try to submit without entering any text for feedback
     if (userInput === undefined) {
         alert("Please type a brief review for your feedback");
     } else {
+        // sends the payload to the backend
         try {
             await fetch(`${config.public.apiURL}/feedback`, {
                 method: "POST",
