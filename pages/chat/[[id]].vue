@@ -83,7 +83,6 @@ const route = useRoute();
 const userMessageTextarea = ref(null);
 
 const userMessage = ref("");
-const chatMessages = ref([]);
 const suggestedQuestions = ref(null);
 
 const conversationHistory = ref([]);
@@ -156,7 +155,7 @@ const sendMessage = () => {
                     addMessages(conversationId.value).then(() => {
                         if (isNewChat) {
                             // update conversation list of left
-                            conversationHistory.value.getConversations();
+                            conversationHistory.value.refreshConversations();
                         }
                     });
                 }
@@ -190,22 +189,23 @@ const sendMessage = () => {
 const getConversationHistory = async inputConversationId => {
     const { token } = useAuth();
     try {
-        const conversationHistory = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: token.value,
+        const { data: conversationHistory } = await useFetch(
+            `${config.public.apiURL}/conversations/${inputConversationId}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token.value,
+                },
             },
-        });
-        chatMessages.value = conversationHistory;
+        );
+        return conversationHistory;
     } catch (error) {
         console.error("Error fetching conversation history: ", error);
     }
 };
 
-if (conversationId.value) {
-    await getConversationHistory(conversationId.value);
-}
+const chatMessages = conversationId.value ? await getConversationHistory(conversationId.value) : ref([]);
 
 // adds the recent two messages to the tables
 // if it's the first question to the chatbot, the title is updated in the database

@@ -22,7 +22,6 @@
 
 <script setup>
 const config = useRuntimeConfig();
-const conversations = ref([]);
 const { token } = useAuth();
 const router = useRouter();
 
@@ -33,19 +32,23 @@ const emit = defineEmits(["conversation-selected"]);
 const getConversations = async () => {
     try {
         // sets 'conversations' to values from get request
-        await $fetch(`${config.public.apiURL}/conversations`, {
+        const { data } = await useFetch(`${config.public.apiURL}/conversations`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: token.value,
             },
             // reverse the order of titles to show recent conversations at the top
-        }).then(response => {
-            conversations.value = response.reverse();
+            transform: resp => resp.reverse(),
         });
+        return data;
     } catch (error) {
         console.error("Error fetching conversations: ", error);
     }
+};
+
+const refreshConversations = async () => {
+    conversations.value = (await getConversations()).value;
 };
 
 // deletes the conversation in the database
@@ -63,22 +66,21 @@ const deleteConversation = async inputConversationId => {
             // Remove the deleted conversation from the conversations array
             conversations.value = conversations.value.filter(conversation => conversation.id !== inputConversationId);
         }
-        console.log(isConversationDeleted);
     }
 };
+
+defineExpose({
+    refreshConversations,
+    deleteConversation,
+});
+
+const conversations = await getConversations();
 
 // when clicking a title, sets the conversation ID to the correct one for the conversation
 const handleTitleClick = conversation => {
     router.push({ path: `/chat/${conversation.id}` });
     emit("conversation-selected", conversation.id);
 };
-
-defineExpose({
-    getConversations,
-    deleteConversation,
-});
-
-await getConversations();
 </script>
 
 <style scoped></style>
