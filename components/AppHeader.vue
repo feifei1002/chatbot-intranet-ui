@@ -1,5 +1,5 @@
 <script setup>
-const { status } = useAuth();
+const { status, signOut } = useAuth();
 const authStatus = ref(status.value === "authenticated");
 
 watch(status, newStatus => {
@@ -15,11 +15,17 @@ watch(locale, () => {
     cookieLocale.value = locale.value;
 });
 
+const showMenu = ref(false);
+
 const toggleMenu = () => {
     showMenu.value = !showMenu.value;
 };
 
-const showMenu = ref(false);
+const logout = async () => {
+    // use signIn function built into useAuth,
+    // send the user to the homepage after
+    await signOut({ callbackUrl: "/" });
+};
 </script>
 
 <template>
@@ -50,13 +56,19 @@ const showMenu = ref(false);
                     class="text-xl font-semibold text-chatbot-font dark:text-chatbot-white"
                     exact-active-class="!text-chatbot-red"
                 />
-
                 <NuxtLinkLocale
                     v-if="!authStatus"
                     v-t="'titles.signin'"
                     to="/signin"
                     class="px-4 text-xl font-semibold text-chatbot-font"
                     exact-active-class="!text-chatbot-red"
+                />
+                <!-- sign out shows when signed in -->
+                <NuxtLinkLocale
+                    v-if="authStatus"
+                    v-t="'titles.signout'"
+                    class="cursor-pointer text-xl font-semibold text-chatbot-font hover:text-chatbot-red dark:text-chatbot-white dark:hover:text-chatbot-red"
+                    @click="logout()"
                 />
                 <NuxtLinkLocale
                     to="/chat"
