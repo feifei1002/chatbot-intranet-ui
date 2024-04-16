@@ -32,7 +32,7 @@
                         <CopyButton :content="message.content" />
                         <TTSResponse :content="message.content" />
                         <FeedbackButtons
-                            v-if="message.role === 'assistant' && message.id"
+                            v-if="message.role === 'assistant'"
                             :id="message.id"
                             :content="message.content"
                         />

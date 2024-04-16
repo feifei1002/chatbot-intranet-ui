@@ -69,7 +69,7 @@ async function sendFeedback(isPositive, userInput) {
         <UButton
             icon="i-heroicons-arrows-up-down"
             size="sm"
-            color=""
+            color="blue"
             variant="solid"
             :trailing="false"
             @click="showInputBox"
