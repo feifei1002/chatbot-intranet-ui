@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-3/5 w-full flex-col bg-chatbot-white px-1 pb-1 pt-4 dark:bg-chatbot-font">
+    <div class="flex flex-col bg-chatbot-white pb-1 pt-4 dark:bg-chatbot-font">
         <div class="flex justify-center text-2xl font-bold text-black dark:text-white">
             <h2>Admin Chatbot</h2>
         </div>

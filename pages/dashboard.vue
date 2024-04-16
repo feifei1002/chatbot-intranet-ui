@@ -63,10 +63,10 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-10 h-3/5">
-                <AdminChatbot></AdminChatbot>
-            </div>
         </div>
+    </div>
+    <div class="h-2/3">
+        <AdminChatbot class="h-full"></AdminChatbot>
     </div>
 </template>
 
