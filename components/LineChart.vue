@@ -14,9 +14,11 @@ import {
     Title,
     Tooltip,
     Legend,
+    TimeScale,
 } from "chart.js";
+import "chartjs-adapter-date-fns";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale);
 
 defineProps({
     data: {

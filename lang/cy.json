@@ -41,7 +41,9 @@
       "toolUsage": "Defnyddio’r Teclyn",
       "numberOfConv24h": "Nifer y Sgwrsiadau (24 Awr)",
       "numberOfConv7d": "Nifer y Sgwrsiadau (7 Diwrnod)",
-      "activityThisHour": "Gweithgarwch yr Awr Hon",
-      "historicalStats": "Ystadegau Hanesyddol"
+      "recentActivity": "Dadansoddiadau diweddar",
+      "historicalStats": "Ystadegau hanesyddol",
+      "numberOfMessages7d": "Nifer y negeseuon (7 diwrnod)",
+      "numberOfConv1h": "Nifer y sgyrsiau (1 awr)"
     }
 }
