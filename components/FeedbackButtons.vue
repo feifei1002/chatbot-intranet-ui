@@ -17,9 +17,9 @@ const props = defineProps({
 });
 
 // this makes sure that the preview message when submitting feedback isnt super long
-const chatbotMessagePreview =
-    props.content.length > 100 ? '"' + props.content.substring(0, 99) + '..."' : '"' + props.content + '"';
-
+const chatbotMessagePreview = computed(() =>
+    props.content.length > 100 ? '"' + props.content.substring(0, 99) + '..."' : '"' + props.content + '"',
+);
 
 // when clicked, pops up the form
 function showInputBox() {
