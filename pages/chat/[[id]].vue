@@ -31,7 +31,7 @@
                     <div class="flex items-center justify-end gap-x-1">
                         <CopyButton :content="message.content" />
                         <FeedbackButtons
-                            v-if="message.role === 'assistant'"
+                            v-if="message.role === 'assistant' && message.id"
                             :id="message.id"
                             :content="message.content"
                         />
