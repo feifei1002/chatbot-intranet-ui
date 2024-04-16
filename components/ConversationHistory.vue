@@ -137,7 +137,7 @@ const handleTitleClick = conversation => {
 const shareConversation = conversationId => {
     // sets url and id for unique conversation id
     copiedId.value = conversationId;
-    copiedUrl.value = `http://localhost:3000/chat/${conversationId}`;
+    copiedUrl.value = `${window.location.origin}/chat/${conversationId}`;
     showLinkPopup.value = true;
 };
 
