@@ -40,7 +40,9 @@
       "toolUsage": "도구 사용",
       "numberOfConv24h": "대화 수 (24시간)",
       "numberOfConv7d": "대화 수 (7일)",
-      "activityThisHour": "이 시간의 활동",
-      "historicalStats": "역사적 통계" 
+      "recentActivity": "최근의 분석",
+      "historicalStats": "역사적 통계",
+      "numberOfMessages7d": "메시지 수 (7일)",
+      "numberOfConv1h": "대화 수 (1시간)"
   } 
 }
