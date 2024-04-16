@@ -1,10 +1,5 @@
 image: node:20-slim
 
-cache:
-  paths:
-    - node_modules/
-    - /root/.local/share/pnpm
-
 before_script:
   - corepack enable && corepack prepare pnpm@latest --activate
 
