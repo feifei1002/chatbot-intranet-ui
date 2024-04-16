@@ -71,8 +71,6 @@
             </UModal>
         </div>
     </div>
-    <!-- success notification when sharing a conversation and copying link -->
-    <UNotifications />
 </template>
 
 <script setup>
