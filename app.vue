@@ -5,4 +5,6 @@
             <NuxtPage />
         </div>
     </div>
+    <!-- Notifications for the app -->
+    <UNotifications />
 </template>
