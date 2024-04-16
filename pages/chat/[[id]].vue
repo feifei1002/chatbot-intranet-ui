@@ -30,6 +30,11 @@
                     <MarkdownRenderer :content="message.content" />
                     <div class="flex items-center justify-end gap-x-1">
                         <CopyButton :content="message.content" />
+                        <FeedbackButtons
+                            v-if="message.role === 'assistant'"
+                            :id="message.id"
+                            :content="message.content"
+                        />
                         <TTSResponse :content="message.content" />
                     </div>
                 </div>
@@ -78,7 +83,6 @@ const route = useRoute();
 const userMessageTextarea = ref(null);
 
 const userMessage = ref("");
-const chatMessages = ref([]);
 const suggestedQuestions = ref(null);
 
 const conversationHistory = ref([]);
@@ -151,7 +155,7 @@ const sendMessage = () => {
                     addMessages(conversationId.value).then(() => {
                         if (isNewChat) {
                             // update conversation list of left
-                            conversationHistory.value.getConversations();
+                            conversationHistory.value.refreshConversations();
                         }
                     });
                 }
@@ -185,22 +189,23 @@ const sendMessage = () => {
 const getConversationHistory = async inputConversationId => {
     const { token } = useAuth();
     try {
-        const conversationHistory = await $fetch(`${config.public.apiURL}/conversations/${inputConversationId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: token.value,
+        const { data: conversationHistory } = await useFetch(
+            `${config.public.apiURL}/conversations/${inputConversationId}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token.value,
+                },
             },
-        });
-        chatMessages.value = conversationHistory;
+        );
+        return conversationHistory;
     } catch (error) {
         console.error("Error fetching conversation history: ", error);
     }
 };
 
-if (conversationId.value) {
-    await getConversationHistory(conversationId.value);
-}
+const chatMessages = conversationId.value ? await getConversationHistory(conversationId.value) : ref([]);
 
 // adds the recent two messages to the tables
 // if it's the first question to the chatbot, the title is updated in the database
@@ -218,6 +223,10 @@ const addMessages = async inputConversationId => {
                 // chat_messages: props.chatMessages.slice(-2),
                 chat_messages: chatMessages.value.slice(-2),
             },
+        }).then(resp => {
+            resp.message_ids.forEach((messageId, index) => {
+                chatMessages.value[chatMessages.value.length - 2 + index].id = messageId;
+            });
         });
     } catch (error) {
         console.error("Error adding to conversation history: ", error);
