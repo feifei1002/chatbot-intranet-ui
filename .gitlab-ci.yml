@@ -10,11 +10,11 @@ stages:
 lint_project:
   stage: lint
   script:
-    - pnpm install
+    - pnpm install --no-frozen-lockfile
     - pnpm lint --no-fix --max-warnings=0
 
 build_project:
   stage: build
   script:
-    - pnpm install
+    - pnpm install --no-frozen-lockfile
     - pnpm build
