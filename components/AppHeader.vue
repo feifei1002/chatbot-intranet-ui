@@ -39,16 +39,11 @@ const logout = async () => {
             />
             <div class="flex items-center">
                 <div class="md:hidden">
-                    <button class="text-gray-500 hover:text-chatbot-red focus:outline-none" @click="toggleMenu">
-                        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4 6h16M4 12h16m-7 6h7"
-                            ></path>
-                        </svg>
-                    </button>
+                    <UButton
+                        icon="i-heroicons-bars-3-bottom-right-16-solid"
+                        variant="ghost"
+                        @click="toggleMenu"
+                    ></UButton>
                 </div>
             </div>
             <div class="hidden w-1/3 justify-between pr-6 md:flex">
