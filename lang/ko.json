@@ -19,7 +19,8 @@
     "chatbot": {
       "newchat": "새로운 채팅",
       "send": "메시지를 보내다",
-      "message": "챗봇에게 메시지를 보냅니다..."
+      "message": "챗봇에게 메시지를 보냅니다...",
+      "history_login": "채팅 기록을 보려면 로그인 해주세요"
     },
     "speechRec": {
       "micDisabled": "마이크 비활성화됨",

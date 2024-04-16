@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-full">
         <!-- Blue side with 1/3 of the page -->
-        <div class="flex w-1/5 flex-col bg-amaranth-600 p-4 dark:bg-chatbot-dark-red">
+        <div class="flex w-1/5 flex-col overflow-y-scroll bg-amaranth-600 p-4 dark:bg-chatbot-dark-red">
             <!-- New Chat Button -->
             <button
                 v-t="'chatbot.newchat'"
