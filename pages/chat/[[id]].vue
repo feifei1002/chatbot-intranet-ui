@@ -1,22 +1,35 @@
 <template>
     <div class="flex h-full">
-        <!-- Blue side with 1/3 of the page -->
-        <div class="flex w-1/5 flex-col bg-amaranth-600 p-4 dark:bg-chatbot-dark-red">
-            <!-- New Chat Button -->
-            <button
-                v-t="'chatbot.newchat'"
-                class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black focus:outline-none focus:ring-white dark:hover:bg-black dark:hover:text-white"
-                @click="newChat"
-            />
+        <!-- Collapsible sidebar -->
+        <aside class="bg-amaranth-600 p-4 dark:bg-chatbot-dark-red" :class="{ collapsed: !isSidebarOpen }">
+            <!-- Toggle button -->
+            <button class="" @click="toggleSidebar()">
+                <span v-if="isSidebarOpen">&laquo;</span>
+                <span v-else style="font-size: 36px">&raquo;</span>
+            </button>
 
-            <!-- output previous conversations ordered by title (when authenticated user logged in) -->
-            <ConversationHistory v-if="authStatus !== 'unauthenticated'" ref="conversationHistory" />
-            <span v-else v-t="'chatbot.history_login'" class="mt-2 text-center text-xl text-white"></span>
-        </div>
-        <!-- Pink side with 3/4 of the page -->
-        <div class="flex w-4/5 flex-col bg-chatbot-white px-1 pb-1 pt-4 dark:bg-chatbot-font">
+            <!-- Content inside the sidebar -->
+            <div v-show="isSidebarOpen">
+                <!-- New Chat Button -->
+                <button
+                    v-t="'chatbot.newchat'"
+                    class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black focus:outline-none focus:ring-white dark:hover:bg-black dark:hover:text-white"
+                    @click="newChat"
+                />
+                <!-- Output previous conversations -->
+                <ConversationHistory v-if="authStatus !== 'unauthenticated'" ref="conversationHistory" />
+                <span v-else v-t="'chatbot.history_login'" class="mt-2 text-center text-xl text-white"></span>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <div
+            class="flex w-4/5 flex-col bg-chatbot-white px-1 pb-1 pt-4 dark:bg-chatbot-font"
+            :class="{ 'w-full': !isSidebarOpen }"
+        >
             <!-- Add your chatbot content here -->
             <div class="flex h-full flex-col overflow-y-scroll">
+                <!-- Chat messages -->
                 <div
                     v-for="(message, index) in chatMessages"
                     :key="index"
@@ -33,16 +46,15 @@
                         <TTSResponse :content="message.content" />
                     </div>
                 </div>
-
-                <!-- suggested qs output here -->
+                <!-- Suggested questions -->
                 <SuggestedQuestions
                     ref="suggestedQuestions"
                     :chat-messages="chatMessages"
                     @ask-to-chat-bot="submitQuestion"
                 />
-                <!-- end of suggestion qs -->
             </div>
 
+            <!-- Text area for input -->
             <div class="relative mx-1">
                 <textarea
                     ref="userMessageTextarea"
@@ -51,8 +63,7 @@
                     class="h-fit min-h-20 w-full rounded-md bg-amaranth-100 p-2 pr-32 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-amaranth-500 dark:bg-chatbot-black dark:text-white dark:focus:text-white dark:focus:ring-chatbot-black"
                     @keydown.enter="handleShiftEnter"
                     @input="e => autoGrow(e.target)"
-                ></textarea>
-
+                />
                 <div class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center">
                     <speech-rec class="mr-2" @on-transcribed="text => (userMessage = text)" />
                     <button
@@ -98,6 +109,12 @@ const newChat = () => {
     else if (needsRefresh.value) {
         location.href = "/chat";
     }
+};
+
+const isSidebarOpen = ref(true);
+
+const toggleSidebar = () => {
+    isSidebarOpen.value = !isSidebarOpen.value;
 };
 
 const sendMessage = () => {
