@@ -65,6 +65,9 @@
             </div>
         </div>
     </div>
+    <div class="h-full">
+        <AdminChatbot class="h-full"></AdminChatbot>
+    </div>
 </template>
 
 <script setup>
