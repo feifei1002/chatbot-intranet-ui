@@ -30,12 +30,12 @@
                     <MarkdownRenderer :content="message.content" />
                     <div class="flex items-center justify-end gap-x-1">
                         <CopyButton :content="message.content" />
-                        <TTSResponse :content="message.content" />
                         <FeedbackButtons
                             v-if="message.role === 'assistant'"
                             :id="message.id"
                             :content="message.content"
                         />
+                        <TTSResponse :content="message.content" />
                     </div>
                 </div>
 
