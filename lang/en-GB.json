@@ -40,10 +40,12 @@
         "toolUsage": "Tool Usage",
         "numberOfConv24h": "Number of Conversations (24hr)",
         "numberOfConv7d": "Number of Conversations (7d)",
-        "activityThisHour": "Activity this Hour",
-        "historicalStats": "Historical Stats"
+        "recentActivity": "Recent Activity",
+        "historicalStats": "Historical Stats",
+        "numberOfMessages7d": "Number of Messages (7d)",
+        "numberOfConv1h": "Number of Conversations (1hr)"
     },
-    "feedback":{
+    "feedback": {
         "feedbackTitle": "Feedback Form",
         "textareaPlaceholder": "Please provide feedback on the message above (250 chars)",
         "positiveLabel": "Send as Positive Feedback",
