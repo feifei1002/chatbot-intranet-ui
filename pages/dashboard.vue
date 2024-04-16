@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-    <div class="h-2/3">
+    <div class="h-full">
         <AdminChatbot class="h-full"></AdminChatbot>
     </div>
 </template>
