@@ -44,5 +44,12 @@
         "historicalStats": "Historical Stats",
         "numberOfMessages7d": "Number of Messages (7d)",
         "numberOfConv1h": "Number of Conversations (1hr)"
+    },
+    "feedback": {
+        "feedbackTitle": "Feedback Form",
+        "textareaPlaceholder": "Please provide feedback on the message above (250 chars)",
+        "positiveLabel": "Send as Positive Feedback",
+        "negativeLabel": "Send as Negative Feedback",
+        "close": "close"
     }
 }
