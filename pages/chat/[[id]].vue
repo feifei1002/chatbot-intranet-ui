@@ -1,11 +1,14 @@
 <template>
     <div class="flex h-full">
         <!-- Collapsible sidebar -->
-        <aside class="bg-amaranth-600 p-4 dark:bg-chatbot-dark-red" :class="{ collapsed: !isSidebarOpen }">
+        <aside
+            class="w-fit overflow-x-hidden overflow-y-scroll bg-amaranth-600 p-4 md:w-1/5 dark:bg-amaranth-800"
+            :class="{ '!w-fit': !isSidebarOpen }"
+        >
             <!-- Toggle button -->
-            <button class="" @click="toggleSidebar()">
-                <span v-if="isSidebarOpen">&laquo;</span>
-                <span v-else style="font-size: 36px">&raquo;</span>
+            <button @click="toggleSidebar()">
+                <span v-if="isSidebarOpen" class="text-4xl">&laquo;</span>
+                <span v-else class="text-4xl">&raquo;</span>
             </button>
 
             <!-- Content inside the sidebar -->
@@ -13,20 +16,21 @@
                 <!-- New Chat Button -->
                 <button
                     v-t="'chatbot.newchat'"
-                    class="mt-4 cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black focus:outline-none focus:ring-white dark:hover:bg-black dark:hover:text-white"
+                    class="mt-4 w-full cursor-pointer rounded-full border-2 border-white bg-transparent px-4 py-2 text-white transition duration-300 hover:bg-white hover:text-black focus:outline-none focus:ring-white dark:hover:bg-black dark:hover:text-white"
                     @click="newChat"
                 />
                 <!-- Output previous conversations -->
                 <ConversationHistory v-if="authStatus !== 'unauthenticated'" ref="conversationHistory" />
-                <span v-else v-t="'chatbot.history_login'" class="mt-2 text-center text-xl text-white"></span>
+                <span
+                    v-else
+                    v-t="'chatbot.history_login'"
+                    class="mt-2 block w-full text-center text-xl text-white"
+                ></span>
             </div>
         </aside>
 
         <!-- Main content -->
-        <div
-            class="flex w-4/5 flex-col bg-chatbot-white px-1 pb-1 pt-4 dark:bg-chatbot-font"
-            :class="{ 'w-full': !isSidebarOpen }"
-        >
+        <div class="flex w-full flex-col bg-chatbot-white px-1 pb-1 pt-4 dark:bg-chatbot-font">
             <!-- Add your chatbot content here -->
             <div class="flex h-full flex-col overflow-y-scroll">
                 <!-- Chat messages -->
