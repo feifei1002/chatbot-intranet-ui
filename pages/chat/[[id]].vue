@@ -101,6 +101,8 @@ const newChat = () => {
     // url bar shows a conversation ID, but this instance is without one
     else if (needsRefresh.value) {
         location.href = "/chat";
+    } else {
+        chatMessages.value = [];
     }
 };
 
