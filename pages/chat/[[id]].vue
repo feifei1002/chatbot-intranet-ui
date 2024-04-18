@@ -119,6 +119,7 @@ const newChat = () => {
     } else {
         chatMessages.value = [];
     }
+    suggestedQuestions.value.clear();
 };
 
 const isSidebarOpen = ref(true);
