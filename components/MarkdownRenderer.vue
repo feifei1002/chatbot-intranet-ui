@@ -32,4 +32,8 @@ const markdownHtml = computed(() => {
 .markdown * {
     all: revert;
 }
+
+.markdown code {
+    text-wrap: balance;
+}
 </style>
