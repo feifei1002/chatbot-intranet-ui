@@ -10,6 +10,8 @@ const password = ref("");
 
 const showPassword = ref(false);
 
+const submitting = ref(false);
+
 const submitInput = async () => {
     const credentials = {
         username: username.value,
@@ -18,9 +20,11 @@ const submitInput = async () => {
 
     // This sends a POST request to the `auth.provider.endpoints.signIn` (/api/token) endpoint with `credentials` as the body
     try {
+        submitting.value = true;
         await signIn(credentials, {
             redirect: false,
         });
+        submitting.value = false;
         // Check if the 'admin' property has a truthy value.
         if (data.value.admin) {
             navigateTo("/dashboard");
@@ -32,6 +36,7 @@ const submitInput = async () => {
         // alert the message from the error
         // if undefined, alert the error itself
         alert(err?.data?.message ?? err);
+        submitting.value = false;
     }
 };
 </script>
@@ -87,11 +92,14 @@ const submitInput = async () => {
                         class="ml-2 block text-sm text-chatbot-white"
                     />
                 </div>
-                <button
-                    v-t="'signin.signin'"
-                    class="w-full rounded-md bg-chatbot-black px-4 py-2 text-chatbot-white"
+                <UButton
+                    :label="$t('signin.signin')"
+                    class="w-full"
+                    color="black"
+                    :loading="submitting"
+                    :disabled="submitting"
                     @click="submitInput"
-                ></button>
+                ></UButton>
             </div>
         </div>
     </div>
