@@ -8,3 +8,13 @@
     <!-- Notifications for the app -->
     <UNotifications />
 </template>
+
+<script setup>
+// See https://github.com/sidebase/nuxt-auth/issues/732#issuecomment-2077425393
+onMounted(() => {
+    const { getSession, status } = useAuth();
+    if (status.value !== "unauthenticated") {
+        getSession({ force: true });
+    }
+});
+</script>
